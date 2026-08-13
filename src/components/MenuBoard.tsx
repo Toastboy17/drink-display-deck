@@ -69,8 +69,9 @@ function DrinkPreview({ drink }: { drink: Drink }) {
 }
 
 export function MenuBoard() {
-  const [activeId, setActiveId] = useState(allDrinks[0].id);
-  const active = allDrinks.find((d) => d.id === activeId) ?? allDrinks[0];
+  const first = allDrinks[0] as Drink;
+  const [activeId, setActiveId] = useState<string>(first.id);
+  const active: Drink = allDrinks.find((d) => d.id === activeId) ?? first;
 
   return (
     <div className="grid items-start gap-6 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
