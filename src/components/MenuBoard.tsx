@@ -24,15 +24,16 @@ function NutrientBar({ label, value, unit, max }: { label: string; value: number
 
 function DrinkPreview({ drink }: { drink: Drink }) {
   return (
-    <div key={drink.id} className="animate-in fade-in duration-500">
+    <div>
       <div className="relative overflow-hidden rounded-3xl bg-sky-wash">
         <img
+          key={drink.id}
           src={drink.image}
           alt={`${drink.name} in a nube transparent can`}
           loading="lazy"
           width={900}
           height={1100}
-          className="mx-auto h-64 w-auto object-contain drop-shadow-xl sm:h-72"
+          className="animate-in fade-in zoom-in-95 mx-auto h-64 w-auto object-contain drop-shadow-xl duration-500 sm:h-72"
         />
       </div>
 
