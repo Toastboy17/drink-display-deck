@@ -22,7 +22,7 @@ export const Route = createFileRoute("/impressum")({
   component: ImpressumPage,
 });
 
-const copy: Record<string, L> = {
+const copy = {
   responsible: {
     de: "Verantwortlich für den Inhalt",
     en: "Responsible for the content",
@@ -56,14 +56,14 @@ const copy: Record<string, L> = {
     fr: "Tous les textes, images et graphiques de ce site sont protégés par le droit d'auteur. Toute utilisation sans accord écrit est interdite.",
     it: "Tutti i testi, le immagini e i grafici di questo sito sono protetti dal diritto d'autore. L'uso senza consenso scritto non è consentito.",
   },
-};
+} satisfies Record<string, L>;
 
 function ImpressumPage() {
   const { t, tl } = useI18n();
 
   return (
     <LegalLayout heading={t("legal.impressum")}>
-      <LegalSection title={tl(copy.responsible!)}>
+      <LegalSection title={tl(copy.responsible)}>
         <p>
           nube worldwide
           <br />
@@ -73,7 +73,7 @@ function ImpressumPage() {
         </p>
       </LegalSection>
 
-      <LegalSection title={tl(copy.contact!)}>
+      <LegalSection title={tl(copy.contact)}>
         <p>
           <a href={`mailto:${site.email}`} className="underline-offset-4 hover:underline">
             {site.email}
@@ -85,16 +85,16 @@ function ImpressumPage() {
         </p>
       </LegalSection>
 
-      <LegalSection title={tl(copy.legalForm!)}>
-        <p>{tl(copy.legalFormBody!)}</p>
+      <LegalSection title={tl(copy.legalForm)}>
+        <p>{tl(copy.legalFormBody)}</p>
       </LegalSection>
 
-      <LegalSection title={tl(copy.liability!)}>
-        <p>{tl(copy.liabilityBody!)}</p>
+      <LegalSection title={tl(copy.liability)}>
+        <p>{tl(copy.liabilityBody)}</p>
       </LegalSection>
 
-      <LegalSection title={tl(copy.copyright!)}>
-        <p>{tl(copy.copyrightBody!)}</p>
+      <LegalSection title={tl(copy.copyright)}>
+        <p>{tl(copy.copyrightBody)}</p>
       </LegalSection>
     </LegalLayout>
   );
