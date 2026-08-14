@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Clock, MapPin, Phone, Star } from "lucide-react";
-import heroCan from "@/assets/hero-can.jpg";
+import heroCanAsset from "@/assets/iced-matcha-latte.jpg.asset.json";
 import { MenuBoard } from "@/components/MenuBoard";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -12,7 +12,7 @@ import { useI18n } from "@/i18n";
 
 const title = "nube — Specialty Coffee & Matcha in Zürich";
 const description =
-  "nube Zürich: Premium Matcha, Specialty Coffee, Food und Desserts in versiegelten Klardosen. Kirchgasse 3, Mo–Sa 12–18 Uhr. Interaktive Karte mit Preisen und Nährwerten.";
+  "nube Zürich: Premium Matcha, Specialty Coffee und Shakes in versiegelten Klardosen. Kirchgasse 3, Mo–Sa 12–18 Uhr. Interaktive Karte mit Fotos und Nährwerten.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -73,8 +73,8 @@ function Index() {
             </div>
             <div>
               <img
-                src={heroCan}
-                alt="Transparente nube Dose mit geschichtetem Iced Matcha Latte"
+                src={heroCanAsset.url}
+                alt="nube Iced Matcha Latte in der signature Klardose"
                 width={1408}
                 height={1408}
                 className="mx-auto w-full max-w-md rounded-4xl object-cover shadow-lift"

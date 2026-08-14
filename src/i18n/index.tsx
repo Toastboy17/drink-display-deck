@@ -106,10 +106,10 @@ export const dict: Record<string, L> = {
     it: "Tutti i modi per salire sulla nuvola",
   },
   "menu.body": {
-    de: "Alle Preise in CHF. Kaffeespezialitäten, Matcha, Refresher und Food — jedes Produkt zeigt Bild und Nährwerte.",
-    en: "All prices in CHF. Coffee specialties, matcha, refreshers and food — every item shows its photo and nutrition.",
-    fr: "Tous les prix en CHF. Cafés, matcha, rafraîchissements et food — chaque produit affiche sa photo et ses valeurs nutritives.",
-    it: "Tutti i prezzi in CHF. Caffè, matcha, refresher e food — ogni prodotto mostra foto e valori nutrizionali.",
+    de: "Matcha, Kaffeespezialitäten und Shakes — jedes Produkt zeigt Bild und Nährwerte.",
+    en: "Matcha, coffee specialties and shakes — every item shows its photo and nutrition.",
+    fr: "Matcha, cafés de spécialité et shakes — chaque produit affiche sa photo et ses valeurs nutritives.",
+    it: "Matcha, specialità di caffè e shake — ogni prodotto mostra foto e valori nutrizionali.",
   },
   "menu.hintDesktop": {
     de: "Fahre über ein Produkt",
@@ -135,7 +135,6 @@ export const dict: Record<string, L> = {
     fr: "Valeurs par portion, préparées au lait d'avoine. Chaque boisson existe en version végane.",
     it: "Valori per porzione, preparati con latte d'avena. Ogni bevanda è disponibile vegana.",
   },
-  "menu.priceNote": { de: "Preise in CHF", en: "Prices in CHF", fr: "Prix en CHF", it: "Prezzi in CHF" },
 
   "nutrition.calories": { de: "Kalorien", en: "Calories", fr: "Calories", it: "Calorie" },
   "nutrition.caffeine": { de: "Koffein", en: "Caffeine", fr: "Caféine", it: "Caffeina" },
