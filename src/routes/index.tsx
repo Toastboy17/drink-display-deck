@@ -7,7 +7,9 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { ReviewsSection } from "@/components/ReviewsSection";
 import { MapWidget } from "@/components/MapWidget";
 import { InstagramWidget } from "@/components/InstagramWidget";
-import { faqs, gallery, pillars, site, teamMembers } from "@/data/site";
+import { CanBuild } from "@/components/CanBuild";
+import { Reveal } from "@/components/Reveal";
+import { faqs, gallery, pillars, site } from "@/data/site";
 import { useI18n } from "@/i18n";
 
 const title = "nube — Specialty Coffee & Matcha in Zürich";
@@ -71,15 +73,10 @@ function Index() {
                 </a>
               </div>
             </div>
-            <div>
-              <img
-                src={heroCanAsset.url}
-                alt="nube Iced Matcha Latte in der signature Klardose"
-                width={1408}
-                height={1408}
-                className="mx-auto w-full max-w-md rounded-4xl object-cover shadow-lift"
-              />
-            </div>
+            <CanBuild
+              photo={heroCanAsset.url}
+              alt="nube Iced Matcha Latte in der signature Klardose"
+            />
           </div>
         </section>
 
@@ -118,7 +115,9 @@ function Index() {
             <p className="mt-4 text-muted-foreground">{t("menu.body")}</p>
           </div>
           <div className="mt-10 md:mt-12">
-            <MenuBoard />
+            <Reveal>
+              <MenuBoard />
+            </Reveal>
           </div>
         </section>
 
@@ -132,13 +131,14 @@ function Index() {
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {pillars.map((p) => (
-                <div
-                  key={p.title.en}
-                  className="rounded-3xl border border-border bg-background p-6 transition-shadow hover:shadow-soft"
-                >
-                  <h3 className="text-xl">{tl(p.title)}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{tl(p.body)}</p>
-                </div>
+                <Reveal key={p.title.en}>
+                  <div className="h-full rounded-3xl border border-border bg-background p-6 transition-all duration-300 hover:-translate-y-1 hover:glow-cloud">
+                    <h3 className="text-xl">{tl(p.title)}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {tl(p.body)}
+                    </p>
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -150,46 +150,15 @@ function Index() {
           <h2 className="mt-4 max-w-xl text-4xl md:text-5xl">{t("gallery.title")}</h2>
           <div className="mt-10 grid gap-4 sm:grid-cols-3">
             {gallery.map((g, i) => (
-              <img
-                key={i}
-                src={g.image}
-                alt={tl(g.alt)}
-                loading="lazy"
-                className="aspect-4/5 w-full rounded-4xl border border-border object-cover shadow-soft"
-              />
+              <Reveal key={i} delay={i * 120}>
+                <img
+                  src={g.image}
+                  alt={tl(g.alt)}
+                  loading="lazy"
+                  className="aspect-4/5 w-full rounded-4xl border border-border object-cover shadow-soft transition-transform duration-500 hover:scale-[1.02]"
+                />
+              </Reveal>
             ))}
-          </div>
-        </section>
-
-        {/* Team */}
-        <section id="team" className="scroll-mt-20 border-y border-border bg-card/60">
-          <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
-            <p className="eyebrow">{t("team.eyebrow")}</p>
-            <h2 className="mt-4 max-w-xl text-4xl md:text-5xl">{t("team.title")}</h2>
-            <p className="mt-4 max-w-lg text-muted-foreground">{t("team.body")}</p>
-
-            <div className="-mx-5 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4 [&::-webkit-scrollbar]:hidden">
-              {teamMembers.map((m) => (
-                <figure
-                  key={m.name}
-                  className="w-[70vw] shrink-0 snap-center overflow-hidden rounded-4xl border border-border bg-background shadow-soft sm:w-auto"
-                >
-                  <img
-                    src={m.image}
-                    alt={`${m.name} — ${tl(m.role)} @ nube`}
-                    loading="lazy"
-                    className="aspect-4/5 w-full object-cover"
-                  />
-                  <figcaption className="p-5">
-                    <p className="font-display text-2xl leading-none">{m.name}</p>
-                    <p className="mt-1.5 text-sm text-matcha">{tl(m.role)}</p>
-                    <p className="mt-3 text-xs text-muted-foreground">
-                      {t("team.favourite")}: {m.favourite}
-                    </p>
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
           </div>
         </section>
 
