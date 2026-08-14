@@ -8,16 +8,16 @@ import mangoMatchaAsset from "@/assets/mango-matcha.jpg.asset.json";
 import saltedCaramelBananaMatchaAsset from "@/assets/salted-caramel-banana-matcha.jpg.asset.json";
 import kidsMatchaAsset from "@/assets/kids-matcha.jpg.asset.json";
 import mangoShakeAsset from "@/assets/mango-shake.jpg.asset.json";
+import cappuccinoAsset from "@/assets/cappuccino.png.asset.json";
+import flatWhiteAsset from "@/assets/flat-white.png.asset.json";
+import caffeLatteAsset from "@/assets/caffe-latte.png.asset.json";
+import latteMacchiatoAsset from "@/assets/latte-macchiato.png.asset.json";
+import mochaAsset from "@/assets/mocha.png.asset.json";
+import filterCoffeeAsset from "@/assets/filter-coffee.png.asset.json";
+import hotMatchaLatteAsset from "@/assets/hot-matcha-latte.png.asset.json";
+import espressoAsset from "@/assets/espresso.jpg.asset.json";
+import espressoDoppioAsset from "@/assets/espresso-doppio.jpg.asset.json";
 import type { L } from "@/i18n";
-
-export type Nutrition = {
-  calories: number;
-  protein: number;
-  carbs: number;
-  sugar: number;
-  fat: number;
-  caffeine: number;
-};
 
 export type Drink = {
   id: string;
@@ -25,9 +25,10 @@ export type Drink = {
   jp: string;
   blurb: L;
   image: string;
+  /** Cut-out photo that should float without a photo frame. */
+  floating?: boolean;
   size: string;
   tags: string[];
-  nutrition: Nutrition;
 };
 
 export type MenuCategory = {
@@ -61,7 +62,6 @@ export const menu: MenuCategory[] = [
         image: icedMatchaLatteAsset.url,
         size: "400 ml",
         tags: ["tag.veganOption", "tag.signature"],
-        nutrition: { calories: 180, protein: 7, carbs: 22, sugar: 18, fat: 6, caffeine: 70 },
       },
       {
         id: "strawberry-matcha",
@@ -76,7 +76,6 @@ export const menu: MenuCategory[] = [
         image: strawberryMatchaAsset.url,
         size: "400 ml",
         tags: ["tag.veganOption", "tag.fruit"],
-        nutrition: { calories: 220, protein: 6, carbs: 34, sugar: 28, fat: 6, caffeine: 60 },
       },
       {
         id: "blueberry-matcha",
@@ -91,7 +90,6 @@ export const menu: MenuCategory[] = [
         image: blueberryMatchaAsset.url,
         size: "400 ml",
         tags: ["tag.veganOption", "tag.fruit"],
-        nutrition: { calories: 230, protein: 6, carbs: 36, sugar: 29, fat: 6, caffeine: 60 },
       },
       {
         id: "mango-matcha",
@@ -106,7 +104,6 @@ export const menu: MenuCategory[] = [
         image: mangoMatchaAsset.url,
         size: "400 ml",
         tags: ["tag.veganOption", "tag.fruit"],
-        nutrition: { calories: 240, protein: 6, carbs: 38, sugar: 31, fat: 6, caffeine: 60 },
       },
       {
         id: "salted-caramel-banana-matcha",
@@ -121,7 +118,6 @@ export const menu: MenuCategory[] = [
         image: saltedCaramelBananaMatchaAsset.url,
         size: "400 ml",
         tags: ["tag.signature", "tag.veganOption"],
-        nutrition: { calories: 280, protein: 7, carbs: 42, sugar: 34, fat: 8, caffeine: 60 },
       },
       {
         id: "kids-matcha",
@@ -136,17 +132,166 @@ export const menu: MenuCategory[] = [
         image: kidsMatchaAsset.url,
         size: "300 ml",
         tags: ["tag.caffeineFree", "tag.veganOption"],
-        nutrition: { calories: 150, protein: 4, carbs: 26, sugar: 22, fat: 4, caffeine: 0 },
+      },
+      {
+        id: "hot-matcha-latte",
+        name: "Hot Matcha Latte",
+        jp: "ホット抹茶ラテ",
+        blurb: {
+          de: "Warm aufgeschlagener Matcha mit samtigem Milchschaum und Latte Art.",
+          en: "Warm whisked matcha with velvety microfoam and latte art.",
+          fr: "Matcha fouetté chaud, mousse velouté et latte art.",
+          it: "Matcha caldo montato, microschiuma vellutata e latte art.",
+        },
+        image: hotMatchaLatteAsset.url,
+        floating: true,
+        size: "300 ml",
+        tags: ["tag.warm", "tag.veganOption"],
+      },
+    ],
+  },
+  {
+    id: "hot",
+    label: {
+      de: "Heisse Klassiker",
+      en: "Hot classics",
+      fr: "Classiques chauds",
+      it: "Classici caldi",
+    },
+    note: {
+      de: "Im nube Cup, mit Latte Art",
+      en: "In the nube cup, with latte art",
+      fr: "Dans le gobelet nube, avec latte art",
+      it: "Nel bicchiere nube, con latte art",
+    },
+    drinks: [
+      {
+        id: "espresso",
+        name: "Espresso",
+        jp: "エスプレッソ",
+        blurb: {
+          de: "Ein Shot Specialty Espresso mit dichter, karamellfarbener Crema.",
+          en: "A single specialty shot with a dense, caramel-coloured crema.",
+          fr: "Un shot de spécialité, crema dense et caramel.",
+          it: "Un singolo shot specialty con crema densa e caramellata.",
+        },
+        image: espressoAsset.url,
+        size: "30 ml",
+        tags: ["tag.warm", "tag.sugarFree"],
+      },
+      {
+        id: "espresso-doppio",
+        name: "Espresso Doppio",
+        jp: "ドッピオ",
+        blurb: {
+          de: "Doppelter Espresso — voller Körper, langer Schokoabgang.",
+          en: "Double espresso — full body, long chocolate finish.",
+          fr: "Double espresso — corps plein, finale cacaotée.",
+          it: "Doppio espresso — corpo pieno, finale di cacao.",
+        },
+        image: espressoDoppioAsset.url,
+        size: "60 ml",
+        tags: ["tag.warm", "tag.sugarFree"],
+      },
+      {
+        id: "cappuccino",
+        name: "Cappuccino",
+        jp: "カプチーノ",
+        blurb: {
+          de: "Espresso unter dichtem Milchschaum — cremig, klassisch, mit Herz.",
+          en: "Espresso under dense microfoam — creamy, classic, heart on top.",
+          fr: "Espresso sous une mousse dense — crémeux et classique.",
+          it: "Espresso sotto microschiuma densa — cremoso e classico.",
+        },
+        image: cappuccinoAsset.url,
+        floating: true,
+        size: "200 ml",
+        tags: ["tag.warm", "tag.veganOption"],
+      },
+      {
+        id: "flat-white",
+        name: "Flat White",
+        jp: "フラットホワイト",
+        blurb: {
+          de: "Doppelter Ristretto mit feiner Mikroschaum-Milch — intensiv und rund.",
+          en: "Double ristretto with silky microfoam — intense and round.",
+          fr: "Double ristretto et microfoam soyeux — intense et rond.",
+          it: "Doppio ristretto con microschiuma setosa — intenso e rotondo.",
+        },
+        image: flatWhiteAsset.url,
+        floating: true,
+        size: "220 ml",
+        tags: ["tag.warm", "tag.veganOption", "tag.signature"],
+      },
+      {
+        id: "caffe-latte",
+        name: "Caffè Latte",
+        jp: "カフェラテ",
+        blurb: {
+          de: "Viel warme Milch, ein sanfter Espresso — der milde Alltagsbegleiter.",
+          en: "Plenty of warm milk, a gentle espresso — the mild everyday cup.",
+          fr: "Beaucoup de lait chaud, un espresso doux — la tasse du quotidien.",
+          it: "Tanto latte caldo e un espresso delicato — la tazza di ogni giorno.",
+        },
+        image: caffeLatteAsset.url,
+        floating: true,
+        size: "300 ml",
+        tags: ["tag.warm", "tag.veganOption"],
+      },
+      {
+        id: "latte-macchiato",
+        name: "Latte Macchiato",
+        jp: "ラテマキアート",
+        blurb: {
+          de: "Geschichtet: warme Milch, Schaum und ein Espresso obendrauf.",
+          en: "Layered: warm milk, foam and an espresso poured on top.",
+          fr: "En couches : lait chaud, mousse et espresso versé dessus.",
+          it: "A strati: latte caldo, schiuma ed espresso versato sopra.",
+        },
+        image: latteMacchiatoAsset.url,
+        floating: true,
+        size: "300 ml",
+        tags: ["tag.warm", "tag.veganOption"],
+      },
+      {
+        id: "mocha",
+        name: "Mocha",
+        jp: "モカ",
+        blurb: {
+          de: "Espresso, Schokolade und Milch — Dessert im Becher.",
+          en: "Espresso, chocolate and milk — dessert in a cup.",
+          fr: "Espresso, chocolat et lait — un dessert en tasse.",
+          it: "Espresso, cioccolato e latte — dessert in tazza.",
+        },
+        image: mochaAsset.url,
+        floating: true,
+        size: "300 ml",
+        tags: ["tag.warm", "tag.signature"],
+      },
+      {
+        id: "filter-coffee",
+        name: "Filter Coffee",
+        jp: "フィルターコーヒー",
+        blurb: {
+          de: "Handgefiltert, klar und aromatisch — Single Origin des Monats.",
+          en: "Hand-brewed, clean and aromatic — single origin of the month.",
+          fr: "Filtré à la main, net et aromatique — single origin du mois.",
+          it: "Filtro a mano, pulito e aromatico — single origin del mese.",
+        },
+        image: filterCoffeeAsset.url,
+        floating: true,
+        size: "300 ml",
+        tags: ["tag.warm", "tag.sugarFree"],
       },
     ],
   },
   {
     id: "coffee",
     label: {
-      de: "Kaffeespezialitäten",
-      en: "Coffee specialties",
-      fr: "Cafés de spécialité",
-      it: "Specialità di caffè",
+      de: "Iced Coffee",
+      en: "Iced coffee",
+      fr: "Cafés glacés",
+      it: "Caffè freddi",
     },
     note: {
       de: "Specialty Beans, in der Schweiz geröstet",
@@ -168,7 +313,6 @@ export const menu: MenuCategory[] = [
         image: icedLatteAsset.url,
         size: "400 ml",
         tags: ["tag.veganOption"],
-        nutrition: { calories: 140, protein: 8, carbs: 13, sugar: 12, fat: 5, caffeine: 150 },
       },
       {
         id: "salted-caramel-banana",
@@ -183,7 +327,6 @@ export const menu: MenuCategory[] = [
         image: saltedCaramelBananaAsset.url,
         size: "400 ml",
         tags: ["tag.signature", "tag.veganOption"],
-        nutrition: { calories: 260, protein: 7, carbs: 40, sugar: 33, fat: 7, caffeine: 150 },
       },
       {
         id: "blueberry-latte",
@@ -198,7 +341,6 @@ export const menu: MenuCategory[] = [
         image: blueberryLatteAsset.url,
         size: "400 ml",
         tags: ["tag.fruit", "tag.veganOption"],
-        nutrition: { calories: 220, protein: 7, carbs: 33, sugar: 28, fat: 6, caffeine: 150 },
       },
     ],
   },
@@ -225,7 +367,6 @@ export const menu: MenuCategory[] = [
         image: mangoShakeAsset.url,
         size: "400 ml",
         tags: ["tag.caffeineFree", "tag.fruit"],
-        nutrition: { calories: 300, protein: 6, carbs: 48, sugar: 40, fat: 8, caffeine: 0 },
       },
     ],
   },
