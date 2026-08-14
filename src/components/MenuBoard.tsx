@@ -90,7 +90,6 @@ function DrinkPreview({ drink }: { drink: Drink }) {
 
       <div className="mt-6 flex items-baseline justify-between gap-4">
         <h3 className="text-3xl leading-none">{drink.name}</h3>
-        <span className="text-sm text-muted-foreground tabular-nums">{drink.price}</span>
       </div>
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{tl(drink.blurb)}</p>
 
@@ -157,9 +156,6 @@ function DesktopBoard() {
                             isActive ? "opacity-100" : "opacity-60",
                           )}
                         />
-                        <span className="text-sm text-muted-foreground tabular-nums">
-                          {drink.price}
-                        </span>
                       </button>
                     </li>
                   );
@@ -243,8 +239,7 @@ function MobileBoard() {
             </div>
             <div className="mt-4 flex items-baseline justify-between gap-3">
               <h3 className="text-2xl leading-none">{drink.name}</h3>
-              <span className="text-sm text-muted-foreground tabular-nums">{drink.price}</span>
-            </div>
+                  </div>
             <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{tl(drink.blurb)}</p>
             <p className="mt-3 text-xs tracking-wide text-matcha uppercase">
               {t("menu.tapDetails")}
@@ -271,9 +266,6 @@ function MobileBoard() {
                   <DrawerTitle className="font-display text-3xl leading-none font-normal">
                     {openDrink.name}
                   </DrawerTitle>
-                  <span className="text-sm text-muted-foreground tabular-nums">
-                    {openDrink.price}
-                  </span>
                 </div>
                 <DrawerDescription className="text-left">{tl(openDrink.blurb)}</DrawerDescription>
               </DrawerHeader>

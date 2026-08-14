@@ -7,8 +7,11 @@ import social2 from "@/assets/social-2.jpg";
 import social3 from "@/assets/social-3.jpg";
 import spaceInterior from "@/assets/space-interior.jpg";
 import spaceCounter from "@/assets/space-counter.jpg";
-import matchaLatte from "@/assets/drink-matcha-latte.jpg";
-import cakeInACan from "@/assets/drink-cake-in-a-can.jpg";
+import matchaLatteAsset from "@/assets/iced-matcha-latte.jpg.asset.json";
+import mangoShakeAsset from "@/assets/mango-shake.jpg.asset.json";
+
+const matchaLatte = matchaLatteAsset.url;
+const cakeInACan = mangoShakeAsset.url;
 import type { L } from "@/i18n";
 
 export const site = {
@@ -285,10 +288,10 @@ export const socialPosts: { image: string; caption: L; likes: string; href: stri
   {
     image: cakeInACan,
     caption: {
-      de: "Cake in a Can — Wochenend-Drop 🍰",
-      en: "Cake in a Can — weekend drop 🍰",
-      fr: "Cake in a Can — drop du week-end 🍰",
-      it: "Cake in a Can — drop del weekend 🍰",
+      de: "Mango Shake — Sommer-Drop 🥭",
+      en: "Mango Shake — summer drop 🥭",
+      fr: "Mango Shake — drop de l'été 🥭",
+      it: "Mango Shake — drop estivo 🥭",
     },
     likes: "1.6K",
     href: site.instagram,
