@@ -1,7 +1,3 @@
-import team1 from "@/assets/team-1.jpg";
-import team2 from "@/assets/team-2.jpg";
-import team3 from "@/assets/team-3.jpg";
-import team4 from "@/assets/team-4.jpg";
 import social1 from "@/assets/social-1.jpg";
 import social2 from "@/assets/social-2.jpg";
 import social3 from "@/assets/social-3.jpg";
@@ -147,33 +143,6 @@ export const faqs: { q: L; a: L }[] = [
       fr: "Nos canettes transparentes gardent la fraîcheur, se transportent facilement et révèlent chaque couche.",
       it: "Le nostre lattine trasparenti mantengono la freschezza, sono comode e mostrano ogni strato.",
     },
-  },
-];
-
-export const teamMembers: { name: string; role: L; favourite: string; image: string }[] = [
-  {
-    name: "Aiko",
-    role: { de: "Gründerin", en: "Founder", fr: "Fondatrice", it: "Fondatrice" },
-    favourite: "Cloud Matcha Latte",
-    image: team1,
-  },
-  {
-    name: "Luca",
-    role: { de: "Head Barista", en: "Head barista", fr: "Chef barista", it: "Head barista" },
-    favourite: "18h Cold Brew",
-    image: team2,
-  },
-  {
-    name: "Noemi",
-    role: { de: "Matcha Master", en: "Matcha master", fr: "Maître matcha", it: "Maestra del matcha" },
-    favourite: "Strawberry Matcha",
-    image: team3,
-  },
-  {
-    name: "Sami",
-    role: { de: "Küche & Bake", en: "Kitchen & bake", fr: "Cuisine & pâtisserie", it: "Cucina & forno" },
-    favourite: "Tamago Sando",
-    image: team4,
   },
 ];
 

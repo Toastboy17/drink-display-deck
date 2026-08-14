@@ -11,51 +11,6 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 
-function NutrientBar({
-  label,
-  value,
-  unit,
-  max,
-}: {
-  label: string;
-  value: number;
-  unit: string;
-  max: number;
-}) {
-  return (
-    <div>
-      <div className="flex items-baseline justify-between text-sm">
-        <span className="text-muted-foreground">{label}</span>
-        <span className="font-medium tabular-nums">
-          {value}
-          <span className="text-muted-foreground text-xs"> {unit}</span>
-        </span>
-      </div>
-      <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-secondary">
-        <div
-          className="h-full rounded-full bg-matcha transition-[width] duration-500 ease-out"
-          style={{ width: `${Math.min(100, (value / max) * 100)}%` }}
-        />
-      </div>
-    </div>
-  );
-}
-
-function NutritionGrid({ drink }: { drink: Drink }) {
-  const { t } = useI18n();
-  const n = drink.nutrition;
-  return (
-    <div className="grid gap-4 sm:grid-cols-2">
-      <NutrientBar label={t("nutrition.calories")} value={n.calories} unit="kcal" max={400} />
-      <NutrientBar label={t("nutrition.caffeine")} value={n.caffeine} unit="mg" max={200} />
-      <NutrientBar label={t("nutrition.protein")} value={n.protein} unit="g" max={16} />
-      <NutrientBar label={t("nutrition.carbs")} value={n.carbs} unit="g" max={60} />
-      <NutrientBar label={t("nutrition.sugar")} value={n.sugar} unit="g" max={35} />
-      <NutrientBar label={t("nutrition.fat")} value={n.fat} unit="g" max={22} />
-    </div>
-  );
-}
-
 function Tags({ drink }: { drink: Drink }) {
   const { t } = useI18n();
   return (
@@ -63,7 +18,7 @@ function Tags({ drink }: { drink: Drink }) {
       {[drink.size, ...drink.tags.map((tag) => t(tag))].map((label) => (
         <span
           key={label}
-          className="rounded-full border border-border px-3 py-1 text-xs text-secondary-foreground"
+          className="rounded-full border border-border bg-secondary/40 px-3 py-1 text-xs text-secondary-foreground transition-colors hover:bg-secondary"
         >
           {label}
         </span>
@@ -73,10 +28,10 @@ function Tags({ drink }: { drink: Drink }) {
 }
 
 function DrinkPreview({ drink }: { drink: Drink }) {
-  const { t, tl } = useI18n();
+  const { tl } = useI18n();
   return (
     <div>
-      <div className="relative overflow-hidden rounded-3xl bg-sky-wash">
+      <div className="relative overflow-hidden rounded-3xl bg-sky-wash p-2">
         <img
           key={drink.id}
           src={drink.image}
@@ -84,7 +39,10 @@ function DrinkPreview({ drink }: { drink: Drink }) {
           loading="lazy"
           width={900}
           height={1100}
-          className="animate-in fade-in zoom-in-95 mx-auto h-64 w-auto object-contain drop-shadow-xl duration-500 sm:h-72"
+          className={cn(
+            "animate-in fade-in zoom-in-95 float-slow mx-auto h-64 w-auto object-contain drop-shadow-2xl duration-700 sm:h-72",
+            !drink.floating && "rounded-2xl",
+          )}
         />
       </div>
 
@@ -96,11 +54,6 @@ function DrinkPreview({ drink }: { drink: Drink }) {
       <div className="mt-4">
         <Tags drink={drink} />
       </div>
-
-      <div className="mt-7">
-        <NutritionGrid drink={drink} />
-      </div>
-      <p className="mt-5 text-xs text-muted-foreground">{t("menu.nutritionNote")}</p>
     </div>
   );
 }
@@ -142,8 +95,8 @@ function DesktopBoard() {
                           "group flex w-full items-baseline gap-3 rounded-xl px-3 py-3 text-left transition-all",
                           "duration-300 ease-out outline-none focus-visible:ring-2 focus-visible:ring-ring",
                           isActive
-                            ? "bg-accent/60 translate-x-1"
-                            : "hover:bg-accent/40 hover:translate-x-1",
+                            ? "glow-cloud bg-accent/70 translate-x-1"
+                            : "hover:bg-secondary/60 hover:translate-x-1",
                         )}
                       >
                         <span className="text-base font-medium">{drink.name}</span>
@@ -225,21 +178,24 @@ function MobileBoard() {
             key={drink.id}
             type="button"
             onClick={() => setOpenDrink(drink)}
-            className="animate-in fade-in slide-in-from-bottom-2 w-[74vw] max-w-xs shrink-0 snap-center rounded-4xl border border-border bg-card p-4 text-left shadow-soft transition-transform duration-300 active:scale-[0.98] sm:w-[52vw]"
+            className="animate-in fade-in slide-in-from-bottom-2 w-[74vw] max-w-xs shrink-0 snap-center rounded-4xl border border-border bg-card p-4 text-left shadow-soft transition-all duration-300 hover:-translate-y-1 hover:glow-rose active:scale-[0.98] sm:w-[52vw]"
           >
-            <div className="overflow-hidden rounded-3xl bg-sky-wash">
+            <div className="overflow-hidden rounded-3xl bg-sky-wash p-1">
               <img
                 src={drink.image}
                 alt={`${drink.name} — nube`}
                 loading="lazy"
                 width={900}
                 height={1100}
-                className="mx-auto h-52 w-auto object-contain drop-shadow-lg"
+                className={cn(
+                  "mx-auto h-52 w-auto object-contain drop-shadow-xl",
+                  !drink.floating && "rounded-2xl",
+                )}
               />
             </div>
             <div className="mt-4 flex items-baseline justify-between gap-3">
               <h3 className="text-2xl leading-none">{drink.name}</h3>
-                  </div>
+            </div>
             <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{tl(drink.blurb)}</p>
             <p className="mt-3 text-xs tracking-wide text-matcha uppercase">
               {t("menu.tapDetails")}
@@ -253,13 +209,16 @@ function MobileBoard() {
           {openDrink && (
             <div className="overflow-y-auto px-5 pb-8">
               <DrawerHeader className="px-0 text-left">
-                <div className="overflow-hidden rounded-3xl bg-sky-wash">
+                <div className="overflow-hidden rounded-3xl bg-sky-wash p-1">
                   <img
                     src={openDrink.image}
                     alt={`${openDrink.name} — nube`}
                     width={900}
                     height={1100}
-                    className="animate-in fade-in zoom-in-95 mx-auto h-56 w-auto object-contain drop-shadow-xl duration-500"
+                    className={cn(
+                      "animate-in fade-in zoom-in-95 mx-auto h-56 w-auto object-contain drop-shadow-2xl duration-500",
+                      !openDrink.floating && "rounded-2xl",
+                    )}
                   />
                 </div>
                 <div className="mt-4 flex items-baseline justify-between gap-3">
@@ -271,10 +230,6 @@ function MobileBoard() {
               </DrawerHeader>
 
               <Tags drink={openDrink} />
-              <div className="mt-6">
-                <NutritionGrid drink={openDrink} />
-              </div>
-              <p className="mt-5 text-xs text-muted-foreground">{t("menu.nutritionNote")}</p>
               <DrawerClose className="mt-6 w-full rounded-full bg-primary py-3 text-sm text-primary-foreground">
                 {t("cta.close")}
               </DrawerClose>
