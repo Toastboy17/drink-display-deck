@@ -1,15 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Clock, MapPin, Phone, Star } from "lucide-react";
-import heroCanAsset from "@/assets/iced-matcha-latte.jpg.asset.json";
 import { MenuBoard } from "@/components/MenuBoard";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { ReviewsSection } from "@/components/ReviewsSection";
 import { MapWidget } from "@/components/MapWidget";
 import { InstagramWidget } from "@/components/InstagramWidget";
-import { CanBuild } from "@/components/CanBuild";
 import { Reveal } from "@/components/Reveal";
-import { faqs, gallery, pillars, site } from "@/data/site";
+import { faqs, gallery, heroImage, pillars, site } from "@/data/site";
 import { useI18n } from "@/i18n";
 
 const title = "nube — Specialty Coffee & Matcha in Zürich";
@@ -61,22 +59,27 @@ function Index() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
                   href="#menu"
-                  className="rounded-full bg-primary px-6 py-3 text-sm text-primary-foreground transition-transform hover:-translate-y-0.5"
+                  className="rounded-full bg-primary px-6 py-3 text-sm text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:glow-cloud"
                 >
                   {t("cta.menu")}
                 </a>
                 <a
                   href="#visit"
-                  className="rounded-full border border-foreground/15 px-6 py-3 text-sm transition-colors hover:bg-card"
+                  className="rounded-full border border-secondary bg-secondary/40 px-6 py-3 text-sm transition-all duration-300 hover:-translate-y-0.5 hover:glow-rose"
                 >
                   {site.street}, 8001
                 </a>
               </div>
             </div>
-            <CanBuild
-              photo={heroCanAsset.url}
-              alt="nube Iced Matcha Latte in der signature Klardose"
-            />
+            <div className="relative mx-auto w-full max-w-md">
+              <img
+                src={heroImage}
+                alt="nube Iced Matcha Latte in der signature Klardose"
+                width={1408}
+                height={1408}
+                className="aspect-4/5 w-full rounded-4xl object-cover shadow-lift"
+              />
+            </div>
           </div>
         </section>
 
