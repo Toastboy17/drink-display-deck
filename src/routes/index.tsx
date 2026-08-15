@@ -84,7 +84,7 @@ function Index() {
         </section>
 
         {/* Hours & location strip */}
-        <section className="border-y border-border bg-card/60">
+        <section className="border-y-2 border-secondary/60 bg-card/70">
           <div className="mx-auto grid max-w-6xl gap-4 px-5 py-6 sm:grid-cols-3">
             <div className="flex items-start gap-3">
               <Clock className="mt-0.5 size-4 shrink-0 text-matcha" aria-hidden="true" />
@@ -125,7 +125,7 @@ function Index() {
         </section>
 
         {/* Story */}
-        <section id="story" className="scroll-mt-20 border-y border-border bg-card/60">
+        <section id="story" className="scroll-mt-20 border-y-2 border-secondary/60 bg-accent/25">
           <div className="mx-auto grid max-w-6xl gap-12 px-5 py-16 md:grid-cols-[0.9fr_1.1fr] md:py-24">
             <div>
               <p className="eyebrow">{t("story.eyebrow")}</p>
@@ -135,7 +135,7 @@ function Index() {
             <div className="grid gap-4 sm:grid-cols-2">
               {pillars.map((p) => (
                 <Reveal key={p.title.en}>
-                  <div className="h-full rounded-3xl border border-border bg-background p-6 transition-all duration-300 hover:-translate-y-1 hover:glow-cloud">
+                  <div className="h-full rounded-3xl border border-border bg-background p-6 transition-all duration-300 hover:-translate-y-1 hover:glow-rose">
                     <h3 className="text-xl">{tl(p.title)}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                       {tl(p.body)}
@@ -173,7 +173,7 @@ function Index() {
         </section>
 
         {/* Visit + map */}
-        <section id="visit" className="scroll-mt-20 border-t border-border bg-card/60">
+        <section id="visit" className="scroll-mt-20 border-t-2 border-secondary/60 bg-accent/25">
           <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
             <MapWidget />
           </div>
@@ -183,9 +183,9 @@ function Index() {
         <section id="faq" className="mx-auto max-w-3xl scroll-mt-20 px-5 py-16 md:py-24">
           <p className="eyebrow">{t("faq.eyebrow")}</p>
           <h2 className="mt-4 text-4xl">{t("faq.title")}</h2>
-          <div className="mt-8 divide-y divide-border border-y border-border">
+          <div className="mt-8 divide-y divide-secondary/70 border-y-2 border-secondary/70">
             {faqs.map((f) => (
-              <details key={f.q.en} className="group py-5">
+              <details key={f.q.en} className="group py-5 transition-colors hover:text-cloud-deep">
                 <summary className="cursor-pointer list-none text-lg marker:hidden">
                   {tl(f.q)}
                 </summary>
