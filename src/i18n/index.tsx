@@ -106,10 +106,10 @@ export const dict: Record<string, L> = {
     it: "Tutti i modi per salire sulla nuvola",
   },
   "menu.body": {
-    de: "Matcha, Kaffeespezialitäten und Shakes — jedes Produkt zeigt Bild und Nährwerte.",
-    en: "Matcha, coffee specialties and shakes — every item shows its photo and nutrition.",
-    fr: "Matcha, cafés de spécialité et shakes — chaque produit affiche sa photo et ses valeurs nutritives.",
-    it: "Matcha, specialità di caffè e shake — ogni prodotto mostra foto e valori nutrizionali.",
+    de: "Matcha, Kaffeespezialitäten und Shakes — jedes Produkt zeigt Bild und Beschreibung.",
+    en: "Matcha, coffee specialties and shakes — every item shows its photo and description.",
+    fr: "Matcha, cafés de spécialité et shakes — chaque produit affiche sa photo et sa description.",
+    it: "Matcha, specialità di caffè e shake — ogni prodotto mostra foto e descrizione.",
   },
   "menu.hintDesktop": {
     de: "Fahre über ein Produkt",
@@ -124,10 +124,10 @@ export const dict: Record<string, L> = {
     it: "Scorri e tocca",
   },
   "menu.tapDetails": {
-    de: "Antippen für Nährwerte",
-    en: "Tap for nutrition",
-    fr: "Toucher pour les valeurs",
-    it: "Tocca per i valori",
+    de: "Antippen für Details",
+    en: "Tap for details",
+    fr: "Toucher pour les détails",
+    it: "Tocca per i dettagli",
   },
   "menu.nutritionNote": {
     de: "Werte pro Portion, zubereitet mit Hafermilch. Jedes Getränk gibt es auch vegan.",

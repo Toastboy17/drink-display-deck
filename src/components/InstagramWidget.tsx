@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Heart, Instagram } from "lucide-react";
+import { Instagram } from "lucide-react";
 import { useI18n } from "@/i18n";
 import { site, socialPosts } from "@/data/site";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
@@ -18,19 +18,11 @@ export function InstagramWidget() {
           <p className="mt-4 text-muted-foreground">{t("insta.body")}</p>
         </div>
         <div className="flex items-center gap-6">
-          <div>
-            <p className="font-display text-3xl leading-none tabular-nums">{site.followers}</p>
-            <p className="eyebrow mt-1">{t("insta.followers")}</p>
-          </div>
-          <div>
-            <p className="font-display text-3xl leading-none tabular-nums">{site.postCount}</p>
-            <p className="eyebrow mt-1">{t("insta.posts")}</p>
-          </div>
           <a
             href={site.instagram}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm text-primary-foreground transition-transform hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-secondary hover:glow-rose"
           >
             <Instagram className="size-4" aria-hidden="true" />
             {t("insta.follow")}
@@ -44,7 +36,7 @@ export function InstagramWidget() {
             key={i}
             type="button"
             onClick={() => setOpenIndex(i)}
-            className="group relative aspect-square overflow-hidden rounded-3xl border border-border"
+            className="group relative aspect-square overflow-hidden rounded-3xl border border-border transition-all duration-500 hover:-translate-y-1 hover:glow-cloud"
           >
             <img
               src={p.image}
@@ -53,10 +45,7 @@ export function InstagramWidget() {
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <span className="absolute inset-0 flex items-end bg-gradient-to-t from-foreground/70 to-transparent p-3 text-left text-xs text-background opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-              <span className="inline-flex items-center gap-1.5">
-                <Heart className="size-3.5 fill-current" aria-hidden="true" />
-                {p.likes}
-              </span>
+              <span className="inline-flex items-center gap-1.5">{tl(p.caption)}</span>
             </span>
           </button>
         ))}
@@ -75,15 +64,11 @@ export function InstagramWidget() {
                 className="aspect-square w-full rounded-2xl object-cover"
               />
               <p className="text-sm text-muted-foreground">{tl(post.caption)}</p>
-              <p className="inline-flex items-center gap-1.5 text-sm">
-                <Heart className="size-4 fill-current text-matcha" aria-hidden="true" />
-                {post.likes}
-              </p>
               <a
                 href={post.href}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm text-primary-foreground"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm text-primary-foreground transition-all duration-300 hover:bg-secondary hover:glow-rose"
               >
                 <Instagram className="size-4" aria-hidden="true" />
                 {t("insta.open")}

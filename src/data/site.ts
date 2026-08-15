@@ -1,14 +1,23 @@
-import social1 from "@/assets/social-1.jpg";
-import social2 from "@/assets/social-2.jpg";
-import social3 from "@/assets/social-3.jpg";
-import spaceInterior from "@/assets/space-interior.jpg";
-import spaceCounter from "@/assets/space-counter.jpg";
+import storeAsset1 from "@/assets/store-1.jpg.asset.json";
+import storeAsset2 from "@/assets/store-2.jpg.asset.json";
+import storeAsset3 from "@/assets/store-3.jpg.asset.json";
+import ig1 from "@/assets/ig-1.jpg.asset.json";
+import ig2 from "@/assets/ig-2.jpg.asset.json";
+import ig3 from "@/assets/ig-3.jpg.asset.json";
+import ig4 from "@/assets/ig-4.jpg.asset.json";
+import ig5 from "@/assets/ig-5.jpg.asset.json";
+import ig6 from "@/assets/ig-6.jpg.asset.json";
 import matchaLatteAsset from "@/assets/iced-matcha-latte.jpg.asset.json";
-import mangoShakeAsset from "@/assets/mango-shake.jpg.asset.json";
-
-const matchaLatte = matchaLatteAsset.url;
-const cakeInACan = mangoShakeAsset.url;
+import logoAsset from "@/assets/nube-logo.png.asset.json";
 import type { L } from "@/i18n";
+
+export const logoUrl = logoAsset.url;
+export const heroImage = matchaLatteAsset.url;
+
+/** Same string for every locale (original quotes, brand names, etc.). */
+function L4(v: string): L {
+  return { de: v, en: v, fr: v, it: v };
+}
 
 export const site = {
   name: "nube",
@@ -20,17 +29,14 @@ export const site = {
   instagram: "https://www.instagram.com/nubeworldwide/",
   instagramHandle: "@nubeworldwide",
   tiktok: "https://www.tiktok.com/@nubeworldwide",
-  followers: "12.4K",
-  postCount: "310",
   mapsEmbed:
     "https://www.google.com/maps?q=Kirchgasse+3,+8001+Z%C3%BCrich&hl=de&z=17&output=embed",
   mapsLink: "https://www.google.com/maps/search/?api=1&query=Kirchgasse+3,+8001+Z%C3%BCrich",
   directionsLink:
     "https://www.google.com/maps/dir/?api=1&destination=Kirchgasse+3,+8001+Z%C3%BCrich",
-  reviewsLink:
-    "https://www.google.com/maps/search/?api=1&query=nube+Kirchgasse+3+Z%C3%BCrich",
-  rating: 4.9,
-  reviewCount: 214,
+  reviewsLink: "https://www.google.com/maps/search/?api=1&query=nube+Kirchgasse+3+Z%C3%BCrich",
+  rating: 5.0,
+  reviewCount: 3,
 } as const;
 
 export const pillars: { title: L; body: L }[] = [
@@ -49,7 +55,12 @@ export const pillars: { title: L; body: L }[] = [
     },
   },
   {
-    title: { de: "Premium Matcha", en: "Premium matcha", fr: "Matcha premium", it: "Matcha premium" },
+    title: {
+      de: "Premium Matcha",
+      en: "Premium matcha",
+      fr: "Matcha premium",
+      it: "Matcha premium",
+    },
     body: {
       de: "Ausgewählt für aussergewöhnlichen Geschmack und Farbe. Das Herz von allem, was wir machen.",
       en: "Sourced for exceptional taste and colour. The heart of everything we make.",
@@ -146,259 +157,53 @@ export const faqs: { q: L; a: L }[] = [
   },
 ];
 
+/**
+ * Google Reviews — Platzhalter.
+ * Zum Aktualisieren einfach name, initial (Anfangsbuchstabe), rating (1–5)
+ * und den Review-Text ersetzen bzw. weitere Einträge hinzufügen.
+ */
 export const reviews: { name: string; initial: string; rating: number; text: L; when: L }[] = [
   {
-    name: "Melanie K.",
+    name: "Madeleine Mattli",
     initial: "M",
     rating: 5,
-    text: {
-      de: "Der beste Matcha in Zürich, und die Dosen sind einfach zu schön. Team super freundlich!",
-      en: "The best matcha in Zürich, and those cans are just beautiful. Super friendly team!",
-      fr: "Le meilleur matcha de Zurich, et ces canettes sont magnifiques. Équipe très sympa !",
-      it: "Il miglior matcha di Zurigo e le lattine sono splendide. Team super gentile!",
-    },
-    when: { de: "vor 2 Wochen", en: "2 weeks ago", fr: "il y a 2 semaines", it: "2 settimane fa" },
+    text: L4(
+      "Super Takeaway Kaffee! Würde sofort wieder gehen. Fand die Getränkeauswahl mega und der Kuchen (Matcha/Strawberry) hat super geschmeckt. Was sehr stark aufgefallen ist wie schön alles aussah, Packaging und Branding super nice, geschmacklich war es definitiv auch auf dem Niveau.",
+    ),
+    when: L4("Google Review"),
   },
   {
-    name: "Daniel R.",
-    initial: "D",
+    name: "Nici N.",
+    initial: "N",
     rating: 5,
-    text: {
-      de: "Cold Brew auf Weltklasse-Niveau. Mein täglicher Stop auf dem Weg ins Büro.",
-      en: "World-class cold brew. My daily stop on the way to the office.",
-      fr: "Un cold brew d'exception. Mon arrêt quotidien avant le bureau.",
-      it: "Cold brew di livello mondiale. La mia tappa quotidiana verso l'ufficio.",
-    },
-    when: { de: "vor 1 Monat", en: "1 month ago", fr: "il y a 1 mois", it: "1 mese fa" },
+    text: L4(
+      "Sehr cuter Laden. Leckere Drinks. Ich hatte das letzte Mal Mango-Matcha und diesmal caramel-coffee. Beide 10/10!!! Auf jeden Fall mein Lieblingscafé in Zürich. \U0001F60C",
+    ),
+    when: L4("Google Review"),
   },
   {
-    name: "Sofia B.",
+    name: "Saskia K.",
     initial: "S",
     rating: 5,
-    text: {
-      de: "Cake in a Can ist ein Erlebnis. Sieht toll aus, schmeckt noch besser.",
-      en: "Cake in a Can is an experience. Looks great, tastes even better.",
-      fr: "Le Cake in a Can est une expérience. Beau et encore meilleur au goût.",
-      it: "Cake in a Can è un'esperienza. Bellissimo e ancora più buono.",
-    },
-    when: { de: "vor 3 Wochen", en: "3 weeks ago", fr: "il y a 3 semaines", it: "3 settimane fa" },
-  },
-  {
-    name: "Jon P.",
-    initial: "J",
-    rating: 4,
-    text: {
-      de: "Klein, aber perfekt organisiert. Der Yuzu Peach ist im Sommer unschlagbar.",
-      en: "Small but perfectly run. The Yuzu Peach is unbeatable in summer.",
-      fr: "Petit mais parfaitement tenu. Le Yuzu Peach est imbattable en été.",
-      it: "Piccolo ma perfetto. Lo Yuzu Peach in estate è imbattibile.",
-    },
-    when: { de: "vor 5 Tagen", en: "5 days ago", fr: "il y a 5 jours", it: "5 giorni fa" },
-  },
-  {
-    name: "Elena V.",
-    initial: "E",
-    rating: 5,
-    text: {
-      de: "Freundlichstes Team der Altstadt. Sie kennen meine Bestellung auswendig.",
-      en: "Friendliest team in the old town. They know my order by heart.",
-      fr: "L'équipe la plus sympa de la vieille ville. Ils connaissent ma commande par cœur.",
-      it: "Il team più gentile del centro storico. Conoscono il mio ordine a memoria.",
-    },
-    when: { de: "vor 2 Monaten", en: "2 months ago", fr: "il y a 2 mois", it: "2 mesi fa" },
+    text: L4(
+      "Super süsses Café mit leckeren Matchas in einer fancy Dose. Sehr zuvorkommendes Personal und der Schmuck ist auch super hübsch!",
+    ),
+    when: L4("Google Review"),
   },
 ];
 
-export const socialPosts: { image: string; caption: L; likes: string; href: string }[] = [
-  {
-    image: social1,
-    caption: {
-      de: "Matcha-Wolken über der Limmat ☁️",
-      en: "Matcha clouds over the Limmat ☁️",
-      fr: "Nuages de matcha sur la Limmat ☁️",
-      it: "Nuvole di matcha sulla Limmat ☁️",
-    },
-    likes: "1.2K",
-    href: site.instagram,
-  },
-  {
-    image: social2,
-    caption: {
-      de: "Neue Sommer-Refresher sind da 🍑",
-      en: "New summer refreshers are here 🍑",
-      fr: "Les refreshers d'été arrivent 🍑",
-      it: "Arrivano i refresher estivi 🍑",
-    },
-    likes: "890",
-    href: site.instagram,
-  },
-  {
-    image: social3,
-    caption: {
-      de: "Samstag in der Kirchgasse ✨",
-      en: "Saturday on Kirchgasse ✨",
-      fr: "Samedi à Kirchgasse ✨",
-      it: "Sabato in Kirchgasse ✨",
-    },
-    likes: "2.1K",
-    href: site.instagram,
-  },
-  {
-    image: matchaLatte,
-    caption: {
-      de: "Ceremonial Grade, jeden Morgen 🍵",
-      en: "Ceremonial grade, every morning 🍵",
-      fr: "Qualité cérémonielle, chaque matin 🍵",
-      it: "Ceremonial grade, ogni mattina 🍵",
-    },
-    likes: "740",
-    href: site.instagram,
-  },
-  {
-    image: cakeInACan,
-    caption: {
-      de: "Mango Shake — Sommer-Drop 🥭",
-      en: "Mango Shake — summer drop 🥭",
-      fr: "Mango Shake — drop de l'été 🥭",
-      it: "Mango Shake — drop estivo 🥭",
-    },
-    likes: "1.6K",
-    href: site.instagram,
-  },
-  {
-    image: spaceCounter,
-    caption: {
-      de: "Hinter der Theke 🤍",
-      en: "Behind the counter 🤍",
-      fr: "Derrière le comptoir 🤍",
-      it: "Dietro al banco 🤍",
-    },
-    likes: "620",
-    href: site.instagram,
-  },
+/** Instagram-Platzhalter mit echten Fotos. Neue Posts einfach ergänzen. */
+export const socialPosts: { image: string; caption: L; href: string }[] = [
+  { image: ig1.url, caption: L4("nube Zurich"), href: site.instagram },
+  { image: ig2.url, caption: L4("Cake in a Can"), href: site.instagram },
+  { image: ig3.url, caption: L4("Ceremonial Grade Matcha"), href: site.instagram },
+  { image: ig4.url, caption: L4("PORSHE x GOLDXBODY x nube"), href: site.instagram },
+  { image: ig5.url, caption: L4("Student Discount — Fruit Matchas & Lattes"), href: site.instagram },
+  { image: ig6.url, caption: L4("Coconut Cloud Matcha"), href: site.instagram },
 ];
 
 export const gallery: { image: string; alt: L }[] = [
-  {
-    image: spaceInterior,
-    alt: {
-      de: "Heller Innenraum von nube mit Holz und Pflanzen",
-      en: "Bright nube interior with wood and plants",
-      fr: "Intérieur lumineux de nube avec bois et plantes",
-      it: "Interno luminoso di nube con legno e piante",
-    },
-  },
-  {
-    image: spaceCounter,
-    alt: {
-      de: "Barista schlägt Uji-Matcha an der Theke auf",
-      en: "Barista whisking Uji matcha at the counter",
-      fr: "Barista fouettant du matcha Uji au comptoir",
-      it: "Barista che monta il matcha Uji al banco",
-    },
-  },
-  {
-    image: social1,
-    alt: {
-      de: "nube Dose in der Zürcher Altstadt",
-      en: "nube can in Zürich's old town",
-      fr: "Canette nube dans la vieille ville de Zurich",
-      it: "Lattina nube nel centro storico di Zurigo",
-    },
-  },
-];
-
-export const partners: {
-  name: string;
-  handle: string;
-  platform: string;
-  reach: string;
-  image: string;
-  note: L;
-  href: string;
-}[] = [
-  {
-    name: "Zürich Eats",
-    handle: "@zuricheats",
-    platform: "Instagram",
-    reach: "84K",
-    image: social2,
-    note: {
-      de: "Reel über unsere versiegelten Klardosen — 400K Views.",
-      en: "Reel about our sealed clear cans — 400K views.",
-      fr: "Reel sur nos canettes scellées — 400K vues.",
-      it: "Reel sulle nostre lattine sigillate — 400K views.",
-    },
-    href: site.instagram,
-  },
-  {
-    name: "Matcha Diaries",
-    handle: "@matchadiaries",
-    platform: "TikTok",
-    reach: "126K",
-    image: matchaLatte,
-    note: {
-      de: "Blind-Tasting: nube Matcha auf Platz 1 in Zürich.",
-      en: "Blind tasting: nube matcha ranked #1 in Zürich.",
-      fr: "Dégustation à l'aveugle : nube matcha n°1 à Zurich.",
-      it: "Degustazione alla cieca: nube matcha n°1 a Zurigo.",
-    },
-    href: site.tiktok,
-  },
-  {
-    name: "Lea Bakes",
-    handle: "@leabakes",
-    platform: "Instagram",
-    reach: "31K",
-    image: cakeInACan,
-    note: {
-      de: "Rezept-Kollab zum Cake in a Can.",
-      en: "Recipe collab around Cake in a Can.",
-      fr: "Collab recette autour du Cake in a Can.",
-      it: "Collab ricetta intorno al Cake in a Can.",
-    },
-    href: site.instagram,
-  },
-  {
-    name: "Old Town Guide",
-    handle: "@oldtownzurich",
-    platform: "Blog",
-    reach: "—",
-    image: spaceInterior,
-    note: {
-      de: "«Der schönste Kaffee-Stop der Kirchgasse.»",
-      en: "\u201cThe prettiest coffee stop on Kirchgasse.\u201d",
-      fr: "« Le plus beau stop café de la Kirchgasse. »",
-      it: "«La sosta caffè più bella della Kirchgasse.»",
-    },
-    href: site.mapsLink,
-  },
-  {
-    name: "Sara Runs ZH",
-    handle: "@sararunszh",
-    platform: "Strava & IG",
-    reach: "19K",
-    image: social3,
-    note: {
-      de: "Sonntags-Runs enden immer bei nube.",
-      en: "Sunday runs always end at nube.",
-      fr: "Les runs du dimanche finissent chez nube.",
-      it: "Le corse della domenica finiscono da nube.",
-    },
-    href: site.instagram,
-  },
-  {
-    name: "Kaffee Kollektiv",
-    handle: "@kaffeekollektiv",
-    platform: "Roastery",
-    reach: "—",
-    image: spaceCounter,
-    note: {
-      de: "Rösterei-Partner für unsere Specialty Beans.",
-      en: "Roastery partner for our specialty beans.",
-      fr: "Partenaire torréfacteur de nos grains.",
-      it: "Partner di torrefazione per i nostri chicchi.",
-    },
-    href: site.instagram,
-  },
+  { image: storeAsset1.url, alt: L4("nube Drinks vor der Menütafel im Store") },
+  { image: storeAsset2.url, alt: L4("Frisch versiegelte nube Dosen an der Theke") },
+  { image: storeAsset3.url, alt: L4("nube Logo auf der La Marzocco Espressomaschine") },
 ];
