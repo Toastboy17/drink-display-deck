@@ -17,6 +17,7 @@ import filterCoffeeAsset from "@/assets/filter-coffee.png.asset.json";
 import hotMatchaLatteAsset from "@/assets/hot-matcha-latte.png.asset.json";
 import espressoAsset from "@/assets/espresso.jpg.asset.json";
 import espressoDoppioAsset from "@/assets/espresso-doppio.jpg.asset.json";
+import { resolveLovableAssetUrl } from "@/lib/lovable-asset-url";
 import type { L } from "@/i18n";
 
 export type Drink = {
@@ -371,5 +372,11 @@ export const menu: MenuCategory[] = [
     ],
   },
 ];
+
+for (const category of menu) {
+  for (const drink of category.drinks) {
+    drink.image = resolveLovableAssetUrl(drink.image);
+  }
+}
 
 export const allDrinks: Drink[] = menu.flatMap((c) => c.drinks);

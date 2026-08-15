@@ -11,6 +11,7 @@ import { CanBuild } from "@/components/CanBuild";
 import { Reveal } from "@/components/Reveal";
 import { faqs, gallery, pillars, site } from "@/data/site";
 import { useI18n } from "@/i18n";
+import { resolveLovableAssetUrl } from "@/lib/lovable-asset-url";
 
 const title = "nube — Specialty Coffee & Matcha in Zürich";
 const description =
@@ -74,7 +75,7 @@ function Index() {
               </div>
             </div>
             <CanBuild
-              photo={heroCanAsset.url}
+              photo={resolveLovableAssetUrl(heroCanAsset.url)}
               alt="nube Iced Matcha Latte in der signature Klardose"
             />
           </div>

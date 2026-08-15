@@ -7,10 +7,10 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { href: "/#menu", key: "nav.menu" },
-  { href: "/#story", key: "nav.about" },
-  { href: "/#reviews", key: "nav.reviews" },
-  { href: "/#visit", key: "nav.visit" },
+  { href: `${import.meta.env.BASE_URL}#menu`, key: "nav.menu" },
+  { href: `${import.meta.env.BASE_URL}#story`, key: "nav.about" },
+  { href: `${import.meta.env.BASE_URL}#reviews`, key: "nav.reviews" },
+  { href: `${import.meta.env.BASE_URL}#visit`, key: "nav.visit" },
 ];
 
 export function SiteHeader() {
@@ -48,7 +48,7 @@ export function SiteHeader() {
           </a>
           <LanguageSwitcher />
           <a
-            href="/#visit"
+            href={`${import.meta.env.BASE_URL}#visit`}
             className="hidden rounded-full bg-primary px-4 py-2 text-xs tracking-wide text-primary-foreground uppercase transition-opacity hover:opacity-90 sm:block"
           >
             {t("cta.visit")}
@@ -90,7 +90,7 @@ export function SiteHeader() {
             {t("nav.partners")}
           </Link>
           <a
-            href="/#faq"
+            href={`${import.meta.env.BASE_URL}#faq`}
             onClick={() => setOpen(false)}
             className="rounded-xl px-2 py-2.5 transition-colors hover:bg-accent/40"
           >

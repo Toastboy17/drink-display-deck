@@ -5,9 +5,10 @@ import spaceInterior from "@/assets/space-interior.jpg";
 import spaceCounter from "@/assets/space-counter.jpg";
 import matchaLatteAsset from "@/assets/iced-matcha-latte.jpg.asset.json";
 import mangoShakeAsset from "@/assets/mango-shake.jpg.asset.json";
+import { resolveLovableAssetUrl } from "@/lib/lovable-asset-url";
 
-const matchaLatte = matchaLatteAsset.url;
-const cakeInACan = mangoShakeAsset.url;
+const matchaLatte = resolveLovableAssetUrl(matchaLatteAsset.url);
+const cakeInACan = resolveLovableAssetUrl(mangoShakeAsset.url);
 import type { L } from "@/i18n";
 
 export const site = {
@@ -22,13 +23,11 @@ export const site = {
   tiktok: "https://www.tiktok.com/@nubeworldwide",
   followers: "12.4K",
   postCount: "310",
-  mapsEmbed:
-    "https://www.google.com/maps?q=Kirchgasse+3,+8001+Z%C3%BCrich&hl=de&z=17&output=embed",
+  mapsEmbed: "https://www.google.com/maps?q=Kirchgasse+3,+8001+Z%C3%BCrich&hl=de&z=17&output=embed",
   mapsLink: "https://www.google.com/maps/search/?api=1&query=Kirchgasse+3,+8001+Z%C3%BCrich",
   directionsLink:
     "https://www.google.com/maps/dir/?api=1&destination=Kirchgasse+3,+8001+Z%C3%BCrich",
-  reviewsLink:
-    "https://www.google.com/maps/search/?api=1&query=nube+Kirchgasse+3+Z%C3%BCrich",
+  reviewsLink: "https://www.google.com/maps/search/?api=1&query=nube+Kirchgasse+3+Z%C3%BCrich",
   rating: 4.9,
   reviewCount: 214,
 } as const;
@@ -49,7 +48,12 @@ export const pillars: { title: L; body: L }[] = [
     },
   },
   {
-    title: { de: "Premium Matcha", en: "Premium matcha", fr: "Matcha premium", it: "Matcha premium" },
+    title: {
+      de: "Premium Matcha",
+      en: "Premium matcha",
+      fr: "Matcha premium",
+      it: "Matcha premium",
+    },
     body: {
       de: "Ausgewählt für aussergewöhnlichen Geschmack und Farbe. Das Herz von allem, was wir machen.",
       en: "Sourced for exceptional taste and colour. The heart of everything we make.",
