@@ -22,7 +22,10 @@ export function ReviewsSection() {
   const { t, tl } = useI18n();
 
   return (
-    <section id="reviews" className="scroll-mt-20 border-y border-border bg-card/60">
+    <section
+      id="reviews"
+      className="scroll-mt-20 border-y-2 border-secondary/60 bg-secondary/20"
+    >
       <div className="mx-auto max-w-6xl px-5 py-20 md:py-24">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-xl">
@@ -43,7 +46,7 @@ export function ReviewsSection() {
               href={site.reviewsLink}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full bg-primary px-5 py-3 text-sm text-primary-foreground transition-transform hover:-translate-y-0.5"
+              className="rounded-full bg-primary px-5 py-3 text-sm text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:glow-cloud"
             >
               {t("reviews.viewAll")}
             </a>
@@ -51,7 +54,7 @@ export function ReviewsSection() {
               href={site.reviewsLink}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-foreground/15 px-5 py-3 text-sm transition-colors hover:bg-background"
+              className="rounded-full border border-secondary bg-background px-5 py-3 text-sm transition-all duration-300 hover:-translate-y-0.5 hover:glow-rose"
             >
               {t("reviews.write")}
             </a>
@@ -62,10 +65,10 @@ export function ReviewsSection() {
           {reviews.map((r) => (
             <figure
               key={r.name}
-              className="w-[80vw] shrink-0 snap-center rounded-3xl border border-border bg-background p-6 shadow-soft transition-shadow hover:shadow-lift md:w-auto"
+              className="w-[80vw] shrink-0 snap-center rounded-3xl border border-border bg-background p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:glow-rose md:w-auto"
             >
               <div className="flex items-center gap-3">
-                <span className="flex size-9 items-center justify-center rounded-full bg-accent/60 text-sm font-medium">
+                <span className="flex size-9 items-center justify-center rounded-full bg-secondary text-sm font-medium">
                   {r.initial}
                 </span>
                 <div>
