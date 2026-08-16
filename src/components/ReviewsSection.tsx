@@ -46,7 +46,7 @@ export function ReviewsSection() {
             <div className="mt-5 flex items-center gap-3">
               <span className="font-display text-4xl leading-none tabular-nums">{site.rating}</span>
               <div>
-                <Stars rating={5} />
+                <Stars rating={site.rating} />
                 <p className="mt-1 text-xs text-muted-foreground">
                   {site.reviewCount} {t("reviews.basedOn")}
                 </p>
