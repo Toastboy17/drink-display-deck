@@ -35,8 +35,8 @@ export const site = {
   directionsLink:
     "https://www.google.com/maps/dir/?api=1&destination=Kirchgasse+3,+8001+Z%C3%BCrich",
   reviewsLink: "https://www.google.com/maps/search/?api=1&query=nube+Kirchgasse+3+Z%C3%BCrich",
-  rating: 5.0,
-  reviewCount: 3,
+  rating: 4.8,
+  reviewCount: "350+",
 } as const;
 
 export const pillars: { title: L; body: L }[] = [

@@ -2,18 +2,30 @@ import { Star } from "lucide-react";
 import { useI18n } from "@/i18n";
 import { reviews, site } from "@/data/site";
 
+function StarSlot({ filled }: { filled: number }) {
+  if (filled <= 0) {
+    return <Star className="size-3.5 text-muted-foreground/40" aria-hidden="true" />;
+  }
+  if (filled >= 1) {
+    return <Star className="size-3.5 fill-current text-matcha" aria-hidden="true" />;
+  }
+  return (
+    <div className="relative size-3.5">
+      <Star className="absolute size-3.5 text-muted-foreground/40" aria-hidden="true" />
+      <div className="absolute overflow-hidden" style={{ width: `${filled * 100}%` }}>
+        <Star className="size-3.5 fill-current text-matcha" aria-hidden="true" />
+      </div>
+    </div>
+  );
+}
+
 function Stars({ rating }: { rating: number }) {
   return (
     <div className="flex gap-0.5" aria-label={`${rating}/5`}>
-      {[1, 2, 3, 4, 5].map((i) => (
-        <Star
-          key={i}
-          aria-hidden="true"
-          className={
-            i <= rating ? "size-3.5 fill-current text-matcha" : "size-3.5 text-muted-foreground/40"
-          }
-        />
-      ))}
+      {[1, 2, 3, 4, 5].map((i) => {
+        const filled = Math.min(1, Math.max(0, rating - (i - 1)));
+        return <StarSlot key={i} filled={filled} />;
+      })}
     </div>
   );
 }
