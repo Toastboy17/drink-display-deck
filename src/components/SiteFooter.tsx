@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, MapPin } from "lucide-react";
 import { useI18n } from "@/i18n";
-import { logoUrl, site } from "@/data/site";
+import { site } from "@/data/site";
+import logoMark from "@/assets/logo-nube.png";
 
 export function SiteFooter() {
   const { t } = useI18n();
