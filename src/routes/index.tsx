@@ -10,6 +10,9 @@ import { Reveal } from "@/components/Reveal";
 import { HeroStage } from "@/components/HeroStage";
 import { CategoryPanels } from "@/components/CategoryPanels";
 import { Marquee } from "@/components/Marquee";
+import { TextureLetters } from "@/components/TextureLetters";
+import { GlacierShowcase } from "@/components/GlacierShowcase";
+import { CloudFriend } from "@/components/CloudFriend";
 import { faqs, gallery, pillars, site } from "@/data/site";
 import { useI18n } from "@/i18n";
 
@@ -96,6 +99,10 @@ function Index() {
           className="overflow-hidden border-y border-border bg-secondary/40 py-3 text-foreground"
         />
 
+        <TextureLetters />
+
+        <GlacierShowcase />
+
         {/* Story */}
         <section id="story" className="scroll-mt-20 bg-background">
           <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-[0.9fr_1.1fr] md:px-10 md:py-28">
@@ -145,6 +152,8 @@ function Index() {
             ))}
           </div>
         </section>
+
+        <CloudFriend />
 
         <ReviewsSection />
 
