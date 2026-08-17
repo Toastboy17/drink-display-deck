@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Menu, Star, X } from "lucide-react";
 import { useI18n } from "@/i18n";
-import { logoUrl, site } from "@/data/site";
+import { site } from "@/data/site";
+import logoMark from "@/assets/logo-nube.png";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { cn } from "@/lib/utils";
 
@@ -21,11 +22,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-cream/15 bg-ink/90 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-5 py-3.5 md:px-10">
         <Link to="/" className="flex items-center" aria-label="nube Zürich">
-          <img
-            src={logoUrl}
-            alt="nube Zürich Logo"
-            className="h-8 w-auto brightness-0 invert md:h-9"
-          />
+          <img src={logoMark} alt="nube Zürich Logo" className="h-8 w-auto md:h-9" />
         </Link>
 
         <nav className="hidden gap-7 rule-label text-cream/60 lg:flex">
