@@ -10,11 +10,7 @@ export function SiteFooter() {
     <footer className="grain relative overflow-hidden bg-ink">
       <div className="mx-auto grid max-w-7xl gap-8 px-5 py-14 sm:grid-cols-3 md:px-10">
         <div>
-          <img
-            src={logoUrl}
-            alt="nube Zürich Logo"
-            className="h-9 w-auto brightness-0 invert"
-          />
+          <img src={logoMark} alt="nube Zürich Logo" className="h-9 w-auto" />
           <p className="mt-3 text-sm text-cream/60">{t("contact.takeaway")}</p>
           <a
             href={site.instagram}
