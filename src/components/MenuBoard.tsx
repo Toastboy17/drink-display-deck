@@ -151,8 +151,8 @@ function MobileBoard() {
   return (
     <div className="lg:hidden">
       <div className="flex items-baseline justify-between px-1">
-        <p className="eyebrow">nube menu board</p>
-        <p className="text-xs text-muted-foreground">{t("menu.hintMobile")}</p>
+        <p className="rule-label">nube menu board</p>
+        <p className="rule-label text-muted-foreground">{t("menu.hintMobile")}</p>
       </div>
 
       {/* Category chips */}
@@ -167,7 +167,7 @@ function MobileBoard() {
               className={cn(
                 "rounded-full border px-4 py-2 text-sm transition-all duration-300",
                 c.id === categoryId
-                  ? "border-transparent bg-primary text-primary-foreground shadow-soft"
+                  ? "border-transparent bg-ink text-cream"
                   : "border-border bg-card text-muted-foreground",
               )}
             >
@@ -189,9 +189,9 @@ function MobileBoard() {
             key={drink.id}
             type="button"
             onClick={() => setOpenDrink(drink)}
-            className="animate-in fade-in slide-in-from-bottom-2 w-[74vw] max-w-xs shrink-0 snap-center rounded-4xl border border-border bg-card p-4 text-left shadow-soft transition-all duration-300 hover:-translate-y-1 hover:glow-rose active:scale-[0.98] sm:w-[52vw]"
+            className="animate-in fade-in slide-in-from-bottom-2 grain w-[74vw] max-w-xs shrink-0 snap-center rounded-[1.75rem] border border-cream/15 bg-ink p-4 text-left text-cream shadow-soft transition-all duration-300 hover:-translate-y-1 hover:glow-rose active:scale-[0.98] sm:w-[52vw]"
           >
-            <div className="overflow-hidden rounded-3xl bg-sky-wash p-1">
+            <div className="overflow-hidden rounded-[1.25rem] bg-cream/5 p-1">
               <img
                 src={drink.image}
                 alt={`${drink.name} — nube`}
@@ -205,10 +205,10 @@ function MobileBoard() {
               />
             </div>
             <div className="mt-4 flex items-baseline justify-between gap-3">
-              <h3 className="text-2xl leading-none">{drink.name}</h3>
+              <h3 className="display-lg text-2xl">{drink.name}</h3>
             </div>
-            <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{tl(drink.blurb)}</p>
-            <p className="mt-3 text-xs tracking-wide text-matcha uppercase">
+            <p className="mt-2 line-clamp-2 text-sm text-cream/60">{tl(drink.blurb)}</p>
+            <p className="mt-3 rule-label text-rose">
               {t("menu.tapDetails")}
             </p>
           </button>
@@ -220,7 +220,7 @@ function MobileBoard() {
           {openDrink && (
             <div className="overflow-y-auto px-5 pb-8">
               <DrawerHeader className="px-0 text-left">
-                <div className="overflow-hidden rounded-3xl bg-sky-wash p-1">
+                <div className="overflow-hidden rounded-3xl bg-accent/40 p-1">
                   <img
                     src={openDrink.image}
                     alt={`${openDrink.name} — nube`}
@@ -233,7 +233,7 @@ function MobileBoard() {
                   />
                 </div>
                 <div className="mt-4 flex items-baseline justify-between gap-3">
-                  <DrawerTitle className="font-display text-3xl leading-none font-normal">
+                  <DrawerTitle className="display-lg text-3xl font-normal">
                     {openDrink.name}
                   </DrawerTitle>
                 </div>
@@ -241,7 +241,7 @@ function MobileBoard() {
               </DrawerHeader>
 
               <Tags drink={openDrink} />
-              <DrawerClose className="mt-6 w-full rounded-full bg-primary py-3 text-sm text-primary-foreground">
+              <DrawerClose className="mt-6 w-full rounded-full bg-ink py-3 rule-label text-cream">
                 {t("cta.close")}
               </DrawerClose>
             </div>
