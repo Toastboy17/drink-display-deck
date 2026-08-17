@@ -27,14 +27,14 @@ export function TextureLetters() {
           />
           <span
             aria-hidden="true"
-            className="absolute inset-0 -z-10 bg-ink/10 transition-colors duration-500 group-hover:bg-ink/0"
+            className="absolute inset-0 -z-10 bg-ink/35 transition-colors duration-500 group-hover:bg-ink/20"
           />
           <div className="flex h-full items-center justify-center">
-            <span className="font-display text-[7rem] leading-none text-cream/85 mix-blend-overlay drop-shadow-lg md:text-[11rem]">
+            <span className="font-display text-[7rem] leading-none text-cream drop-shadow-[0_10px_30px_rgba(10,20,40,0.55)] md:text-[11rem]">
               {p.letter}
             </span>
           </div>
-          <p className="absolute bottom-4 left-0 w-full text-center rule-label text-cream/90">
+          <p className="absolute bottom-4 left-0 w-full text-center rule-label text-cream">
             {p.label}
           </p>
         </div>
