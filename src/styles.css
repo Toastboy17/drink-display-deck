@@ -133,6 +133,24 @@
   --glow-cloud: 0 0 0 1px oklch(0.906 0.056 232 / 0.8), 0 22px 50px -20px oklch(0.7 0.12 236 / 0.55);
   --glow-rose: 0 0 0 1px oklch(0.895 0.055 5 / 0.85), 0 22px 50px -20px oklch(0.75 0.13 8 / 0.5);
   --transition-soft: 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  /* Editorial / glacier layer */
+  --ink-deep: oklch(0.19 0.035 258);
+  --ink-mid: oklch(0.29 0.05 254);
+  --gradient-ink: radial-gradient(
+      120% 90% at 15% 0%,
+      oklch(0.42 0.075 250) 0%,
+      transparent 60%
+    ),
+    radial-gradient(90% 80% at 90% 20%, oklch(0.62 0.09 8 / 0.35) 0%, transparent 62%),
+    linear-gradient(180deg, var(--ink-mid) 0%, var(--ink-deep) 100%);
+  --gradient-chrome: linear-gradient(
+    115deg,
+    oklch(0.99 0.004 240) 0%,
+    oklch(0.82 0.05 232) 26%,
+    oklch(1 0 0) 45%,
+    oklch(0.86 0.045 5) 68%,
+    oklch(0.95 0.02 240) 100%
+  );
 }
 
 .dark {
@@ -259,6 +277,113 @@
     transition: none;
   }
   .float-slow {
+    animation: none;
+  }
+}
+
+/* ============ Editorial layer ============ */
+
+@utility bg-ink {
+  background-image: var(--gradient-ink);
+  background-color: var(--ink-deep);
+  color: var(--cream);
+}
+
+@utility text-chrome {
+  background-image: var(--gradient-chrome);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@utility grain {
+  position: relative;
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Oversized editorial display type */
+@utility display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(3.4rem, 13vw, 11rem);
+  line-height: 0.82;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+}
+
+@utility display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 7.5vw, 5.5rem);
+  line-height: 0.86;
+  text-transform: uppercase;
+}
+
+@utility rule-label {
+  font-size: 0.66rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+}
+
+@utility vertical-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+@utility marquee-track {
+  animation: nube-marquee 26s linear infinite;
+}
+
+@keyframes nube-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility drift {
+  animation: nube-drift 14s ease-in-out infinite;
+}
+
+@keyframes nube-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, -4%, 0) scale(1.06);
+  }
+}
+
+@utility sparkle {
+  animation: nube-sparkle 4.5s ease-in-out infinite;
+}
+
+@keyframes nube-sparkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.85) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15) rotate(25deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .drift,
+  .sparkle {
     animation: none;
   }
 }
