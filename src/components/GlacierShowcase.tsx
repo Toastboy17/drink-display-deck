@@ -1,4 +1,4 @@
-import glacier from "@/assets/gen-glacier-can.jpg";
+import glacier from "@/assets/gen-ice-can-logo.png";
 import pedestal from "@/assets/gen-pedestal-cake.jpg";
 import { Reveal } from "@/components/Reveal";
 

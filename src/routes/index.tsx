@@ -10,7 +10,6 @@ import { Reveal } from "@/components/Reveal";
 import { HeroStage } from "@/components/HeroStage";
 import { CategoryPanels } from "@/components/CategoryPanels";
 import { Marquee } from "@/components/Marquee";
-import { TextureLetters } from "@/components/TextureLetters";
 import { GlacierShowcase } from "@/components/GlacierShowcase";
 import { CloudFriend } from "@/components/CloudFriend";
 import { faqs, gallery, pillars, site } from "@/data/site";
@@ -98,8 +97,6 @@ function Index() {
           items={["FRESH TO ORDER", "SEALED IN ZÜRICH", "CEREMONIAL MATCHA", "TAKE IT WITH YOU"]}
           className="overflow-hidden border-y border-border bg-secondary/40 py-3 text-foreground"
         />
-
-        <TextureLetters />
 
         <GlacierShowcase />
 

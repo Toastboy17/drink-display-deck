@@ -1,4 +1,4 @@
-import cloudFriend from "@/assets/gen-cloud-mascot.png";
+import cloudFriend from "@/assets/gen-cloud-mascot-logo.png";
 import pour from "@/assets/gen-pour.jpg";
 import { Reveal } from "@/components/Reveal";
 
