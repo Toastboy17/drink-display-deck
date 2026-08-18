@@ -10,6 +10,24 @@ export function PickYourCloud() {
 
   const activeCategory = menu.find((c) => c.id === active) ?? menu[0]!;
 
+  const handleCardMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const max = 9; // degrees
+    const rx = ((y - cy) / cy) * -max;
+    const ry = ((x - cx) / cx) * max;
+    e.currentTarget.style.setProperty("--rx", `${rx}deg`);
+    e.currentTarget.style.setProperty("--ry", `${ry}deg`);
+  };
+
+  const handleCardLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.style.setProperty("--rx", "0deg");
+    e.currentTarget.style.setProperty("--ry", "0deg");
+  };
+
   const onPointerDown = (e: React.PointerEvent) => {
     const el = track.current;
     if (!el) return;
@@ -54,8 +72,14 @@ export function PickYourCloud() {
               key={category.id}
               type="button"
               onClick={() => setActive(category.id)}
+              onMouseMove={handleCardMove}
+              onMouseLeave={handleCardLeave}
               aria-pressed={isActive}
-              className={`group relative isolate w-[70vw] max-w-[20rem] shrink-0 snap-start overflow-hidden rounded-[1.75rem] border bg-ink text-left transition-colors duration-300 sm:w-[22rem] ${
+              style={{
+                transform:
+                  "perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))",
+              }}
+              className={`group relative isolate w-[70vw] max-w-[20rem] shrink-0 snap-start overflow-hidden rounded-[1.75rem] border bg-ink text-left transition-[transform,colors] duration-500 [transition-timing-function:cubic-bezier(0.34,1.56,0.64,1)] sm:w-[22rem] ${
                 isActive ? "border-cloud" : "border-border"
               }`}
             >
