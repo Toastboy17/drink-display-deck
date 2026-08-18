@@ -72,8 +72,14 @@ export function PickYourCloud() {
               key={category.id}
               type="button"
               onClick={() => setActive(category.id)}
+              onMouseMove={handleCardMove}
+              onMouseLeave={handleCardLeave}
               aria-pressed={isActive}
-              className={`group relative isolate w-[70vw] max-w-[20rem] shrink-0 snap-start overflow-hidden rounded-[1.75rem] border bg-ink text-left transition-colors duration-300 sm:w-[22rem] ${
+              style={{
+                transform:
+                  "perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))",
+              }}
+              className={`group relative isolate w-[70vw] max-w-[20rem] shrink-0 snap-start overflow-hidden rounded-[1.75rem] border bg-ink text-left transition-[transform,colors] duration-500 [transition-timing-function:cubic-bezier(0.34,1.56,0.64,1)] sm:w-[22rem] ${
                 isActive ? "border-cloud" : "border-border"
               }`}
             >
