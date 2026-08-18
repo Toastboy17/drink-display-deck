@@ -65,6 +65,7 @@ export function CanPedestal() {
   }, []);
 
   const active = Math.round(pos);
+  const activeFrame = FRAMES[active] ?? FRAMES[0]!;
 
   return (
     <section className="relative isolate overflow-hidden bg-sky-wash">
@@ -83,7 +84,7 @@ export function CanPedestal() {
               aria-valuemin={0}
               aria-valuemax={FRAMES.length - 1}
               aria-valuenow={active}
-              aria-valuetext={FRAMES[active].label}
+              aria-valuetext={activeFrame.label}
               tabIndex={0}
               onPointerDown={onDown}
               onPointerMove={onMove}
@@ -136,7 +137,7 @@ export function CanPedestal() {
               ))}
             </div>
             <p className="mt-3 text-center text-[0.7rem] uppercase tracking-[0.28em] text-muted-foreground">
-              Ziehen zum Drehen · {FRAMES[active].label}
+              Ziehen zum Drehen · {activeFrame.label}
             </p>
           </div>
         </Reveal>
