@@ -1,6 +1,10 @@
 import { useRef } from "react";
 import { ArrowDownRight, ChevronDown } from "lucide-react";
+import { ClientOnly } from "@tanstack/react-router";
 import { useI18n } from "@/i18n";
+import ProceduralDrink from "@/components/three/ProceduralDrink";
+import { DrinkStage } from "@/components/three/DrinkStage";
+import { drinks } from "@/data/drinks";
 import heroFrost from "@/assets/hero-frost.png.asset.json";
 import logoMark from "@/assets/logo-nube.png";
 import mascotWave from "@/assets/mascot-wave.png.asset.json";
@@ -54,10 +58,19 @@ export function HeroStage() {
           {t("hero.eyebrow")}
         </p>
 
+        {/* Live 3D drink */}
+        <div className="mt-2 h-64 w-full max-w-md sm:h-80">
+          <ClientOnly fallback={<div className="h-full w-full" />}>
+            <DrinkStage className="h-full w-full">
+              <ProceduralDrink drink={drinks[0]!} focused />
+            </DrinkStage>
+          </ClientOnly>
+        </div>
+
         <a
           ref={btnRef}
           href="#menu"
-          className="magnetic-btn group mt-10 inline-flex items-center gap-2 rounded-full bg-cloud px-8 py-4 font-display text-sm uppercase tracking-[0.12em] text-ink hover:bg-cream"
+          className="magnetic-btn group mt-4 inline-flex items-center gap-2 rounded-full bg-cloud px-8 py-4 font-display text-sm uppercase tracking-[0.12em] text-ink hover:bg-cream"
           onMouseMove={handleMagneticMove}
           onMouseLeave={handleMagneticLeave}
         >

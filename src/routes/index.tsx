@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Clock, MapPin, Phone } from "lucide-react";
-import { MenuBoard } from "@/components/MenuBoard";
+import { DrinkShelf } from "@/components/DrinkShelf";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { ReviewsSection } from "@/components/ReviewsSection";
@@ -88,9 +88,7 @@ function Index() {
             <p className="text-sm leading-relaxed text-muted-foreground">{t("menu.body")}</p>
           </div>
           <div className="mt-10 md:mt-12">
-            <Reveal>
-              <MenuBoard />
-            </Reveal>
+            <DrinkShelf />
           </div>
         </section>
 
