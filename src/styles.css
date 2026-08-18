@@ -339,10 +339,10 @@
   --hover-y: 0px;
   transform: translate(var(--mag-x), calc(var(--mag-y) + var(--hover-y)));
   transition: transform 0.2s ease-out, background-color 0.3s, color 0.3s;
-}
 
-@utility magnetic-btn:hover {
-  --hover-y: -2px;
+  &:hover {
+    --hover-y: -2px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
