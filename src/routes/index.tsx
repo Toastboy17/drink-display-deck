@@ -8,7 +8,7 @@ import { MapWidget } from "@/components/MapWidget";
 import { InstagramWidget } from "@/components/InstagramWidget";
 import { Reveal } from "@/components/Reveal";
 import { HeroStage } from "@/components/HeroStage";
-import { CategoryPanels } from "@/components/CategoryPanels";
+import { PickYourCloud } from "@/components/PickYourCloud";
 import { Marquee } from "@/components/Marquee";
 import { GlacierShowcase } from "@/components/GlacierShowcase";
 import { CloudFriend } from "@/components/CloudFriend";
@@ -73,7 +73,7 @@ function Index() {
         {/* Category panels */}
         <section className="mx-auto max-w-7xl px-5 py-14 md:px-10 md:py-20">
           <Reveal>
-            <CategoryPanels />
+            <PickYourCloud />
           </Reveal>
         </section>
 
