@@ -274,21 +274,76 @@
   }
 }
 
-/* Slow Ken-Burns frost drift */
-@utility frost-drift {
-  animation: nube-frost-drift 28s ease-in-out infinite alternate;
-  will-change: transform;
+/* Wordmark chrome sweep */
+@utility chrome-sweep {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0) 25%,
+      rgba(255, 255, 255, 0.85) 50%,
+      rgba(255, 255, 255, 0) 75%,
+      transparent 100%
+    );
+    transform: translateX(-150%) skewX(-18deg);
+    animation: nube-chrome 2.2s ease-out forwards;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
 }
 
-@keyframes nube-frost-drift {
+@keyframes nube-chrome {
   0% {
-    transform: scale(1.05) translate(0, 0);
+    transform: translateX(-150%) skewX(-18deg);
   }
   100% {
-    transform: scale(1.12) translate(-1%, 1%);
+    transform: translateX(150%) skewX(-18deg);
   }
 }
 
+/* Mascot cameo */
+@utility mascot-cameo {
+  animation: nube-mascot-cameo 2.5s ease-in-out 0.5s forwards;
+  opacity: 0;
+}
+
+@keyframes nube-mascot-cameo {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+}
+
+/* Magnetic CTA button */
+@utility magnetic-btn {
+  --mag-x: 0px;
+  --mag-y: 0px;
+  --hover-y: 0px;
+  transform: translate(var(--mag-x), calc(var(--mag-y) + var(--hover-y)));
+  transition: transform 0.2s ease-out, background-color 0.3s, color 0.3s;
+}
+
+@utility magnetic-btn:hover {
+  --hover-y: -2px;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .reveal {
@@ -297,7 +352,10 @@
     transition: none;
   }
   .float-slow,
-  .frost-drift {
+  .frost-drift,
+  .chrome-sweep::after,
+  .mascot-cameo,
+  .magnetic-btn {
     animation: none;
   }
 }
