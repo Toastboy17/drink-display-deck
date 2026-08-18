@@ -1,14 +1,22 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useI18n } from "@/i18n";
 import { menu } from "@/data/menu";
 
 export function PickYourCloud() {
   const { tl } = useI18n();
   const [active, setActive] = useState(menu[0]?.id ?? "");
+  const [tappedId, setTappedId] = useState<string | null>(null);
   const track = useRef<HTMLDivElement>(null);
   const drag = useRef<{ x: number; left: number } | null>(null);
+  const tapTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const activeCategory = menu.find((c) => c.id === active) ?? menu[0]!;
+
+  useEffect(() => {
+    return () => {
+      if (tapTimer.current) clearTimeout(tapTimer.current);
+    };
+  }, []);
 
   const handleCardMove = (e: React.MouseEvent<HTMLButtonElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -42,6 +50,13 @@ export function PickYourCloud() {
     drag.current = null;
   };
 
+  const handleCardClick = (id: string) => {
+    setActive(id);
+    setTappedId(id);
+    if (tapTimer.current) clearTimeout(tapTimer.current);
+    tapTimer.current = setTimeout(() => setTappedId(null), 2500);
+  };
+
   return (
     <div>
       <div className="flex flex-wrap items-end justify-between gap-4 border-t border-border pt-8">
@@ -66,12 +81,13 @@ export function PickYourCloud() {
         {menu.map((category, i) => {
           const hero = category.drinks[0]!;
           const isActive = category.id === active;
+          const isTapped = category.id === tappedId;
 
           return (
             <button
               key={category.id}
               type="button"
-              onClick={() => setActive(category.id)}
+              onClick={() => handleCardClick(category.id)}
               onMouseMove={handleCardMove}
               onMouseLeave={handleCardLeave}
               aria-pressed={isActive}
@@ -95,13 +111,33 @@ export function PickYourCloud() {
                   aria-hidden="true"
                   className="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-transparent"
                 />
-                <div className="absolute inset-x-0 bottom-0 p-5">
+
+                {/* Default card info */}
+                <div
+                  className={`absolute inset-x-0 bottom-0 z-10 p-5 transition-opacity duration-300 ${
+                    isTapped ? "opacity-0" : "group-hover:opacity-0"
+                  }`}
+                >
                   <p className="rule-label text-cloud/80">0{i + 1}</p>
                   <h3 className="mt-2 font-display text-3xl uppercase text-cream">
                     {tl(category.label)}
                   </h3>
                   <p className="mt-1 text-xs text-cream/70">
                     {category.drinks.length} ×
+                  </p>
+                </div>
+
+                {/* Hover / tap title + description */}
+                <div
+                  className={`pointer-events-none absolute inset-0 z-20 flex flex-col justify-end bg-gradient-to-t from-ink via-ink/70 to-ink/10 p-5 opacity-0 translate-y-4 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-y-0 ${
+                    isTapped ? "opacity-100 translate-y-0" : ""
+                  }`}
+                >
+                  <h3 className="font-display text-3xl uppercase text-cream">
+                    {hero.name}
+                  </h3>
+                  <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-cream/80">
+                    {tl(hero.blurb)}
                   </p>
                 </div>
               </div>
