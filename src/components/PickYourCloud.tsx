@@ -1,33 +1,6 @@
 import { useRef, useState } from "react";
 import { useI18n } from "@/i18n";
 import { menu } from "@/data/menu";
-import nubeLogo from "@/assets/nube-logo.png.asset.json";
-
-/** Per-category label geometry: cans are curved, cups/jars are flat. */
-const logoGeometry: Record<
-  string,
-  { className: string; style?: React.CSSProperties }
-> = {
-  matcha: {
-    // tall clear can — curved surface, logo sits slightly high
-    className: "w-[38%] top-[44%]",
-    style: { transform: "perspective(320px) rotateY(-16deg) rotateX(4deg)" },
-  },
-  hot: {
-    // ceramic cup — flat front, smaller mark
-    className: "w-[26%] top-[56%]",
-    style: { transform: "perspective(600px) rotateX(10deg)" },
-  },
-  coffee: {
-    className: "w-[36%] top-[47%]",
-    style: { transform: "perspective(320px) rotateY(-14deg) rotateX(3deg)" },
-  },
-  shakes: {
-    // wide jar — broader label band
-    className: "w-[42%] top-[50%]",
-    style: { transform: "perspective(420px) rotateY(-10deg)" },
-  },
-};
 
 export function PickYourCloud() {
   const { tl } = useI18n();
@@ -74,7 +47,6 @@ export function PickYourCloud() {
       >
         {menu.map((category, i) => {
           const hero = category.drinks[0]!;
-          const geo = logoGeometry[category.id] ?? logoGeometry['matcha']!;
           const isActive = category.id === active;
 
           return (
@@ -94,15 +66,6 @@ export function PickYourCloud() {
                   loading="lazy"
                   draggable={false}
                   className="absolute inset-0 h-full w-full object-cover"
-                />
-                {/* nube logo placed over the empty label area of the product */}
-                <img
-                  src={nubeLogo.url}
-                  alt=""
-                  aria-hidden="true"
-                  draggable={false}
-                  className={`pointer-events-none absolute left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-90 mix-blend-normal drop-shadow-sm ${geo.className}`}
-                  style={geo.style}
                 />
                 <span
                   aria-hidden="true"
