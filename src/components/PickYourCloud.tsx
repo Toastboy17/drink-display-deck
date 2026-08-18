@@ -10,6 +10,24 @@ export function PickYourCloud() {
 
   const activeCategory = menu.find((c) => c.id === active) ?? menu[0]!;
 
+  const handleCardMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const max = 9; // degrees
+    const rx = ((y - cy) / cy) * -max;
+    const ry = ((x - cx) / cx) * max;
+    e.currentTarget.style.setProperty("--rx", `${rx}deg`);
+    e.currentTarget.style.setProperty("--ry", `${ry}deg`);
+  };
+
+  const handleCardLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.style.setProperty("--rx", "0deg");
+    e.currentTarget.style.setProperty("--ry", "0deg");
+  };
+
   const onPointerDown = (e: React.PointerEvent) => {
     const el = track.current;
     if (!el) return;
