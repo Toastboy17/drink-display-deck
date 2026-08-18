@@ -14,7 +14,7 @@ export function HeroStage() {
           src={heroFrost.url}
           alt=""
           loading="eager"
-          className="h-full w-full object-cover"
+          className="frost-drift h-full w-full scale-105 object-cover"
         />
         {/* Base navy wash for readability */}
         <div className="absolute inset-0 bg-ink/30" />

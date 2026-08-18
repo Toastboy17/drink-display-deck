@@ -274,13 +274,30 @@
   }
 }
 
+/* Slow Ken-Burns frost drift */
+@utility frost-drift {
+  animation: nube-frost-drift 28s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes nube-frost-drift {
+  0% {
+    transform: scale(1.05) translate(0, 0);
+  }
+  100% {
+    transform: scale(1.12) translate(-1%, 1%);
+  }
+}
+
+
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     opacity: 1;
     transform: none;
     transition: none;
   }
-  .float-slow {
+  .float-slow,
+  .frost-drift {
     animation: none;
   }
 }
