@@ -35,7 +35,7 @@ export function PickYourCloud() {
   const track = useRef<HTMLDivElement>(null);
   const drag = useRef<{ x: number; left: number } | null>(null);
 
-  const activeCategory = menu.find((c) => c.id === active) ?? menu[0];
+  const activeCategory = menu.find((c) => c.id === active) ?? menu[0]!;
 
   const onPointerDown = (e: React.PointerEvent) => {
     const el = track.current;
@@ -73,8 +73,8 @@ export function PickYourCloud() {
         className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {menu.map((category, i) => {
-          const hero = category.drinks[0];
-          const geo = logoGeometry[category.id] ?? logoGeometry.matcha;
+          const hero = category.drinks[0]!;
+          const geo = logoGeometry[category.id] ?? logoGeometry['matcha']!;
           const isActive = category.id === active;
 
           return (
