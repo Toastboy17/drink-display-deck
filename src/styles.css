@@ -296,7 +296,8 @@
     transform: none;
     transition: none;
   }
-  .float-slow {
+  .float-slow,
+  .frost-drift {
     animation: none;
   }
 }
