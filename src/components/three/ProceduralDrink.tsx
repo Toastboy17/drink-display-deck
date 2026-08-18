@@ -68,7 +68,7 @@ function FoamCap({ color }: { color: string }) {
   );
 }
 
-function WhippedCream({ color = "#fdf8ef" }: { color?: string }) {
+function WhippedCream({ color = "#fdf8ef" }: { color?: string | undefined }) {
   const puffs = [
     [0, 0.78, 0, 0.42],
     [0.28, 0.7, 0.1, 0.3],
