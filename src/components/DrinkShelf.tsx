@@ -83,7 +83,7 @@ export function DrinkShelf() {
       <div ref={trackRef} className="relative mt-6" style={{ height: `${list.length * 60}vh` }}>
         <div className="sticky top-16 h-[70vh] overflow-hidden rounded-[2rem] border border-border bg-gradient-to-b from-cloud/25 via-background to-rose/20">
           <ClientOnly fallback={<div className="h-full w-full" />}>
-            <DrinkStage className="h-full w-full">
+            <DrinkStage className="h-full w-full" cameraZ={8}>
               <Shelf list={list} active={active} />
             </DrinkStage>
           </ClientOnly>
