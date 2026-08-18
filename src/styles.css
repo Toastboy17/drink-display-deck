@@ -6,7 +6,8 @@
 
 @theme {
   --font-display: "Bebas Neue", "Futura", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Futura", "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    "Futura", "Futura PT", "Jost", ui-sans-serif, system-ui, sans-serif;
 }
 
 /*
@@ -76,29 +77,30 @@
 
 :root {
   --radius: 1rem;
-  /* Brand palette: #C2E9FF (cloud blue) + #FFD1E0 (rosé) */
-  --cream: oklch(0.985 0.004 240);
-  --ink: oklch(0.23 0.02 250);
+  /* Brand palette: #C2E9FF (cloud blue), #FFD1E0 (rosé),
+     #16233F (dark navy), #FFF8F0 (warm cream) */
+  --cream: oklch(0.983 0.014 85);
+  --ink: oklch(0.245 0.048 262);
   --cloud: oklch(0.906 0.056 232);
   --cloud-deep: oklch(0.63 0.115 236);
   --rose: oklch(0.895 0.055 5);
   --rose-deep: oklch(0.68 0.13 8);
   --matcha: oklch(0.63 0.115 236);
   --matcha-foreground: oklch(0.99 0.005 236);
-  --background: oklch(0.985 0.004 240);
-  --foreground: oklch(0.23 0.02 250);
+  --background: oklch(0.983 0.014 85);
+  --foreground: oklch(0.245 0.048 262);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.23 0.02 250);
+  --card-foreground: oklch(0.245 0.048 262);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.23 0.02 250);
+  --popover-foreground: oklch(0.245 0.048 262);
   --primary: oklch(0.906 0.056 232);
-  --primary-foreground: oklch(0.23 0.02 250);
+  --primary-foreground: oklch(0.245 0.048 262);
   --secondary: oklch(0.895 0.055 5);
-  --secondary-foreground: oklch(0.23 0.02 250);
-  --muted: oklch(0.955 0.012 240);
-  --muted-foreground: oklch(0.52 0.025 250);
+  --secondary-foreground: oklch(0.245 0.048 262);
+  --muted: oklch(0.958 0.012 85);
+  --muted-foreground: oklch(0.52 0.03 258);
   --accent: oklch(0.906 0.056 232);
-  --accent-foreground: oklch(0.23 0.02 250);
+  --accent-foreground: oklch(0.245 0.048 262);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
   --border: oklch(0.905 0.018 232);
@@ -134,8 +136,8 @@
   --glow-rose: 0 0 0 1px oklch(0.895 0.055 5 / 0.85), 0 22px 50px -20px oklch(0.75 0.13 8 / 0.5);
   --transition-soft: 400ms cubic-bezier(0.22, 1, 0.36, 1);
   /* Editorial / glacier layer */
-  --ink-deep: oklch(0.19 0.035 258);
-  --ink-mid: oklch(0.29 0.05 254);
+  --ink-deep: oklch(0.195 0.045 262);
+  --ink-mid: oklch(0.3 0.055 258);
   --gradient-ink: radial-gradient(
       120% 90% at 15% 0%,
       oklch(0.42 0.075 250) 0%,
@@ -197,6 +199,8 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-weight: 300;
+    letter-spacing: 0.01em;
     -webkit-font-smoothing: antialiased;
   }
 
