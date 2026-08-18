@@ -1,4 +1,4 @@
-import { ChevronDown } from "lucide-react";
+import { ArrowDownRight, ChevronDown } from "lucide-react";
 import { useI18n } from "@/i18n";
 import heroFrost from "@/assets/hero-frost.png.asset.json";
 import logoMark from "@/assets/logo-nube.png";
@@ -16,19 +16,20 @@ export function HeroStage() {
           loading="eager"
           className="h-full w-full object-cover"
         />
-        {/* Navy wash for wordmark contrast */}
-        <div className="absolute inset-0 bg-ink/45" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(22,35,63,0.55)_100%)]" />
+        {/* Base navy wash for readability */}
+        <div className="absolute inset-0 bg-ink/30" />
+        {/* Darker spotlight behind the wordmark */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(22,35,63,0.5)_0%,transparent_60%)]" />
       </div>
 
       {/* Centered content */}
-      <div className="relative z-10 flex flex-col items-center px-6 pt-20 text-center">
+      <div className="relative z-10 flex flex-col items-center px-6 pt-16 text-center">
         <img
           src={logoMark}
           alt="nube Zürich"
           width={800}
           height={313}
-          className="w-56 drop-shadow-[0_0_28px_rgba(22,35,63,0.55)] sm:w-72 md:w-96"
+          className="w-64 drop-shadow-[0_0_28px_rgba(22,35,63,0.55)] sm:w-80 md:w-[28rem]"
         />
         <p className="mt-5 text-sm uppercase tracking-[0.3em] text-cream/90">
           {t("hero.eyebrow")}
@@ -36,15 +37,15 @@ export function HeroStage() {
 
         <a
           href="#menu"
-          className="group mt-10 inline-flex items-center gap-2 rounded-full bg-cream px-8 py-4 font-display text-sm uppercase tracking-[0.12em] text-ink transition-all duration-300 hover:-translate-y-0.5 hover:bg-cloud"
+          className="group mt-10 inline-flex items-center gap-2 rounded-full bg-cloud px-8 py-4 font-display text-sm uppercase tracking-[0.12em] text-ink transition-all duration-300 hover:-translate-y-0.5 hover:bg-cream"
         >
           {t("cta.menu")}
-          <ChevronDown className="size-4 rotate-[-90deg] transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+          <ArrowDownRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5" aria-hidden="true" />
         </a>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 flex flex-col items-center gap-2 text-cream/80">
+      <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 flex flex-col items-center gap-2 text-cream/90">
         <span className="rule-label">Scroll</span>
         <ChevronDown className="size-5" aria-hidden="true" />
       </div>
