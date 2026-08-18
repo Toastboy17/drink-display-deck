@@ -6,7 +6,8 @@
 
 @theme {
   --font-display: "Bebas Neue", "Futura", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Futura", "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    "Futura", "Futura PT", "Jost", ui-sans-serif, system-ui, sans-serif;
 }
 
 /*
