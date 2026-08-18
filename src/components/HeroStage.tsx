@@ -1,10 +1,27 @@
+import { useRef } from "react";
 import { ArrowDownRight, ChevronDown } from "lucide-react";
 import { useI18n } from "@/i18n";
 import heroFrost from "@/assets/hero-frost.png.asset.json";
 import logoMark from "@/assets/logo-nube.png";
+import mascotWave from "@/assets/mascot-wave.png.asset.json";
 
 export function HeroStage() {
   const { t } = useI18n();
+  const btnRef = useRef<HTMLAnchorElement>(null);
+
+  const handleMagneticMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const target = e.currentTarget;
+    const rect = target.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    target.style.setProperty("--mag-x", `${x * 0.25}px`);
+    target.style.setProperty("--mag-y", `${y * 0.25}px`);
+  };
+
+  const handleMagneticLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.currentTarget.style.setProperty("--mag-x", "0px");
+    e.currentTarget.style.setProperty("--mag-y", "0px");
+  };
 
   return (
     <section className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden bg-ink">
@@ -24,20 +41,25 @@ export function HeroStage() {
 
       {/* Centered content */}
       <div className="relative z-10 flex flex-col items-center px-6 pt-16 text-center">
-        <img
-          src={logoMark}
-          alt="nube Zürich"
-          width={800}
-          height={313}
-          className="w-64 drop-shadow-[0_0_28px_rgba(22,35,63,0.55)] sm:w-80 md:w-[28rem]"
-        />
+        <div className="chrome-sweep">
+          <img
+            src={logoMark}
+            alt="nube Zürich"
+            width={800}
+            height={313}
+            className="w-64 drop-shadow-[0_0_28px_rgba(22,35,63,0.55)] sm:w-80 md:w-[28rem]"
+          />
+        </div>
         <p className="mt-5 text-sm uppercase tracking-[0.3em] text-cream/90">
           {t("hero.eyebrow")}
         </p>
 
         <a
+          ref={btnRef}
           href="#menu"
-          className="group mt-10 inline-flex items-center gap-2 rounded-full bg-cloud px-8 py-4 font-display text-sm uppercase tracking-[0.12em] text-ink transition-all duration-300 hover:-translate-y-0.5 hover:bg-cream"
+          className="magnetic-btn group mt-10 inline-flex items-center gap-2 rounded-full bg-cloud px-8 py-4 font-display text-sm uppercase tracking-[0.12em] text-ink hover:bg-cream"
+          onMouseMove={handleMagneticMove}
+          onMouseLeave={handleMagneticLeave}
         >
           {t("cta.menu")}
           <ArrowDownRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5" aria-hidden="true" />
@@ -49,6 +71,14 @@ export function HeroStage() {
         <span className="rule-label">Scroll</span>
         <ChevronDown className="size-5" aria-hidden="true" />
       </div>
+
+      {/* Mascot cameo */}
+      <img
+        src={mascotWave.url}
+        alt=""
+        loading="eager"
+        className="mascot-cameo absolute bottom-8 right-4 z-10 w-20 drop-shadow-[0_8px_24px_rgba(22,35,63,0.25)] sm:bottom-12 sm:right-8 sm:w-24"
+      />
     </section>
   );
 }
