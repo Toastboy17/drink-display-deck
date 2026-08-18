@@ -12,6 +12,7 @@ import { PickYourCloud } from "@/components/PickYourCloud";
 import { Marquee } from "@/components/Marquee";
 import { GlacierShowcase } from "@/components/GlacierShowcase";
 import { CloudFriend } from "@/components/CloudFriend";
+import { CanPedestal } from "@/components/CanPedestal";
 import { faqs, gallery, pillars, site } from "@/data/site";
 import { useI18n } from "@/i18n";
 
@@ -99,6 +100,8 @@ function Index() {
         />
 
         <GlacierShowcase />
+
+        <CanPedestal />
 
         {/* Story */}
         <section id="story" className="scroll-mt-20 bg-background">
