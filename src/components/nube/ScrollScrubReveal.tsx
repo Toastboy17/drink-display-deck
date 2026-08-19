@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { media } from "@/data/nube";
+import { onPlaybackGesture, tryPlay } from "@/lib/video";
 
 /**
  * The pour plays itself. The section pins for one screen, the video starts the
@@ -8,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 export default function ScrollScrubReveal() {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [open, setOpen] = useState(false);
 
   /**
@@ -40,6 +43,20 @@ export default function ScrollScrubReveal() {
     };
   }, []);
 
+  useEffect(() => {
+    const stop = onPlaybackGesture(() => videoRef.current);
+    const id = window.setInterval(() => {
+      const v = videoRef.current;
+      if (!v) return;
+      v.playbackRate = 2;
+      if (v.paused) tryPlay(v);
+    }, 600);
+    return () => {
+      stop();
+      window.clearInterval(id);
+    };
+  }, []);
+
   const mask = "radial-gradient(circle at 50% 50%, #000 0%, #000 62%, transparent 100%)";
   const size = open ? "180%" : "56%";
 
@@ -61,9 +78,20 @@ export default function ScrollScrubReveal() {
             className="absolute inset-0 transition-transform duration-[3000ms] ease-out"
             style={{ transform: open ? "scale(1)" : "scale(1.14)" }}
           >
-            <img
-              src="/media/matcha-pour-2x.webp"
-              alt="Ceremonial matcha pouring into iced milk"
+            <video
+              ref={videoRef}
+              src={media.scrubVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              aria-label="Ceremonial matcha pouring into iced milk"
+              onLoadedData={(e) => {
+                e.currentTarget.playbackRate = 2;
+                tryPlay(e.currentTarget);
+              }}
+              onCanPlay={(e) => tryPlay(e.currentTarget)}
               className="h-full w-full object-cover"
             />
           </div>
