@@ -6,8 +6,6 @@ import { useMagnetic } from "@/hooks/useMagnetic";
 import { onPlaybackGesture, tryPlay } from "@/lib/video";
 import { Button } from "@/components/ui/button";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
-
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -98,18 +96,14 @@ export default function Hero() {
         className="relative z-10 mx-auto flex h-full max-w-screen-2xl flex-col justify-end px-5 pb-14 sm:px-8 sm:pb-20 lg:px-12"
       >
         <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: EASE, delay: 0.1 }}
+          initial={false}
           className="label-caps text-[#FFD1E0]"
         >
           Specialty coffee bar · Zürich
         </motion.p>
 
         <motion.h1
-          initial={{ opacity: 0, y: 34 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: EASE, delay: 0.18 }}
+          initial={false}
           className="mt-4 max-w-[15ch] text-[#F2F7FA]"
         >
           Your way into<span className="text-[#C2E9FF]"> cloud nine</span>
@@ -117,9 +111,7 @@ export default function Hero() {
 
         <div className="mt-7 flex flex-col gap-9 sm:flex-row sm:items-end sm:justify-between">
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.3 }}
+            initial={false}
             className="max-w-[46ch] text-[16px] text-[#DCEDF7] sm:text-[17px]"
           >
             Cold, clean, unhurried coffee. No syrup shortcuts, no rushed pours — every drink
@@ -132,9 +124,7 @@ export default function Hero() {
             data-cursor="hover"
             onMouseMove={magnet.onMouseMove}
             onMouseLeave={magnet.onMouseLeave}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.42 }}
+            initial={false}
             style={{ x: magnet.x, y: magnet.y }}
             className="label-caps inline-flex shrink-0 items-center gap-3 self-start rounded-full border border-[#C2E9FF]/45 px-8 py-4 text-[#C2E9FF] transition-colors duration-300 hover:border-[#FFD1E0] hover:text-[#FFD1E0] sm:self-auto"
           >
