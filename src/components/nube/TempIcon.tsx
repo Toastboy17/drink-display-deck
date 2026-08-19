@@ -2,12 +2,12 @@ import type { Drink } from "@/data/nube";
 
 const COLORS: Record<Drink["temp"], string> = {
   Cold: "#C2E9FF",
-  Whisked: "#FFD1E0",
+  Poured: "#FFD1E0",
   Blended: "#C2E9FF",
   Hot: "#FFD1E0",
 };
 
-/** Tiny hand-drawn glyphs for each preparation style — ice cube, whisk, swirl, steam. */
+/** Tiny hand-drawn glyphs for each preparation style — ice cube, pour, swirl, steam. */
 function Glyph({ temp }: { temp: Drink["temp"] }) {
   const c = COLORS[temp];
   const common = { stroke: c, strokeWidth: 1.2, fill: "none", strokeLinecap: "round" as const };
@@ -18,12 +18,12 @@ function Glyph({ temp }: { temp: Drink["temp"] }) {
         <path {...common} d="M3 5.2 8 8m0 0 5-2.8M8 8v5.5" />
       </svg>
     );
-  if (temp === "Whisked")
+  if (temp === "Poured")
     return (
       <svg viewBox="0 0 16 16" className="h-[13px] w-[13px]" aria-hidden>
-        <path {...common} d="M8 2v4" />
-        <path {...common} d="M5 6.4c0 3 1 5.4 3 7.1 2-1.7 3-4.1 3-7.1" />
-        <path {...common} d="M8 6.4v7.1M6.3 8.6h3.4" />
+        <path {...common} d="M3 3.4c2.6 0 4 1.1 4.4 2.6" />
+        <path {...common} d="M7.9 6.2v3.1" />
+        <path {...common} d="M5.6 11.2h4.8l-.7 2.6H6.3z" />
       </svg>
     );
   if (temp === "Blended")
