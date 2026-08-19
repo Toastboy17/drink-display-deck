@@ -5,7 +5,7 @@ import ScrollScrubReveal from "@/components/nube/ScrollScrubReveal";
 import Marquee from "@/components/nube/Marquee";
 import Menu from "@/components/nube/Menu";
 import Story from "@/components/nube/Story";
-import DriftGallery from "@/components/nube/DriftGallery";
+
 import Reviews from "@/components/nube/Reviews";
 import Footer from "@/components/nube/Footer";
 
