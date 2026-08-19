@@ -12,6 +12,7 @@ export default function ScrollScrubReveal() {
   const handedOff = useRef(false);
   const [videoOk, setVideoOk] = useState(true);
   const [open, setOpen] = useState(false);
+  const [ready, setReady] = useState(false);
 
   /** Start the pour when the section is centred, pause it whenever it leaves. */
   useEffect(() => {
@@ -24,6 +25,7 @@ export default function ScrollScrubReveal() {
         if (!entry) return;
         if (entry.intersectionRatio > 0.75) {
           setOpen(true);
+          if (video) video.playbackRate = 1.75;
           void video?.play().catch(() => undefined);
         } else {
           video?.pause();
@@ -49,7 +51,7 @@ export default function ScrollScrubReveal() {
     const onTime = () => {
       const d = video.duration;
       if (!Number.isFinite(d) || d <= 0 || handedOff.current) return;
-      if (video.currentTime < d - 1.1) return;
+      if (video.currentTime < d - 0.7) return;
       handedOff.current = true;
       const next = sectionRef.current?.nextElementSibling;
       if (next instanceof HTMLElement) {
@@ -86,12 +88,13 @@ export default function ScrollScrubReveal() {
               <video
                 ref={videoRef}
                 src={media.scrubVideo}
-                poster={media.scrubPlate}
                 muted
                 playsInline
                 preload="auto"
+                onPlaying={() => setReady(true)}
                 onError={() => setVideoOk(false)}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover transition-opacity duration-700"
+                style={{ opacity: ready ? 1 : 0 }}
               />
             ) : (
               <img
