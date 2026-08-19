@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState, type Ref } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { Play } from "lucide-react";
 import { media, site } from "@/data/nube";
 import { useMagnetic } from "@/hooks/useMagnetic";
 import { onPlaybackGesture, tryPlay } from "@/lib/video";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { Button } from "@/components/ui/button";
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoOk, setVideoOk] = useState(true);
-  const [videoReady, setVideoReady] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
+  const [showPlay, setShowPlay] = useState(false);
   const magnet = useMagnetic(0.4);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const plateY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
@@ -20,8 +21,20 @@ export default function Hero() {
   useEffect(() => {
     if (!videoOk) return;
     tryPlay(videoRef.current);
-    return onPlaybackGesture(() => videoRef.current);
+    const revealFallback = window.setTimeout(() => {
+      if (videoRef.current?.paused) setShowPlay(true);
+    }, 900);
+    const offGesture = onPlaybackGesture(() => videoRef.current);
+    return () => {
+      window.clearTimeout(revealFallback);
+      offGesture();
+    };
   }, [videoOk]);
+
+  const playVideo = () => {
+    setShowPlay(false);
+    tryPlay(videoRef.current);
+  };
 
   return (
     <section
@@ -46,11 +59,14 @@ export default function Hero() {
             playsInline
             preload="auto"
             disablePictureInPicture
-            onCanPlay={() => setVideoReady(true)}
-            onPlaying={() => setVideoReady(true)}
+            onPlaying={() => {
+              setVideoPlaying(true);
+              setShowPlay(false);
+            }}
+            onPause={() => setVideoPlaying(false)}
             onError={() => setVideoOk(false)}
             className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
-            style={{ opacity: videoReady ? 1 : 0 }}
+            style={{ opacity: videoPlaying ? 1 : 0 }}
           />
         ) : null}
       </motion.div>
@@ -63,23 +79,31 @@ export default function Hero() {
         }}
       />
 
+      {videoOk && (showPlay || !videoPlaying) ? (
+        <Button
+          type="button"
+          onClick={playVideo}
+          className="absolute right-5 top-24 z-20 h-11 rounded-full bg-primary px-5 text-primary-foreground shadow-none md:hidden"
+          aria-label="Play the background video"
+        >
+          <Play className="fill-current" aria-hidden />
+          Play video
+        </Button>
+      ) : null}
+
       <motion.div
         style={{ opacity: copyOpacity }}
         className="relative z-10 mx-auto flex h-full max-w-screen-2xl flex-col justify-end px-5 pb-14 sm:px-8 sm:pb-20 lg:px-12"
       >
         <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: EASE, delay: 0.1 }}
+          initial={false}
           className="label-caps text-[#FFD1E0]"
         >
           Specialty coffee bar · Zürich
         </motion.p>
 
         <motion.h1
-          initial={{ opacity: 0, y: 34 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: EASE, delay: 0.18 }}
+          initial={false}
           className="mt-4 max-w-[15ch] text-[#F2F7FA]"
         >
           Your way into<span className="text-[#C2E9FF]"> cloud nine</span>
@@ -87,9 +111,7 @@ export default function Hero() {
 
         <div className="mt-7 flex flex-col gap-9 sm:flex-row sm:items-end sm:justify-between">
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.3 }}
+            initial={false}
             className="max-w-[46ch] text-[16px] text-[#DCEDF7] sm:text-[17px]"
           >
             Cold, clean, unhurried coffee. No syrup shortcuts, no rushed pours — every drink
@@ -102,9 +124,7 @@ export default function Hero() {
             data-cursor="hover"
             onMouseMove={magnet.onMouseMove}
             onMouseLeave={magnet.onMouseLeave}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.42 }}
+            initial={false}
             style={{ x: magnet.x, y: magnet.y }}
             className="label-caps inline-flex shrink-0 items-center gap-3 self-start rounded-full border border-[#C2E9FF]/45 px-8 py-4 text-[#C2E9FF] transition-colors duration-300 hover:border-[#FFD1E0] hover:text-[#FFD1E0] sm:self-auto"
           >
