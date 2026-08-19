@@ -22,9 +22,14 @@ export default function Hero() {
     if (!videoOk) return;
     const video = videoRef.current;
     tryPlay(video);
+    const retryPlayback = window.setInterval(() => {
+      const current = videoRef.current;
+      if (!current || !current.paused || document.hidden) return;
+      tryPlay(current);
+    }, 750);
     const revealFallback = window.setTimeout(() => {
       if (videoRef.current?.paused) setShowPlay(true);
-    }, 900);
+    }, 4000);
     const offGesture = onPlaybackGesture(() => videoRef.current);
     const keepLooping = () => {
       const current = videoRef.current;
@@ -41,6 +46,7 @@ export default function Hero() {
     document.addEventListener("visibilitychange", onVisibilityChange);
     return () => {
       window.clearTimeout(revealFallback);
+      window.clearInterval(retryPlayback);
       offGesture();
       video?.removeEventListener("ended", keepLooping);
       video?.removeEventListener("stalled", keepLooping);
@@ -77,6 +83,9 @@ export default function Hero() {
             playsInline
             preload="auto"
             disablePictureInPicture
+            onLoadedMetadata={(event) => tryPlay(event.currentTarget)}
+            onLoadedData={(event) => tryPlay(event.currentTarget)}
+            onCanPlay={(event) => tryPlay(event.currentTarget)}
             onPlaying={() => {
               setVideoPlaying(true);
               setShowPlay(false);
