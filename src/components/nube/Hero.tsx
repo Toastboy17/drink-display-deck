@@ -1,14 +1,29 @@
-import { useRef, type Ref } from "react";
+import { useEffect, useRef, type Ref } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { site } from "@/data/nube";
 import { useMagnetic } from "@/hooks/useMagnetic";
+import { onPlaybackGesture, tryPlay } from "@/lib/video";
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const magnet = useMagnetic(0.4);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const plateY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
   const copyOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+
+  useEffect(() => {
+    tryPlay(videoRef.current);
+    const stop = onPlaybackGesture(() => videoRef.current);
+    const id = window.setInterval(() => {
+      const v = videoRef.current;
+      if (v && v.paused) tryPlay(v);
+    }, 800);
+    return () => {
+      stop();
+      window.clearInterval(id);
+    };
+  }, []);
 
   return (
     <section
@@ -17,9 +32,18 @@ export default function Hero() {
       className="relative h-[100dvh] min-h-[100svh] overflow-hidden bg-[#10303d]"
     >
       <motion.div className="absolute inset-0" style={{ y: plateY }}>
-        <img
-          src="/media/hero-matcha-loop.webp"
-          alt="Matcha drink rotating over ice"
+        <video
+          ref={videoRef}
+          src={site.heroVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          onLoadedData={(e) => tryPlay(e.currentTarget)}
+          onCanPlay={(e) => tryPlay(e.currentTarget)}
+          onEnded={(e) => tryPlay(e.currentTarget)}
+          aria-label="Matcha drink rotating over ice"
           className="absolute inset-0 h-full w-full object-cover"
         />
       </motion.div>
