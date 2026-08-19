@@ -3,11 +3,13 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { media, site } from "@/data/nube";
 import { useMagnetic } from "@/hooks/useMagnetic";
 import { onPlaybackGesture, tryPlay } from "@/lib/video";
+import { useI18n } from "@/i18n";
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const magnet = useMagnetic(0.4);
+  const { t } = useI18n();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const plateY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
   const copyOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
@@ -64,14 +66,15 @@ export default function Hero() {
           initial={false}
           className="label-caps text-[#FFD1E0]"
         >
-          Specialty coffee bar · Zürich
+          {t("hero.eyebrow")}
         </motion.p>
 
         <motion.h1
           initial={false}
           className="mt-4 max-w-[15ch] text-[#F2F7FA]"
         >
-          Your way into<span className="text-[#C2E9FF]"> cloud nine</span>
+          {t("hero.titleA")}
+          <span className="text-[#C2E9FF]"> {t("hero.titleB")}</span>
         </motion.h1>
 
         <div className="mt-7 flex flex-col gap-9 sm:flex-row sm:items-end sm:justify-between">
@@ -79,8 +82,7 @@ export default function Hero() {
             initial={false}
             className="max-w-[46ch] text-[16px] text-[#DCEDF7] sm:text-[17px]"
           >
-            Cold, clean, unhurried coffee. No syrup shortcuts, no rushed pours — every drink
-            hand-poured to order in a room that feels a little like cloud nine.
+            {t("hero.body")}
           </motion.p>
 
           <motion.a
@@ -93,7 +95,7 @@ export default function Hero() {
             style={{ x: magnet.x, y: magnet.y }}
             className="label-caps inline-flex shrink-0 items-center gap-3 self-start rounded-full border border-[#C2E9FF]/45 px-8 py-4 text-[#C2E9FF] transition-colors duration-300 hover:border-[#FFD1E0] hover:text-[#FFD1E0] sm:self-auto"
           >
-            See the Menu <span aria-hidden>↓</span>
+            {t("hero.cta")} <span aria-hidden>↓</span>
           </motion.a>
         </div>
 
