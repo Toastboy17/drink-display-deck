@@ -35,7 +35,7 @@ export default function Story() {
           >
             <p className="label-caps text-[#FFD1E0]">Our story</p>
             <h2 className="mt-4 max-w-[18ch] text-[#F2F7FA]">
-              Frost on glass, <span className="text-[#C2E9FF]">in slow motion</span>
+              Taking you to <span className="text-[#C2E9FF]">cloud nine</span>
             </h2>
             <p className="mt-8 max-w-[54ch] text-[17px] leading-relaxed text-[#DCEDF7]">
               nube is a specialty coffee bar in Zürich built around one idea: cold, clean, unhurried

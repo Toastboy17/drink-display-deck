@@ -69,7 +69,7 @@ export default function Hero() {
           transition={{ duration: 0.9, ease: EASE, delay: 0.18 }}
           className="mt-4 max-w-[15ch] text-[#F2F7FA]"
         >
-          Liquid<span className="text-[#C2E9FF]"> Ice</span>
+          Your way into<span className="text-[#C2E9FF]"> cloud nine</span>
         </motion.h1>
 
         <div className="mt-7 flex flex-col gap-9 sm:flex-row sm:items-end sm:justify-between">
@@ -80,7 +80,7 @@ export default function Hero() {
             className="max-w-[46ch] text-[16px] text-[#DCEDF7] sm:text-[17px]"
           >
             Cold, clean, unhurried coffee. No syrup shortcuts, no rushed pours — every drink
-            hand-poured to order in a room that feels like frost on glass.
+            hand-poured to order in a room that feels a little like cloud nine.
           </motion.p>
 
           <motion.a
