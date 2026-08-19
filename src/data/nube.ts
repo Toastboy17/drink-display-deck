@@ -9,7 +9,7 @@ import saltedCaramelBananaMatcha from "@/assets/nube/drink-salted-caramel-banana
 import mangoShake from "@/assets/nube/drink-mango-shake.jpg.asset.json";
 import kidsMatcha from "@/assets/nube/drink-kids-matcha.jpg.asset.json";
 import logo from "@/assets/nube/nube-logo.png.asset.json";
-import heroVideo from "@/assets/nube/hero.mp4.asset.json";
+import heroVideo from "@/assets/nube/hero-matcha-loop.mp4.asset.json";
 import scrubVideo from "@/assets/nube/matcha-pour.mp4.asset.json";
 
 export type Drink = {
