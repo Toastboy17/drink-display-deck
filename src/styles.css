@@ -230,3 +230,26 @@
     animation: none;
   }
 }
+
+/* Slow breathing colour bloom behind a floating can. */
+@keyframes nube-bloom {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(0, -6px, 0) scale(1.12);
+    opacity: 0.85;
+  }
+}
+
+@utility animate-bloom {
+  animation: nube-bloom 9s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-bloom {
+    animation: none;
+  }
+}
