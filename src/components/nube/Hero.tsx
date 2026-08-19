@@ -1,6 +1,6 @@
 import { useEffect, useRef, type Ref } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { site } from "@/data/nube";
+import { media, site } from "@/data/nube";
 import { useMagnetic } from "@/hooks/useMagnetic";
 import { onPlaybackGesture, tryPlay } from "@/lib/video";
 
@@ -34,7 +34,7 @@ export default function Hero() {
       <motion.div className="absolute inset-0" style={{ y: plateY }}>
         <video
           ref={videoRef}
-          src={site.heroVideo}
+          src={media.heroVideo}
           autoPlay
           loop
           muted
