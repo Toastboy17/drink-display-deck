@@ -132,12 +132,6 @@ export default function ScrollScrubReveal() {
             className="absolute inset-0 transition-transform duration-[3000ms] ease-out"
             style={{ transform: open ? "scale(1)" : "scale(1.14)" }}
           >
-            <img
-              src={media.scrubPlate}
-              alt=""
-              aria-hidden
-              className="absolute inset-0 h-full w-full object-cover"
-            />
             {videoOk ? (
               <video
                 ref={videoRef}
@@ -176,7 +170,7 @@ export default function ScrollScrubReveal() {
           </h2>
         </div>
 
-        {videoOk && blocked ? (
+        {videoOk && (blocked || !ready) ? (
           <Button
             type="button"
             onClick={playVideo}

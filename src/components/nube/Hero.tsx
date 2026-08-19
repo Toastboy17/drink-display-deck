@@ -81,11 +81,11 @@ export default function Hero() {
         }}
       />
 
-      {videoOk && showPlay ? (
+      {videoOk && (showPlay || !videoPlaying) ? (
         <Button
           type="button"
           onClick={playVideo}
-          className="absolute left-1/2 top-[42%] z-20 h-12 -translate-x-1/2 rounded-full bg-primary px-6 text-primary-foreground shadow-none md:hidden"
+          className="absolute right-5 top-24 z-20 h-11 rounded-full bg-primary px-5 text-primary-foreground shadow-none md:hidden"
           aria-label="Play the background video"
         >
           <Play className="fill-current" aria-hidden />
