@@ -25,7 +25,7 @@ export default function ScrollScrubReveal() {
         if (!entry) return;
         if (entry.intersectionRatio > 0.75) {
           setOpen(true);
-          if (video) video.playbackRate = 1.75;
+          if (video) video.playbackRate = 2.0;
           void video?.play().catch(() => undefined);
         } else {
           video?.pause();
