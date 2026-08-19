@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { media } from "@/data/nube";
+import { onFirstGesture, primeVideo, tryPlay } from "@/lib/video";
 
 /**
  * The pour plays itself. The section pins for one screen, the video starts the
@@ -8,25 +9,32 @@ import { media } from "@/data/nube";
  */
 export default function ScrollScrubReveal() {
   const sectionRef = useRef<HTMLElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const handedOff = useRef(false);
   const [videoOk, setVideoOk] = useState(true);
   const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
 
-  /** Start the pour when the section is centred, pause it whenever it leaves. */
+  /**
+   * Start the pour when the pinned stage fills the screen. We watch the sticky
+   * stage (exactly one viewport tall) rather than the taller section — on phones
+   * a 130svh section can never reach a high intersection ratio, which used to
+   * mean the video simply never started.
+   */
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
+    const stage = stageRef.current;
+    if (!stage) return;
+    primeVideo(videoRef.current);
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         const video = videoRef.current;
         if (!entry) return;
-        if (entry.intersectionRatio > 0.75) {
+        if (entry.intersectionRatio > 0.55) {
           setOpen(true);
           if (video) video.playbackRate = 2.0;
-          void video?.play().catch(() => undefined);
+          tryPlay(video);
         } else {
           video?.pause();
           if (entry.intersectionRatio < 0.2) {
@@ -36,12 +44,34 @@ export default function ScrollScrubReveal() {
           }
         }
       },
-      { threshold: [0, 0.2, 0.75, 1] },
+      { threshold: [0, 0.2, 0.4, 0.55, 0.75, 1] },
     );
 
-    observer.observe(section);
-    return () => observer.disconnect();
+    observer.observe(stage);
+    const offGesture = onFirstGesture(() => {
+      if (open) tryPlay(videoRef.current);
+    });
+    return () => {
+      observer.disconnect();
+      offGesture();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  /** Keep the playback rate pinned once metadata lands (Safari resets it). */
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const setRate = () => {
+      video.playbackRate = 2.0;
+    };
+    video.addEventListener("loadedmetadata", setRate);
+    video.addEventListener("play", setRate);
+    return () => {
+      video.removeEventListener("loadedmetadata", setRate);
+      video.removeEventListener("play", setRate);
+    };
+  }, [videoOk]);
 
   /** Hand the scroll over ~1.1s before the final frame so nothing ever stalls. */
   useEffect(() => {
@@ -68,7 +98,7 @@ export default function ScrollScrubReveal() {
 
   return (
     <section ref={sectionRef} className="section-deep relative h-[130svh]">
-      <div className="sticky top-0 h-[100svh] overflow-hidden">
+      <div ref={stageRef} className="sticky top-0 h-[100svh] overflow-hidden">
         <div className="section-deep absolute inset-0" />
 
         <div
