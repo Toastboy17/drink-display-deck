@@ -1,8 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { Play } from "lucide-react";
-import { media } from "@/data/nube";
-import { onPlaybackGesture, primeVideo, tryPlay } from "@/lib/video";
-import { Button } from "@/components/ui/button";
 
 /**
  * The pour plays itself. The section pins for one screen, the video starts the
@@ -12,12 +8,7 @@ import { Button } from "@/components/ui/button";
 export default function ScrollScrubReveal() {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const handedOff = useRef(false);
-  const [videoOk, setVideoOk] = useState(true);
   const [open, setOpen] = useState(false);
-  const [ready, setReady] = useState(false);
-  const [blocked, setBlocked] = useState(false);
 
   /**
    * Start the pour when the pinned stage fills the screen. We watch the sticky
@@ -28,39 +19,15 @@ export default function ScrollScrubReveal() {
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage) return;
-    primeVideo(videoRef.current);
-
-    const isStageVisible = () => {
-      const rect = stage.getBoundingClientRect();
-      return rect.bottom > 0 && rect.top < window.innerHeight;
-    };
-
-    const retryPlayback = window.setInterval(() => {
-      const video = videoRef.current;
-      if (!video || !video.paused || !isStageVisible() || document.hidden) return;
-      video.playbackRate = 2.0;
-      tryPlay(video);
-    }, 500);
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        const video = videoRef.current;
         if (!entry) return;
         if (entry.isIntersecting && entry.intersectionRatio > 0.18) {
-          if (video) video.playbackRate = 2.0;
-          tryPlay(video);
-          window.setTimeout(() => {
-            const current = videoRef.current;
-            if (current?.paused) setBlocked(true);
-          }, 4000);
+          setOpen(true);
         } else {
-          video?.pause();
           if (entry.intersectionRatio < 0.2) {
             setOpen(false);
-            setBlocked(false);
-            setReady(false);
-            handedOff.current = false;
-            if (video) video.currentTime = 0;
           }
         }
       },
@@ -68,61 +35,13 @@ export default function ScrollScrubReveal() {
     );
 
     observer.observe(stage);
-    const offGesture = onPlaybackGesture(
-      () => videoRef.current,
-      isStageVisible,
-    );
     return () => {
       observer.disconnect();
-      offGesture();
-      window.clearInterval(retryPlayback);
     };
   }, []);
 
-  /** Keep the playback rate pinned once metadata lands (Safari resets it). */
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    const setRate = () => {
-      video.playbackRate = 2.0;
-    };
-    video.addEventListener("loadedmetadata", setRate);
-    video.addEventListener("play", setRate);
-    return () => {
-      video.removeEventListener("loadedmetadata", setRate);
-      video.removeEventListener("play", setRate);
-    };
-  }, [videoOk]);
-
-  /** Hand the scroll over ~1.1s before the final frame so nothing ever stalls. */
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const onTime = () => {
-      const d = video.duration;
-      if (!Number.isFinite(d) || d <= 0 || handedOff.current) return;
-      if (video.currentTime < d - 0.7) return;
-      handedOff.current = true;
-      const next = sectionRef.current?.nextElementSibling;
-      if (next instanceof HTMLElement) {
-        next.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    };
-
-    video.addEventListener("timeupdate", onTime);
-    return () => video.removeEventListener("timeupdate", onTime);
-  }, [videoOk]);
-
   const mask = "radial-gradient(circle at 50% 50%, #000 0%, #000 62%, transparent 100%)";
   const size = open ? "180%" : "56%";
-
-  const playVideo = () => {
-    const video = videoRef.current;
-    if (video) video.playbackRate = 2.0;
-    setBlocked(false);
-    tryPlay(video);
-  };
 
   return (
     <section ref={sectionRef} className="section-deep relative h-[130dvh] min-h-[130svh]">
@@ -142,32 +61,11 @@ export default function ScrollScrubReveal() {
             className="absolute inset-0 transition-transform duration-[3000ms] ease-out"
             style={{ transform: open ? "scale(1)" : "scale(1.14)" }}
           >
-            {videoOk ? (
-              <video
-                ref={videoRef}
-                src={media.scrubVideo}
-                autoPlay
-                muted
-                playsInline
-                preload="auto"
-                disablePictureInPicture
-                onLoadedMetadata={(event) => {
-                  event.currentTarget.playbackRate = 2.0;
-                  tryPlay(event.currentTarget);
-                }}
-                onLoadedData={(event) => tryPlay(event.currentTarget)}
-                onCanPlay={(event) => tryPlay(event.currentTarget)}
-                onPlaying={() => {
-                  setReady(true);
-                  setOpen(true);
-                  setBlocked(false);
-                }}
-                onPause={() => setReady(false)}
-                onError={() => setVideoOk(false)}
-                className="h-full w-full object-cover transition-opacity duration-700"
-                style={{ opacity: ready ? 1 : 0 }}
-              />
-            ) : null}
+            <img
+              src="/media/matcha-pour-2x.webp"
+              alt="Ceremonial matcha pouring into iced milk"
+              className="h-full w-full object-cover"
+            />
           </div>
           <div
             className="absolute inset-0"
@@ -186,18 +84,6 @@ export default function ScrollScrubReveal() {
             Scroll to pour
           </h2>
         </div>
-
-        {videoOk && (blocked || !ready) ? (
-          <Button
-            type="button"
-            onClick={playVideo}
-            className="absolute left-1/2 top-[58%] z-20 h-12 -translate-x-1/2 rounded-full bg-primary px-6 text-primary-foreground shadow-none md:hidden"
-            aria-label="Play the matcha pour video"
-          >
-            <Play className="fill-current" aria-hidden />
-            Play pour
-          </Button>
-        ) : null}
 
         <p
           className="label-caps absolute bottom-[9%] left-1/2 -translate-x-1/2 text-[#FFD1E0] transition-opacity duration-1000"

@@ -1,64 +1,14 @@
-import { useEffect, useRef, useState, type Ref } from "react";
+import { useRef, type Ref } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Play } from "lucide-react";
-import { media, site } from "@/data/nube";
+import { site } from "@/data/nube";
 import { useMagnetic } from "@/hooks/useMagnetic";
-import { onPlaybackGesture, tryPlay } from "@/lib/video";
-import { Button } from "@/components/ui/button";
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [videoOk, setVideoOk] = useState(true);
-  const [videoPlaying, setVideoPlaying] = useState(false);
-  const [showPlay, setShowPlay] = useState(false);
   const magnet = useMagnetic(0.4);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const plateY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
   const copyOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-
-  /** Safari needs the muted attribute in the DOM, and a gesture in Low Power Mode. */
-  useEffect(() => {
-    if (!videoOk) return;
-    const video = videoRef.current;
-    tryPlay(video);
-    const retryPlayback = window.setInterval(() => {
-      const current = videoRef.current;
-      if (!current || !current.paused || document.hidden) return;
-      tryPlay(current);
-    }, 750);
-    const revealFallback = window.setTimeout(() => {
-      if (videoRef.current?.paused) setShowPlay(true);
-    }, 4000);
-    const offGesture = onPlaybackGesture(() => videoRef.current);
-    const keepLooping = () => {
-      const current = videoRef.current;
-      if (!current || document.hidden) return;
-      if (current.ended) current.currentTime = 0;
-      tryPlay(current);
-    };
-    const onVisibilityChange = () => {
-      if (!document.hidden) keepLooping();
-    };
-    video?.addEventListener("ended", keepLooping);
-    video?.addEventListener("stalled", keepLooping);
-    window.addEventListener("pageshow", keepLooping);
-    document.addEventListener("visibilitychange", onVisibilityChange);
-    return () => {
-      window.clearTimeout(revealFallback);
-      window.clearInterval(retryPlayback);
-      offGesture();
-      video?.removeEventListener("ended", keepLooping);
-      video?.removeEventListener("stalled", keepLooping);
-      window.removeEventListener("pageshow", keepLooping);
-      document.removeEventListener("visibilitychange", onVisibilityChange);
-    };
-  }, [videoOk]);
-
-  const playVideo = () => {
-    setShowPlay(false);
-    tryPlay(videoRef.current);
-  };
 
   return (
     <section
@@ -68,37 +18,10 @@ export default function Hero() {
     >
       <motion.div className="absolute inset-0" style={{ y: plateY }}>
         <img
-          src={media.heroPlate}
-          alt=""
-          aria-hidden
+          src="/media/hero-matcha-loop.webp"
+          alt="Matcha drink rotating over ice"
           className="absolute inset-0 h-full w-full object-cover"
         />
-        {videoOk ? (
-          <video
-            ref={videoRef}
-            src={media.heroVideo}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            disablePictureInPicture
-            onLoadedMetadata={(event) => tryPlay(event.currentTarget)}
-            onLoadedData={(event) => tryPlay(event.currentTarget)}
-            onCanPlay={(event) => tryPlay(event.currentTarget)}
-            onPlaying={() => {
-              setVideoPlaying(true);
-              setShowPlay(false);
-            }}
-            onEnded={(event) => {
-              event.currentTarget.currentTime = 0;
-              tryPlay(event.currentTarget);
-            }}
-            onError={() => setVideoOk(false)}
-            className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
-            style={{ opacity: videoPlaying ? 1 : 0 }}
-          />
-        ) : null}
       </motion.div>
 
       <div
@@ -108,18 +31,6 @@ export default function Hero() {
             "radial-gradient(120% 90% at 12% 8%, rgba(194,233,255,0.22) 0%, transparent 56%), radial-gradient(90% 80% at 92% 96%, rgba(255,209,224,0.2) 0%, transparent 58%), linear-gradient(to bottom, rgba(11,35,48,0.62) 0%, rgba(11,35,48,0.34) 38%, rgba(16,48,61,0.86) 74%, #10303d 100%)",
         }}
       />
-
-      {videoOk && (showPlay || !videoPlaying) ? (
-        <Button
-          type="button"
-          onClick={playVideo}
-          className="absolute right-5 top-24 z-20 h-11 rounded-full bg-primary px-5 text-primary-foreground shadow-none md:hidden"
-          aria-label="Play the background video"
-        >
-          <Play className="fill-current" aria-hidden />
-          Play video
-        </Button>
-      ) : null}
 
       <motion.div
         style={{ opacity: copyOpacity }}
