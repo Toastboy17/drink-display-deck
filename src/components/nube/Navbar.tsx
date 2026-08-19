@@ -3,16 +3,19 @@ import { useEffect, useState, type Ref } from "react";
 import { MapPin } from "lucide-react";
 import { useMagnetic } from "@/hooks/useMagnetic";
 import Logo from "@/components/nube/Logo";
+import LanguageSwitcher from "@/components/nube/LanguageSwitcher";
+import { useI18n } from "@/i18n";
 
 const links = [
-  { label: "Menu", href: "#menu" },
-  { label: "Story", href: "#story" },
-  { label: "Visit", href: "#visit" },
+  { key: "nav.menu", href: "#menu" },
+  { key: "nav.story", href: "#story" },
+  { key: "nav.visit", href: "#visit" },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const magnet = useMagnetic(0.3);
+  const { t } = useI18n();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -48,12 +51,14 @@ export default function Navbar() {
               data-cursor="hover"
               className="label-caps text-[#AECDDD] transition-colors duration-200 hover:text-[#C2E9FF]"
             >
-              {l.label}
+              {t(l.key)}
             </a>
           ))}
         </div>
 
-        <motion.a
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          <LanguageSwitcher />
+          <motion.a
           ref={magnet.ref as Ref<HTMLAnchorElement>}
           href="#visit"
           onMouseMove={magnet.onMouseMove}
@@ -63,8 +68,9 @@ export default function Navbar() {
           className="label-caps flex items-center gap-2.5 rounded-full bg-[#C2E9FF] px-5 py-2.5 text-[#0b2330] transition-colors duration-200 hover:bg-[#FFD1E0]"
         >
           <MapPin className="h-3.5 w-3.5" strokeWidth={2} />
-          <span>Find Us</span>
-        </motion.a>
+          <span>{t("nav.findUs")}</span>
+          </motion.a>
+        </div>
       </nav>
     </header>
   );
