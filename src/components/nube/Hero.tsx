@@ -19,7 +19,10 @@ export default function Hero() {
     const stop = onPlaybackGesture(() => videoRef.current);
     const id = window.setInterval(() => {
       const v = videoRef.current;
-      if (v && v.paused) tryPlay(v);
+      if (v) {
+        v.playbackRate = 1.5;
+        if (v.paused) tryPlay(v);
+      }
     }, 800);
     return () => {
       stop();
@@ -42,7 +45,10 @@ export default function Hero() {
           muted
           playsInline
           preload="auto"
-          onLoadedData={(e) => tryPlay(e.currentTarget)}
+          onLoadedData={(e) => {
+            e.currentTarget.playbackRate = 1.5;
+            tryPlay(e.currentTarget);
+          }}
           onCanPlay={(e) => tryPlay(e.currentTarget)}
           onEnded={(e) => tryPlay(e.currentTarget)}
           aria-label="Matcha drink rotating over ice"
