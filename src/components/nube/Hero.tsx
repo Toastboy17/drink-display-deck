@@ -46,7 +46,7 @@ export default function Hero() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(120% 90% at 12% 8%, rgba(194,233,255,0.3) 0%, transparent 56%), radial-gradient(90% 80% at 92% 96%, rgba(255,209,224,0.28) 0%, transparent 58%), linear-gradient(to bottom, rgba(16,48,61,0.3) 0%, rgba(16,48,61,0.08) 44%, #10303d 100%)",
+            "radial-gradient(120% 90% at 12% 8%, rgba(194,233,255,0.22) 0%, transparent 56%), radial-gradient(90% 80% at 92% 96%, rgba(255,209,224,0.2) 0%, transparent 58%), linear-gradient(to bottom, rgba(11,35,48,0.62) 0%, rgba(11,35,48,0.34) 38%, rgba(16,48,61,0.86) 74%, #10303d 100%)",
         }}
       />
 
