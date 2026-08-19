@@ -30,6 +30,18 @@ export default function ScrollScrubReveal() {
     if (!stage) return;
     primeVideo(videoRef.current);
 
+    const isStageVisible = () => {
+      const rect = stage.getBoundingClientRect();
+      return rect.bottom > 0 && rect.top < window.innerHeight;
+    };
+
+    const retryPlayback = window.setInterval(() => {
+      const video = videoRef.current;
+      if (!video || !video.paused || !isStageVisible() || document.hidden) return;
+      video.playbackRate = 2.0;
+      tryPlay(video);
+    }, 500);
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         const video = videoRef.current;
@@ -40,7 +52,7 @@ export default function ScrollScrubReveal() {
           window.setTimeout(() => {
             const current = videoRef.current;
             if (current?.paused) setBlocked(true);
-          }, 500);
+          }, 4000);
         } else {
           video?.pause();
           if (entry.intersectionRatio < 0.2) {
@@ -58,14 +70,12 @@ export default function ScrollScrubReveal() {
     observer.observe(stage);
     const offGesture = onPlaybackGesture(
       () => videoRef.current,
-      () => {
-        const rect = stage.getBoundingClientRect();
-        return rect.bottom > 0 && rect.top < window.innerHeight;
-      },
+      isStageVisible,
     );
     return () => {
       observer.disconnect();
       offGesture();
+      window.clearInterval(retryPlayback);
     };
   }, []);
 
@@ -136,10 +146,17 @@ export default function ScrollScrubReveal() {
               <video
                 ref={videoRef}
                 src={media.scrubVideo}
+                autoPlay
                 muted
                 playsInline
                 preload="auto"
                 disablePictureInPicture
+                onLoadedMetadata={(event) => {
+                  event.currentTarget.playbackRate = 2.0;
+                  tryPlay(event.currentTarget);
+                }}
+                onLoadedData={(event) => tryPlay(event.currentTarget)}
+                onCanPlay={(event) => tryPlay(event.currentTarget)}
                 onPlaying={() => {
                   setReady(true);
                   setOpen(true);
