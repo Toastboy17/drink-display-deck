@@ -30,6 +30,8 @@ export type Drink = {
   temp: "Cold" | "Whisked" | "Blended" | "Hot";
   /** Dominant colour of the drink — drives the soft glow behind the can. */
   glow: string;
+  /** Two or three lines on where the drink came from. */
+  story?: string;
 };
 
 /** The nube menu — every drink hand-poured to order, in-store only. */
@@ -42,6 +44,8 @@ export const drinks: Drink[] = [
     img: icedLatte.url,
     temp: "Cold",
     glow: "#C08A5A",
+    story:
+      "The first thing we ever poured. A Zürich summer, a fridge full of clear ice, and one shot pulled slow enough to keep its sweetness.",
   },
   {
     id: "matcha-latte",
@@ -51,6 +55,8 @@ export const drinks: Drink[] = [
     img: matchaLatte.url,
     temp: "Whisked",
     glow: "#7FC08A",
+    story:
+      "Borrowed from a quiet Kyoto tea room where nobody spoke while the whisk moved. We kept the silence and added cold milk.",
   },
   {
     id: "strawberry-matcha",
@@ -60,6 +66,8 @@ export const drinks: Drink[] = [
     img: strawberryMatcha.url,
     temp: "Whisked",
     glow: "#F58AA6",
+    story:
+      "Built one June from market strawberries that were too ripe to sell. Crushed, layered, and gone by the afternoon.",
   },
   {
     id: "blueberry-matcha",
@@ -69,6 +77,8 @@ export const drinks: Drink[] = [
     img: blueberryMatcha.url,
     temp: "Whisked",
     glow: "#8E7BD6",
+    story:
+      "Inspired by dusk over the lake — deep purple sinking into green. We stopped stirring it once we saw the colour.",
   },
   {
     id: "mango-matcha",
@@ -78,6 +88,8 @@ export const drinks: Drink[] = [
     img: mangoMatcha.url,
     temp: "Whisked",
     glow: "#F5B45A",
+    story:
+      "A sunrise drink. Mango purée at the bottom so the first sip is bright and the last one is grassy and calm.",
   },
   {
     id: "blueberry-latte",
@@ -87,6 +99,8 @@ export const drinks: Drink[] = [
     img: blueberryLatte.url,
     temp: "Cold",
     glow: "#9A7BC8",
+    story:
+      "Someone asked for the blueberry compote in a coffee instead. We said no once, then tried it and changed the menu.",
   },
   {
     id: "salted-caramel-banana",
@@ -96,6 +110,8 @@ export const drinks: Drink[] = [
     img: saltedCaramelBanana.url,
     temp: "Cold",
     glow: "#D9A85C",
+    story:
+      "Made from a late-shift snack: banana, salt, and the caramel we drizzle down the inside of the glass on purpose.",
   },
   {
     id: "salted-caramel-banana-matcha",
@@ -105,6 +121,8 @@ export const drinks: Drink[] = [
     img: saltedCaramelBananaMatcha.url,
     temp: "Whisked",
     glow: "#BFC96E",
+    story:
+      "The accident that stuck. A caramel banana poured over matcha by mistake — now the one regulars order by name.",
   },
   {
     id: "mango-shake",
@@ -114,6 +132,8 @@ export const drinks: Drink[] = [
     img: mangoShake.url,
     temp: "Blended",
     glow: "#F7C55E",
+    story:
+      "Holiday drink energy, no coffee at all. Ripe mango, milk, barely any ice, blended thick enough to hold a straw.",
   },
   {
     id: "kids-matcha",
@@ -123,6 +143,8 @@ export const drinks: Drink[] = [
     img: kidsMatcha.url,
     temp: "Whisked",
     glow: "#9AD3A8",
+    story:
+      "For the smallest guests on Kirchgasse. Mild matcha, mostly milk, a little fruit — so they get their own cloud too.",
   },
 ];
 
