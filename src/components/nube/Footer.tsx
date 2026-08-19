@@ -35,40 +35,37 @@ export default function Footer() {
             </p>
 
             {/* Studio artwork: three hand-drawn pieces floating beside the wordmark. */}
-            <div className="mt-8">
-              <p className="label-caps text-[#FFD1E0]/80">{t("footer.art")}</p>
-              <div className="mt-4 flex flex-wrap items-end gap-5 sm:gap-7">
-                {artworks.map((art, i) => (
-                  <div
-                    key={art.src}
-                    data-cursor="hover"
-                    className="group relative"
-                    style={{ animationDelay: `${i * 1.4}s` }}
-                  >
-                    <span
-                      aria-hidden
-                      className="pointer-events-none absolute left-1/2 top-1/2 h-[86%] w-[86%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl"
-                      style={{
-                        background:
-                          i === 1
-                            ? "radial-gradient(circle, rgba(255,209,224,0.45) 0%, transparent 70%)"
-                            : "radial-gradient(circle, rgba(194,233,255,0.4) 0%, transparent 70%)",
-                      }}
-                    />
-                    <img
-                      src={art.src}
-                      alt={art.alt}
-                      loading="lazy"
-                      style={{ rotate: `${art.tilt}deg` }}
-                      className={`animate-drift relative h-[86px] w-auto object-contain transition-transform duration-500 ease-out group-hover:scale-110 group-hover:rotate-0 sm:h-[112px] ${
-                        art.plate
-                          ? "rounded-[18px] border border-[#C2E9FF]/25 bg-[#F2F7FA]/90 px-2.5 py-2"
-                          : ""
-                      }`}
-                    />
-                  </div>
-                ))}
-              </div>
+            <div className="mt-8 flex flex-wrap items-end gap-5 sm:gap-7">
+              {artworks.map((art, i) => (
+                <div
+                  key={art.src}
+                  data-cursor="hover"
+                  className="group relative"
+                  style={{ animationDelay: `${i * 1.4}s` }}
+                >
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute left-1/2 top-1/2 h-[86%] w-[86%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl"
+                    style={{
+                      background:
+                        i === 1
+                          ? "radial-gradient(circle, rgba(255,209,224,0.45) 0%, transparent 70%)"
+                          : "radial-gradient(circle, rgba(194,233,255,0.4) 0%, transparent 70%)",
+                    }}
+                  />
+                  <img
+                    src={art.src}
+                    alt={art.alt}
+                    loading="lazy"
+                    style={{ rotate: `${art.tilt}deg` }}
+                    className={`animate-drift relative h-[86px] w-auto object-contain transition-transform duration-500 ease-out group-hover:scale-110 group-hover:rotate-0 sm:h-[112px] ${
+                      art.plate
+                        ? "rounded-[18px] border border-[#C2E9FF]/25 bg-[#F2F7FA]/90 px-2.5 py-2"
+                        : ""
+                    }`}
+                  />
+                </div>
+              ))}
             </div>
           </div>
 
