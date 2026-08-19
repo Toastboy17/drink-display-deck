@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import CustomCursor from "@/components/nube/CustomCursor";
 import Navbar from "@/components/nube/Navbar";
 import Hero from "@/components/nube/Hero";
 import ScrollScrubReveal from "@/components/nube/ScrollScrubReveal";
@@ -31,7 +30,6 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="min-h-screen w-full bg-[#10303d]">
-      <CustomCursor />
       <Navbar />
       <main>
         <Hero />
