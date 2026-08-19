@@ -88,12 +88,13 @@ export default function ScrollScrubReveal() {
               <video
                 ref={videoRef}
                 src={media.scrubVideo}
-                poster={media.scrubPlate}
                 muted
                 playsInline
                 preload="auto"
+                onPlaying={() => setReady(true)}
                 onError={() => setVideoOk(false)}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover transition-opacity duration-700"
+                style={{ opacity: ready ? 1 : 0 }}
               />
             ) : (
               <img
