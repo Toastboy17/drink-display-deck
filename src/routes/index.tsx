@@ -37,7 +37,6 @@ function Index() {
         <Marquee />
         <Menu />
         <Story />
-        <DriftGallery />
         <Reviews />
       </main>
       <Footer />
