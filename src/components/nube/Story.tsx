@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { drinks } from "@/data/nube";
 import Logo from "@/components/nube/Logo";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -26,13 +25,13 @@ export default function Story() {
   return (
     <section id="story" className="section-blush px-5 py-24 sm:px-8 sm:py-32 lg:px-12">
       <div className="mx-auto max-w-screen-2xl">
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-5 lg:gap-20">
+        <div className="grid grid-cols-1 gap-14">
           <motion.div
             initial={{ opacity: 0, y: 36 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.75, ease: EASE }}
-            className="lg:col-span-3"
+            className=""
           >
             <p className="label-caps text-[#FFD1E0]">Our story</p>
             <h2 className="mt-4 max-w-[18ch] text-[#F2F7FA]">
@@ -60,24 +59,8 @@ export default function Story() {
                 </div>
               ))}
             </div>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 48 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.12 }}
-            className="lg:col-span-2"
-          >
-            <div className="overflow-hidden rounded-[26px]">
-              <img
-                src={drinks[2]!.img}
-                alt="Matcha whisked to order, poured over clear ice at the nube bar"
-                loading="lazy"
-                className="aspect-4/5 w-full object-cover"
-              />
-            </div>
-            <div className="mt-6 flex items-baseline justify-between border-t border-[#C2E9FF]/15 pt-6">
+            <div className="mt-14 flex items-baseline justify-between border-t border-[#C2E9FF]/15 pt-6">
               <span className="label-caps text-[#AECDDD]">Zürich · Altstadt</span>
               <Logo aria-hidden className="h-[40px] opacity-85" />
             </div>
