@@ -5,7 +5,7 @@ const phrases = [
   "Sip slower, made effortless",
   "Hand-poured to order",
   "No syrup shortcuts",
-  "Liquid Ice",
+  "Your way into cloud nine",
   `Zürich · ${site.street}`,
   "Matcha whisked to order",
 ];

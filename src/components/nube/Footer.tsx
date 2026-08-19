@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer
       id="visit"
-      className="section-ice border-t border-[#C2E9FF]/20 px-5 pb-10 pt-20 sm:px-8 lg:px-12"
+      className="section-ice border-t border-[#C2E9FF]/20 px-5 pb-10 pt-14 sm:px-8 lg:px-12"
     >
       <div className="mx-auto max-w-screen-2xl">
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-12">
@@ -32,6 +32,15 @@ export default function Footer() {
               className="mt-4 inline-block text-[15px] text-[#AECDDD] transition-colors duration-200 hover:text-[#FFD1E0]"
             >
               {site.email}
+            </a>
+            <a
+              href={site.phoneHref}
+              target="_blank"
+              rel="noreferrer"
+              data-cursor="hover"
+              className="mt-2 block text-[15px] text-[#AECDDD] transition-colors duration-200 hover:text-[#FFD1E0]"
+            >
+              {site.phone}
             </a>
           </div>
 
@@ -60,7 +69,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-4 border-t border-[#C2E9FF]/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-4 border-t border-[#C2E9FF]/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
           <p className="label-caps text-[#9BBACB]">© {new Date().getFullYear()} nube Zürich</p>
           <div className="label-caps flex flex-wrap gap-6 text-[#9BBACB]">
             <a
