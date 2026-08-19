@@ -1,26 +1,16 @@
 import { motion } from "framer-motion";
+import { useI18n } from "@/i18n";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const principles = [
-  {
-    k: "01",
-    t: "No syrup shortcuts",
-    d: "Sweetness comes from the bean and the milk, never from a pump bottle behind the counter.",
-  },
-  {
-    k: "02",
-    t: "Poured to order",
-    d: "Nothing sits in a batch jug. Matcha is whisked, cold brew is drawn, cream is poured in front of you.",
-  },
-  {
-    k: "03",
-    t: "Unhurried by design",
-    d: "Forty seconds slower than the café next door. That difference is the entire point.",
-  },
+  { k: "01", tKey: "story.p1t", dKey: "story.p1d" },
+  { k: "02", tKey: "story.p2t", dKey: "story.p2d" },
+  { k: "03", tKey: "story.p3t", dKey: "story.p3d" },
 ];
 
 export default function Story() {
+  const { t } = useI18n();
   return (
     <section id="story" className="section-blush px-5 py-24 sm:px-8 sm:py-32 lg:px-12">
       <div className="mx-auto max-w-screen-2xl">
