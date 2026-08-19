@@ -190,13 +190,6 @@
   }
 }
 
-/* Hide the native cursor on pointer devices only — touch keeps the real cursor. */
-@media (min-width: 768px) and (hover: hover) {
-  * {
-    cursor: none;
-  }
-}
-
 @keyframes nube-marquee {
   from {
     transform: translate3d(0, 0, 0);
