@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import Logo from "@/components/nube/Logo";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -60,9 +59,8 @@ export default function Story() {
               ))}
             </div>
 
-            <div className="mt-14 flex items-baseline justify-between border-t border-[#C2E9FF]/15 pt-6">
+            <div className="mt-14 border-t border-[#C2E9FF]/15 pt-6">
               <span className="label-caps text-[#AECDDD]">Zürich · Altstadt</span>
-              <Logo aria-hidden className="h-[40px] opacity-85" />
             </div>
           </motion.div>
         </div>

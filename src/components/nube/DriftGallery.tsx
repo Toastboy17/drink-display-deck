@@ -74,6 +74,14 @@ export default function DriftGallery() {
                   >
                     {drink.name}
                   </p>
+                  {drink.story ? (
+                    <p
+                      className="mx-auto mt-3 max-w-[30ch] text-center text-[12.5px] leading-relaxed transition-opacity duration-500"
+                      style={{ color: "#AECDDD", opacity: isActive ? 1 : 0.35 }}
+                    >
+                      {drink.story}
+                    </p>
+                  ) : null}
                 </div>
               );
             })}

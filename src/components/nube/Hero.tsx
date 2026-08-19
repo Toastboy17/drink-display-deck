@@ -2,7 +2,6 @@ import { useRef, useState, type Ref } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { media, site } from "@/data/nube";
 import { useMagnetic } from "@/hooks/useMagnetic";
-import Logo from "@/components/nube/Logo";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -99,11 +98,10 @@ export default function Hero() {
           </motion.a>
         </div>
 
-        <div className="mt-10 flex items-end justify-between gap-6">
+        <div className="mt-10">
           <p className="font-display text-[clamp(20px,2.4vw,32px)] leading-none tracking-[0.14em] text-[#F2F7FA]/45">
             {site.street} · {site.city}
           </p>
-          <Logo aria-hidden className="hidden h-[54px] opacity-40 sm:block lg:h-[64px]" />
         </div>
       </motion.div>
     </section>
