@@ -36,8 +36,6 @@ export default function Footer() {
 
             {/* Studio artwork: three hand-drawn pieces floating beside the wordmark. */}
             <div className="mt-8">
-              <p className="label-caps text-[#FFD1E0]/80">{t("footer.art")}</p>
-              <div className="mt-4 flex flex-wrap items-end gap-5 sm:gap-7">
                 {artworks.map((art, i) => (
                   <div
                     key={art.src}
