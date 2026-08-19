@@ -1,43 +1,14 @@
-import { useEffect, useRef, type Ref } from "react";
+import { useRef, type Ref } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { media, site } from "@/data/nube";
+import { site } from "@/data/nube";
 import { useMagnetic } from "@/hooks/useMagnetic";
-import { onPlaybackGesture, tryPlay } from "@/lib/video";
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const magnet = useMagnetic(0.4);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const plateY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
   const copyOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-
-  /** Desktop keeps the MP4; mobile uses an animated WebP that never needs autoplay permission. */
-  useEffect(() => {
-    const video = videoRef.current;
-    tryPlay(video);
-    const offGesture = onPlaybackGesture(() => videoRef.current);
-    const keepLooping = () => {
-      const current = videoRef.current;
-      if (!current || document.hidden) return;
-      if (current.ended) current.currentTime = 0;
-      tryPlay(current);
-    };
-    const onVisibilityChange = () => {
-      if (!document.hidden) keepLooping();
-    };
-    video?.addEventListener("ended", keepLooping);
-    video?.addEventListener("stalled", keepLooping);
-    window.addEventListener("pageshow", keepLooping);
-    document.addEventListener("visibilitychange", onVisibilityChange);
-    return () => {
-      offGesture();
-      video?.removeEventListener("ended", keepLooping);
-      video?.removeEventListener("stalled", keepLooping);
-      window.removeEventListener("pageshow", keepLooping);
-      document.removeEventListener("visibilitychange", onVisibilityChange);
-    };
-  }, []);
 
   return (
     <section
@@ -49,24 +20,7 @@ export default function Hero() {
         <img
           src="/media/hero-matcha-loop.webp"
           alt="Matcha drink rotating over ice"
-          className="absolute inset-0 h-full w-full object-cover md:hidden"
-        />
-        <video
-          ref={videoRef}
-          src={media.heroVideo}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          disablePictureInPicture
-          onLoadedMetadata={(event) => tryPlay(event.currentTarget)}
-          onCanPlay={(event) => tryPlay(event.currentTarget)}
-          onEnded={(event) => {
-            event.currentTarget.currentTime = 0;
-            tryPlay(event.currentTarget);
-          }}
-          className="absolute inset-0 hidden h-full w-full object-cover md:block"
+          className="absolute inset-0 h-full w-full object-cover"
         />
       </motion.div>
 
