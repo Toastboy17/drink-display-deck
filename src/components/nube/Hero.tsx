@@ -1,17 +1,26 @@
-import { useRef, useState, type Ref } from "react";
+import { useEffect, useRef, useState, type Ref } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { media, site } from "@/data/nube";
 import { useMagnetic } from "@/hooks/useMagnetic";
+import { onFirstGesture, tryPlay } from "@/lib/video";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [videoOk, setVideoOk] = useState(true);
   const magnet = useMagnetic(0.4);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const plateY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
   const copyOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+
+  /** Safari needs the muted attribute in the DOM, and a gesture in Low Power Mode. */
+  useEffect(() => {
+    if (!videoOk) return;
+    tryPlay(videoRef.current);
+    return onFirstGesture(() => tryPlay(videoRef.current));
+  }, [videoOk]);
 
   return (
     <section
@@ -22,6 +31,7 @@ export default function Hero() {
       <motion.div className="absolute inset-0" style={{ y: plateY }}>
         {videoOk ? (
           <video
+            ref={videoRef}
             src={media.heroVideo}
             poster={media.heroPlate}
             autoPlay

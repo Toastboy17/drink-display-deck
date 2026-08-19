@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { useMotionValueEvent, useScroll, useSpring, useTransform } from "framer-motion";
 import { drinks } from "@/data/nube";
 
 /**
@@ -8,18 +8,57 @@ import { drinks } from "@/data/nube";
  */
 export default function DriftGallery() {
   const ref = useRef<HTMLDivElement>(null);
+  const rowRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const [active, setActive] = useState(0);
+  /** Cards shrink with the viewport so a phone never shows a clipped can. */
+  const [card, setCard] = useState(260);
   const last = drinks.length - 1;
 
-  useMotionValueEvent(scrollYProgress, "change", (p) => {
-    setActive(Math.min(last, Math.max(0, Math.round(p * last))));
+  useEffect(() => {
+    const measure = () =>
+      setCard(Math.max(150, Math.min(260, Math.round(window.innerWidth * 0.56))));
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  /**
+   * Travel is tracked in *card units* so the centred card always lines up with
+   * the middle of the screen, whatever width the cards happen to be.
+   */
+  const rawIndex = useTransform(scrollYProgress, [0, 1], [0, last]);
+  const smooth = useSpring(rawIndex, { stiffness: 90, damping: 24, mass: 0.6 });
+  const unit = useRef(0);
+
+  const paint = () => {
+    const el = rowRef.current;
+    if (!el) return;
+    const v = unit.current;
+    el.style.transform = `translate3d(${-v * card}px, 0, 0)`;
+    /**
+     * Emphasis follows the *continuous* position, so the can that sits in the
+     * middle of the screen is always the one that is big, sharp and readable.
+     */
+    Array.from(el.children).forEach((child, i) => {
+      const d = Math.min(Math.abs(i - v), 2.2);
+      const node = child as HTMLElement;
+      node.style.transform = `scale(${1 - d * 0.17})`;
+      node.style.opacity = `${Math.max(0.3, 1 - d * 0.42)}`;
+      node.style.filter = `blur(${d * 1.7}px)`;
+      const near = Math.max(0, 1 - d);
+      const name = node.querySelector<HTMLElement>("[data-name]");
+      const story = node.querySelector<HTMLElement>("[data-story]");
+      if (name) name.style.color = near > 0.5 ? "#F2F7FA" : "#7FA0B4";
+      if (story) story.style.opacity = `${0.3 + near * 0.7}`;
+    });
+  };
+
+  useMotionValueEvent(smooth, "change", (v) => {
+    unit.current = v;
+    paint();
   });
 
-  /** Row travel: item 0 centred at the start, last item centred at the end. */
-  const rawX = useTransform(scrollYProgress, [0, 1], [0, -last * 260]);
-  const x = useSpring(rawX, { stiffness: 90, damping: 24, mass: 0.6 });
-  const rowX = useTransform(x, (v) => `calc(50% - 130px + ${v}px)`);
+  useEffect(paint, [card]);
 
   return (
     <section ref={ref} data-cursor="drag" className="section-blush relative h-[320svh]">
@@ -28,28 +67,14 @@ export default function DriftGallery() {
           Drift through the room
         </p>
 
-        <div className="relative">
-          <motion.div
-            className="flex items-center will-change-transform"
-            style={{ x: rowX }}
-          >
+        <div className="relative" style={{ paddingLeft: `calc(50% - ${card / 2}px)` }}>
+          <div ref={rowRef} className="flex items-center will-change-transform">
             {drinks.map((drink, i) => {
-              const distance = Math.abs(i - active);
-              const isActive = distance === 0;
-              const scale = isActive ? 1 : distance === 1 ? 0.78 : 0.66;
-              const opacity = isActive ? 1 : distance === 1 ? 0.6 : 0.32;
-              const blur = isActive ? 0 : Math.min(distance * 1.8, 4);
-
               return (
                 <div
                   key={drink.id}
-                  className="shrink-0 px-3 transition-all duration-700 ease-out"
-                  style={{
-                    width: 260,
-                    transform: `scale(${scale})`,
-                    opacity,
-                    filter: `blur(${blur}px)`,
-                  }}
+                  className="shrink-0 px-2 will-change-transform sm:px-3"
+                  style={{ width: card, transform: `scale(${i === 0 ? 1 : 0.7})` }}
                 >
                   <div className="relative">
                     <div
@@ -69,15 +94,17 @@ export default function DriftGallery() {
                     />
                   </div>
                   <p
-                    className="mt-5 text-center font-display text-[22px] leading-none tracking-[0.04em] transition-colors duration-500"
-                    style={{ color: isActive ? "#F2F7FA" : "#7FA0B4" }}
+                    data-name
+                    className="mt-4 text-center font-display text-[18px] leading-none tracking-[0.04em] transition-colors duration-500 sm:mt-5 sm:text-[22px]"
+                    style={{ color: i === 0 ? "#F2F7FA" : "#7FA0B4" }}
                   >
                     {drink.name}
                   </p>
                   {drink.story ? (
                     <p
-                      className="mx-auto mt-3 max-w-[30ch] text-center text-[12.5px] leading-relaxed transition-opacity duration-500"
-                      style={{ color: "#AECDDD", opacity: isActive ? 1 : 0.35 }}
+                      data-story
+                      className="mx-auto mt-2.5 max-w-[30ch] text-center text-[11.5px] leading-relaxed sm:mt-3 sm:text-[12.5px]"
+                      style={{ color: "#AECDDD", opacity: i === 0 ? 1 : 0.35 }}
                     >
                       {drink.story}
                     </p>
@@ -85,7 +112,7 @@ export default function DriftGallery() {
                 </div>
               );
             })}
-          </motion.div>
+          </div>
         </div>
 
         <p className="absolute bottom-[10%] left-1/2 max-w-[38ch] -translate-x-1/2 px-6 text-center text-[15px] leading-relaxed text-[#DCEDF7]">

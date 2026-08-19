@@ -23,7 +23,7 @@ function DrinkItem({ drink, index }: { drink: Drink; index: number }) {
       className={`group relative ${feature ? "sm:pt-10" : ""}`}
     >
       <div
-        className={`relative mx-auto ${feature ? "w-[92%] sm:w-full" : "w-[80%] sm:w-[88%]"}`}
+        className={`relative mx-auto ${feature ? "w-full" : "w-[92%] sm:w-[88%]"}`}
       >
         {/* Tight colour bloom bedded behind the can — slow pulse for the liquid feel. */}
         <div
@@ -48,26 +48,30 @@ function DrinkItem({ drink, index }: { drink: Drink; index: number }) {
         />
       </div>
 
-      <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2">
-        <h3 className={`text-[#F2F7FA] ${feature ? "text-[30px] sm:text-[34px]" : ""}`}>
+      <div className="mt-4 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 sm:mt-5 sm:gap-x-3">
+        <h3
+          className={`text-[#F2F7FA] ${
+            feature ? "text-[21px] sm:text-[30px] lg:text-[34px]" : "text-[19px] sm:text-[26px]"
+          }`}
+        >
           {drink.name}
         </h3>
         <span
-          className="label-caps rounded-full border border-[#C2E9FF]/25 bg-[#C2E9FF]/10 px-2.5 py-1 tabular-nums text-[#C2E9FF]"
+          className="label-caps rounded-full border border-[#C2E9FF]/25 bg-[#C2E9FF]/10 px-2 py-0.5 text-[10px] tabular-nums text-[#C2E9FF] sm:px-2.5 sm:py-1"
           aria-label={`Item ${index + 1}`}
         >
           {String(index + 1).padStart(2, "0")}
         </span>
       </div>
 
-      <p className="mt-1.5 text-[13px] text-[#AECDDD]">{drink.tagline}</p>
+      <p className="mt-1.5 text-[12.5px] text-[#AECDDD] sm:text-[13px]">{drink.tagline}</p>
 
-      {/* Ingredients stay hidden at rest and slide in on hover / focus. */}
-      <p className="mt-2 max-h-0 translate-y-1 overflow-hidden text-[13px] text-[#9BBACB] opacity-0 transition-all duration-400 ease-out group-hover:max-h-16 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:max-h-16 group-focus-within:translate-y-0 group-focus-within:opacity-100">
+      {/* Touch devices have no hover, so the ingredients stay visible there. */}
+      <p className="mt-2 overflow-hidden text-[12px] leading-relaxed text-[#9BBACB] transition-all duration-400 ease-out sm:mt-2 sm:max-h-0 sm:translate-y-1 sm:text-[13px] sm:opacity-0 sm:group-hover:max-h-16 sm:group-hover:translate-y-0 sm:group-hover:opacity-100 sm:group-focus-within:max-h-16 sm:group-focus-within:translate-y-0 sm:group-focus-within:opacity-100">
         {drink.notes}
       </p>
 
-      <div className="mt-3 border-t border-[#C2E9FF]/10 pt-3">
+      <div className="mt-3 border-t border-[#C2E9FF]/10 pt-2.5 sm:pt-3">
         <TempIcon temp={drink.temp} />
       </div>
     </motion.article>
@@ -138,7 +142,7 @@ export default function Menu() {
           </p>
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center gap-2.5 border-y border-[#C2E9FF]/12 py-5">
+        <div className="mt-10 flex flex-wrap items-center gap-2 border-y border-[#C2E9FF]/12 py-4 sm:mt-12 sm:gap-2.5 sm:py-5">
           {categories.map((c) => {
             const on = c.id === activeId;
             return (
@@ -148,7 +152,7 @@ export default function Menu() {
                 onClick={() => setActiveId(c.id)}
                 data-cursor="hover"
                 aria-pressed={on}
-                className={`label-caps rounded-full border px-4 py-2 transition-colors duration-300 ${
+                className={`label-caps rounded-full border px-3.5 py-2 transition-colors duration-300 sm:px-4 ${
                   on
                     ? "border-[#C2E9FF]/60 bg-[#C2E9FF]/15 text-[#F2F7FA]"
                     : "border-[#C2E9FF]/20 text-[#AECDDD] hover:border-[#C2E9FF]/40 hover:text-[#F2F7FA]"
@@ -165,7 +169,7 @@ export default function Menu() {
 
         <div
           key={active.id}
-          className="mt-14 grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 sm:mt-14 sm:gap-x-8 sm:gap-y-16 lg:grid-cols-3 xl:grid-cols-4"
         >
           {active.items.map((drink, i) => (
             <DrinkItem key={drink.id} drink={drink} index={i} />
