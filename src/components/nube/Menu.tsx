@@ -75,7 +75,56 @@ function DrinkItem({ drink, index }: { drink: Drink; index: number }) {
   );
 }
 
+const all = [...drinks, ...hotDrinks];
+const byId = (ids: string[]) => ids.map((id) => all.find((d) => d.id === id)!).filter(Boolean);
+
+const categories = [
+  {
+    id: "matcha",
+    label: "Matcha",
+    blurb: "Ceremonial grade, whisked to order — layered over fruit or poured hot.",
+    items: byId([
+      "matcha-latte",
+      "strawberry-matcha",
+      "blueberry-matcha",
+      "mango-matcha",
+      "salted-caramel-banana-matcha",
+      "hot-matcha-latte",
+    ]),
+  },
+  {
+    id: "lattes",
+    label: "Lattes",
+    blurb: "Cold, layered and sealed in the can — espresso the long way round.",
+    items: byId(["iced-latte", "blueberry-latte", "salted-caramel-banana"]),
+  },
+  {
+    id: "coffee",
+    label: "Coffee",
+    blurb: "The warm side of the counter, served in the cup.",
+    items: byId([
+      "cappuccino",
+      "flat-white",
+      "caffe-latte",
+      "latte-macchiato",
+      "mocha",
+      "filter-coffee",
+      "espresso",
+      "espresso-doppio",
+    ]),
+  },
+  {
+    id: "shakes",
+    label: "Shakes",
+    blurb: "Blended thick, caffeine-light — the easy end of the menu.",
+    items: byId(["mango-shake", "kids-matcha"]),
+  },
+];
+
 export default function Menu() {
+  const [activeId, setActiveId] = useState(categories[0]!.id);
+  const active = categories.find((c) => c.id === activeId)!;
+
   return (
     <section id="menu" className="section-ice px-5 py-24 sm:px-8 sm:py-32 lg:px-12">
       <div className="mx-auto max-w-screen-2xl">
@@ -93,21 +142,36 @@ export default function Menu() {
           </p>
         </div>
 
-        <div className="mt-16 grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {drinks.map((drink, i) => (
-            <DrinkItem key={drink.id} drink={drink} index={i} />
-          ))}
+        <div className="mt-12 flex flex-wrap items-center gap-2.5 border-y border-[#C2E9FF]/12 py-5">
+          {categories.map((c) => {
+            const on = c.id === activeId;
+            return (
+              <button
+                key={c.id}
+                type="button"
+                onClick={() => setActiveId(c.id)}
+                data-cursor="hover"
+                aria-pressed={on}
+                className={`label-caps rounded-full border px-4 py-2 transition-colors duration-300 ${
+                  on
+                    ? "border-[#C2E9FF]/60 bg-[#C2E9FF]/15 text-[#F2F7FA]"
+                    : "border-[#C2E9FF]/20 text-[#AECDDD] hover:border-[#C2E9FF]/40 hover:text-[#F2F7FA]"
+                }`}
+              >
+                {c.label}
+                <span className="ml-2 tabular-nums text-[#C2E9FF]/70">{c.items.length}</span>
+              </button>
+            );
+          })}
         </div>
 
-        <div className="mt-28 flex items-end gap-5 border-t border-[#C2E9FF]/12 pt-10">
-          <div>
-            <p className="label-caps text-[#FFD1E0]">Served warm</p>
-            <h3 className="mt-3 text-[#F2F7FA]">The hot side of the bar</h3>
-          </div>
-        </div>
+        <p className="mt-6 max-w-[52ch] text-[15px] text-[#AECDDD]">{active.blurb}</p>
 
-        <div className="mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {hotDrinks.map((drink, i) => (
+        <div
+          key={active.id}
+          className="mt-14 grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        >
+          {active.items.map((drink, i) => (
             <DrinkItem key={drink.id} drink={drink} index={i} />
           ))}
         </div>
