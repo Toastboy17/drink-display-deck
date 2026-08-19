@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { media } from "@/data/nube";
-import { onFirstGesture, primeVideo, tryPlay } from "@/lib/video";
+import { onPlaybackGesture, primeVideo, tryPlay } from "@/lib/video";
 
 /**
  * The pour plays itself. The section pins for one screen, the video starts the
@@ -31,7 +31,7 @@ export default function ScrollScrubReveal() {
       ([entry]) => {
         const video = videoRef.current;
         if (!entry) return;
-        if (entry.intersectionRatio > 0.55) {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.18) {
           setOpen(true);
           if (video) video.playbackRate = 2.0;
           tryPlay(video);
@@ -44,18 +44,21 @@ export default function ScrollScrubReveal() {
           }
         }
       },
-      { threshold: [0, 0.2, 0.4, 0.55, 0.75, 1] },
+      { threshold: [0, 0.18, 0.4, 0.7] },
     );
 
     observer.observe(stage);
-    const offGesture = onFirstGesture(() => {
-      if (open) tryPlay(videoRef.current);
-    });
+    const offGesture = onPlaybackGesture(
+      () => videoRef.current,
+      () => {
+        const rect = stage.getBoundingClientRect();
+        return rect.bottom > 0 && rect.top < window.innerHeight;
+      },
+    );
     return () => {
       observer.disconnect();
       offGesture();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** Keep the playback rate pinned once metadata lands (Safari resets it). */
@@ -97,8 +100,8 @@ export default function ScrollScrubReveal() {
   const size = open ? "180%" : "56%";
 
   return (
-    <section ref={sectionRef} className="section-deep relative h-[130svh]">
-      <div ref={stageRef} className="sticky top-0 h-[100svh] overflow-hidden">
+    <section ref={sectionRef} className="section-deep relative h-[130dvh] min-h-[130svh]">
+      <div ref={stageRef} className="sticky top-0 h-[100dvh] min-h-[100svh] overflow-hidden">
         <div className="section-deep absolute inset-0" />
 
         <div
@@ -114,6 +117,12 @@ export default function ScrollScrubReveal() {
             className="absolute inset-0 transition-transform duration-[3000ms] ease-out"
             style={{ transform: open ? "scale(1)" : "scale(1.14)" }}
           >
+            <img
+              src={media.scrubPlate}
+              alt=""
+              aria-hidden
+              className="absolute inset-0 h-full w-full object-cover"
+            />
             {videoOk ? (
               <video
                 ref={videoRef}
@@ -121,18 +130,13 @@ export default function ScrollScrubReveal() {
                 muted
                 playsInline
                 preload="auto"
+                disablePictureInPicture
                 onPlaying={() => setReady(true)}
                 onError={() => setVideoOk(false)}
                 className="h-full w-full object-cover transition-opacity duration-700"
                 style={{ opacity: ready ? 1 : 0 }}
               />
-            ) : (
-              <img
-                src={media.scrubPlate}
-                alt="Jade matcha purée poured slowly into cold milk over clear ice"
-                className="h-full w-full object-cover"
-              />
-            )}
+            ) : null}
           </div>
           <div
             className="absolute inset-0"
