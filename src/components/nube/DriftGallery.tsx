@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useMotionValueEvent, useScroll, useSpring, useTransform } from "framer-motion";
 import { drinks } from "@/data/nube";
+import { useI18n } from "@/i18n";
 
 /**
  * Calm horizontal drift: the whole row travels sideways as the page scrolls,
@@ -12,6 +13,7 @@ export default function DriftGallery() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   /** Cards shrink with the viewport so a phone never shows a clipped can. */
   const [card, setCard] = useState(260);
+  const { t } = useI18n();
   const last = drinks.length - 1;
 
   useEffect(() => {
@@ -64,7 +66,7 @@ export default function DriftGallery() {
     <section ref={ref} data-cursor="drag" className="section-blush relative h-[320svh]">
       <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden">
         <p className="label-caps absolute left-1/2 top-[10%] -translate-x-1/2 px-6 text-center text-[#AECDDD]">
-          Drift through the room
+          {t("drift.label")}
         </p>
 
         <div className="relative" style={{ paddingLeft: `calc(50% - ${card / 2}px)` }}>

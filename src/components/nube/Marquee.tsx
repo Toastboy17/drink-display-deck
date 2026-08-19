@@ -1,16 +1,12 @@
 import Logo from "@/components/nube/Logo";
 import { site } from "@/data/nube";
+import { useI18n } from "@/i18n";
 
-const phrases = [
-  "Sip slower, made effortless",
-  "Hand-poured to order",
-  "No syrup shortcuts",
-  "Your way into cloud nine",
-  `Zürich · ${site.street}`,
-  "Matcha whisked to order",
-];
+const keys = ["marq.1", "marq.2", "marq.3", "marq.4", "marq.5"];
 
 export default function Marquee() {
+  const { t } = useI18n();
+  const phrases = [...keys.slice(0, 4).map(t), `Zürich · ${site.street}`, t("marq.5")];
   const strip = [...phrases, ...phrases];
 
   return (

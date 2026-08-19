@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { reviews, site } from "@/data/nube";
+import { useI18n } from "@/i18n";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -19,13 +20,16 @@ function Stars({ rating }: { rating: number }) {
 }
 
 export default function Reviews() {
+  const { t } = useI18n();
   return (
     <section id="reviews" className="section-deep px-5 py-24 sm:px-8 sm:py-28 lg:px-12">
       <div className="mx-auto max-w-screen-2xl">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <p className="label-caps text-[#C2E9FF]">Google reviews</p>
-            <h2 className="mt-4 text-[#F2F7FA]">{site.rating} from {site.reviewCount} ratings</h2>
+            <p className="label-caps text-[#C2E9FF]">{t("reviews.eyebrow")}</p>
+            <h2 className="mt-4 text-[#F2F7FA]">
+              {site.rating} {t("reviews.from")} {site.reviewCount} {t("reviews.ratings")}
+            </h2>
           </div>
           <div className="flex items-center gap-4">
             <Stars rating={site.rating} />
@@ -36,7 +40,7 @@ export default function Reviews() {
               data-cursor="hover"
               className="label-caps rounded-full border border-[#C2E9FF]/30 px-5 py-3 text-[#C2E9FF] transition-colors duration-200 hover:bg-[#C2E9FF]/10"
             >
-              Read on Google
+              {t("reviews.cta")}
             </a>
           </div>
         </div>
