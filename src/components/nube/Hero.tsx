@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type Ref } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { media, site } from "@/data/nube";
 import { useMagnetic } from "@/hooks/useMagnetic";
-import { onFirstGesture, tryPlay } from "@/lib/video";
+import { onPlaybackGesture, tryPlay } from "@/lib/video";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -10,6 +10,7 @@ export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoOk, setVideoOk] = useState(true);
+  const [videoReady, setVideoReady] = useState(false);
   const magnet = useMagnetic(0.4);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const plateY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
@@ -19,36 +20,39 @@ export default function Hero() {
   useEffect(() => {
     if (!videoOk) return;
     tryPlay(videoRef.current);
-    return onFirstGesture(() => tryPlay(videoRef.current));
+    return onPlaybackGesture(() => videoRef.current);
   }, [videoOk]);
 
   return (
     <section
       id="top"
       ref={ref}
-      className="relative h-[100svh] min-h-[620px] overflow-hidden bg-[#10303d]"
+      className="relative h-[100dvh] min-h-[100svh] overflow-hidden bg-[#10303d]"
     >
       <motion.div className="absolute inset-0" style={{ y: plateY }}>
+        <img
+          src={media.heroPlate}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover"
+        />
         {videoOk ? (
           <video
             ref={videoRef}
             src={media.heroVideo}
-            poster={media.heroPlate}
             autoPlay
             muted
             loop
             playsInline
             preload="auto"
+            disablePictureInPicture
+            onCanPlay={() => setVideoReady(true)}
+            onPlaying={() => setVideoReady(true)}
             onError={() => setVideoOk(false)}
-            className="h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
+            style={{ opacity: videoReady ? 1 : 0 }}
           />
-        ) : (
-          <img
-            src={media.heroPlate}
-            alt="Cold brew poured over clear ice at nube"
-            className="h-full w-full object-cover"
-          />
-        )}
+        ) : null}
       </motion.div>
 
       <div
