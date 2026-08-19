@@ -48,7 +48,7 @@ export default function ScrollScrubReveal() {
     const id = window.setInterval(() => {
       const v = videoRef.current;
       if (!v) return;
-      v.playbackRate = 2;
+      v.playbackRate = 1.5;
       if (v.paused) tryPlay(v);
     }, 600);
     return () => {
@@ -88,7 +88,7 @@ export default function ScrollScrubReveal() {
               preload="auto"
               aria-label="Ceremonial matcha pouring into iced milk"
               onLoadedData={(e) => {
-                e.currentTarget.playbackRate = 2;
+                e.currentTarget.playbackRate = 1.5;
                 tryPlay(e.currentTarget);
               }}
               onCanPlay={(e) => tryPlay(e.currentTarget)}
