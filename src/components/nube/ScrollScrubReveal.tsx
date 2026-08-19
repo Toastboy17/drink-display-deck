@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import { Play } from "lucide-react";
 import { media } from "@/data/nube";
 import { onPlaybackGesture, primeVideo, tryPlay } from "@/lib/video";
+import { Button } from "@/components/ui/button";
 
 /**
  * The pour plays itself. The section pins for one screen, the video starts the
@@ -15,6 +17,7 @@ export default function ScrollScrubReveal() {
   const [videoOk, setVideoOk] = useState(true);
   const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
+  const [blocked, setBlocked] = useState(false);
 
   /**
    * Start the pour when the pinned stage fills the screen. We watch the sticky
@@ -32,13 +35,18 @@ export default function ScrollScrubReveal() {
         const video = videoRef.current;
         if (!entry) return;
         if (entry.isIntersecting && entry.intersectionRatio > 0.18) {
-          setOpen(true);
           if (video) video.playbackRate = 2.0;
           tryPlay(video);
+          window.setTimeout(() => {
+            const current = videoRef.current;
+            if (current?.paused) setBlocked(true);
+          }, 500);
         } else {
           video?.pause();
           if (entry.intersectionRatio < 0.2) {
             setOpen(false);
+            setBlocked(false);
+            setReady(false);
             handedOff.current = false;
             if (video) video.currentTime = 0;
           }
@@ -99,6 +107,13 @@ export default function ScrollScrubReveal() {
   const mask = "radial-gradient(circle at 50% 50%, #000 0%, #000 62%, transparent 100%)";
   const size = open ? "180%" : "56%";
 
+  const playVideo = () => {
+    const video = videoRef.current;
+    if (video) video.playbackRate = 2.0;
+    setBlocked(false);
+    tryPlay(video);
+  };
+
   return (
     <section ref={sectionRef} className="section-deep relative h-[130dvh] min-h-[130svh]">
       <div ref={stageRef} className="sticky top-0 h-[100dvh] min-h-[100svh] overflow-hidden">
@@ -131,7 +146,12 @@ export default function ScrollScrubReveal() {
                 playsInline
                 preload="auto"
                 disablePictureInPicture
-                onPlaying={() => setReady(true)}
+                onPlaying={() => {
+                  setReady(true);
+                  setOpen(true);
+                  setBlocked(false);
+                }}
+                onPause={() => setReady(false)}
                 onError={() => setVideoOk(false)}
                 className="h-full w-full object-cover transition-opacity duration-700"
                 style={{ opacity: ready ? 1 : 0 }}
@@ -155,6 +175,18 @@ export default function ScrollScrubReveal() {
             Scroll to pour
           </h2>
         </div>
+
+        {videoOk && blocked ? (
+          <Button
+            type="button"
+            onClick={playVideo}
+            className="absolute left-1/2 top-[58%] z-20 h-12 -translate-x-1/2 rounded-full bg-primary px-6 text-primary-foreground shadow-none md:hidden"
+            aria-label="Play the matcha pour video"
+          >
+            <Play className="fill-current" aria-hidden />
+            Play pour
+          </Button>
+        ) : null}
 
         <p
           className="label-caps absolute bottom-[9%] left-1/2 -translate-x-1/2 text-[#FFD1E0] transition-opacity duration-1000"

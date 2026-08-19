@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState, type Ref } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { Play } from "lucide-react";
 import { media, site } from "@/data/nube";
 import { useMagnetic } from "@/hooks/useMagnetic";
 import { onPlaybackGesture, tryPlay } from "@/lib/video";
+import { Button } from "@/components/ui/button";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -10,7 +12,8 @@ export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoOk, setVideoOk] = useState(true);
-  const [videoReady, setVideoReady] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
+  const [showPlay, setShowPlay] = useState(false);
   const magnet = useMagnetic(0.4);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const plateY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
@@ -20,8 +23,20 @@ export default function Hero() {
   useEffect(() => {
     if (!videoOk) return;
     tryPlay(videoRef.current);
-    return onPlaybackGesture(() => videoRef.current);
+    const revealFallback = window.setTimeout(() => {
+      if (videoRef.current?.paused) setShowPlay(true);
+    }, 900);
+    const offGesture = onPlaybackGesture(() => videoRef.current);
+    return () => {
+      window.clearTimeout(revealFallback);
+      offGesture();
+    };
   }, [videoOk]);
+
+  const playVideo = () => {
+    setShowPlay(false);
+    tryPlay(videoRef.current);
+  };
 
   return (
     <section
@@ -46,11 +61,14 @@ export default function Hero() {
             playsInline
             preload="auto"
             disablePictureInPicture
-            onCanPlay={() => setVideoReady(true)}
-            onPlaying={() => setVideoReady(true)}
+            onPlaying={() => {
+              setVideoPlaying(true);
+              setShowPlay(false);
+            }}
+            onPause={() => setVideoPlaying(false)}
             onError={() => setVideoOk(false)}
             className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
-            style={{ opacity: videoReady ? 1 : 0 }}
+            style={{ opacity: videoPlaying ? 1 : 0 }}
           />
         ) : null}
       </motion.div>
@@ -62,6 +80,18 @@ export default function Hero() {
             "radial-gradient(120% 90% at 12% 8%, rgba(194,233,255,0.22) 0%, transparent 56%), radial-gradient(90% 80% at 92% 96%, rgba(255,209,224,0.2) 0%, transparent 58%), linear-gradient(to bottom, rgba(11,35,48,0.62) 0%, rgba(11,35,48,0.34) 38%, rgba(16,48,61,0.86) 74%, #10303d 100%)",
         }}
       />
+
+      {videoOk && showPlay ? (
+        <Button
+          type="button"
+          onClick={playVideo}
+          className="absolute left-1/2 top-[42%] z-20 h-12 -translate-x-1/2 rounded-full bg-primary px-6 text-primary-foreground shadow-none md:hidden"
+          aria-label="Play the background video"
+        >
+          <Play className="fill-current" aria-hidden />
+          Play video
+        </Button>
+      ) : null}
 
       <motion.div
         style={{ opacity: copyOpacity }}
