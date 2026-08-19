@@ -1,8 +1,20 @@
 import { Link } from "@tanstack/react-router";
 import Logo from "@/components/nube/Logo";
 import { site } from "@/data/nube";
+import { useI18n } from "@/i18n";
+import artHeart from "@/assets/nube/art-heart.png.asset.json";
+import artCloudNine from "@/assets/nube/art-cloud-nine.png.asset.json";
+import artCanWalk from "@/assets/nube/art-can-walk.png.asset.json";
+
+/** Hand-drawn studio pieces that sit beside the wordmark as a closing signature. */
+const artworks = [
+  { src: artHeart.url, alt: "nube worldwide hand-lettered heart", tilt: -5 },
+  { src: artCloudNine.url, alt: "Step into cloud nine — meditating nube cloud character", tilt: 3 },
+  { src: artCanWalk.url, alt: "Walking nube can character line drawing", tilt: -3 },
+];
 
 export default function Footer() {
+  const { t } = useI18n();
   return (
     <footer
       id="visit"
@@ -13,18 +25,18 @@ export default function Footer() {
           <div className="lg:col-span-5">
             <Logo className="w-full max-w-[300px] sm:max-w-[360px]" />
             <p className="mt-5 max-w-[38ch] text-[15px] text-[#AECDDD]">
-              Cold, clean, unhurried coffee in Zürich. Sip slower, made effortless.
+              {t("footer.tagline")}
             </p>
           </div>
 
           <div className="lg:col-span-3">
-            <p className="label-caps text-[#C2E9FF]">Visit</p>
+            <p className="label-caps text-[#C2E9FF]">{t("footer.visit")}</p>
             <address className="mt-5 text-[15px] not-italic leading-relaxed text-[#DCEDF7]">
               {site.street}
               <br />
               {site.city}
               <br />
-              {site.area}
+              {t("footer.area")}
             </address>
             <a
               href={`mailto:${site.email}`}
@@ -45,9 +57,12 @@ export default function Footer() {
           </div>
 
           <div className="lg:col-span-4">
-            <p className="label-caps text-[#FFD1E0]">Hours</p>
+            <p className="label-caps text-[#FFD1E0]">{t("footer.hours")}</p>
             <ul className="mt-5 flex flex-col gap-3">
-              {site.hours.map((row) => (
+              {[
+                { d: t("footer.weekdays"), h: "12:00 — 18:00" },
+                { d: t("footer.sunday"), h: t("footer.closed") },
+              ].map((row) => (
                 <li
                   key={row.d}
                   className="flex items-baseline justify-between border-b border-[#C2E9FF]/10 pb-3 text-[15px]"
