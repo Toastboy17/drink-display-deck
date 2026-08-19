@@ -17,8 +17,9 @@ export default function DriftGallery() {
   });
 
   /** Row travel: item 0 centred at the start, last item centred at the end. */
-  const rawX = useTransform(scrollYProgress, [0, 1], [0, -last * 100]);
+  const rawX = useTransform(scrollYProgress, [0, 1], [0, -last * 260]);
   const x = useSpring(rawX, { stiffness: 90, damping: 24, mass: 0.6 });
+  const rowX = useTransform(x, (v) => `calc(50% - 130px + ${v}px)`);
 
   return (
     <section ref={ref} data-cursor="drag" className="section-blush relative h-[320svh]">
@@ -30,7 +31,7 @@ export default function DriftGallery() {
         <div className="relative">
           <motion.div
             className="flex items-center will-change-transform"
-            style={{ x: useTransform(x, (v) => `calc(50% - 130px + ${v * 2.6}px)`) }}
+            style={{ x: rowX }}
           >
             {drinks.map((drink, i) => {
               const distance = Math.abs(i - active);

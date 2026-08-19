@@ -6,10 +6,11 @@ import ScrollScrubReveal from "@/components/nube/ScrollScrubReveal";
 import Marquee from "@/components/nube/Marquee";
 import Menu from "@/components/nube/Menu";
 import Story from "@/components/nube/Story";
-import Scene3D from "@/components/nube/Scene3D";
+import DriftGallery from "@/components/nube/DriftGallery";
+import Reviews from "@/components/nube/Reviews";
 import Footer from "@/components/nube/Footer";
 
-const title = "nube Zürich — Liquid Ice Specialty Coffee & Matcha";
+const title = "nube Zürich — Your Way Into Cloud Nine · Coffee & Matcha";
 const description =
   "nube is a specialty coffee bar in Zürich: iced lattes, matcha whisked to order and layered fruit matchas, hand-poured at Kirchgasse 3. Mon–Sat 12–18.";
 
@@ -38,7 +39,8 @@ function Index() {
         <Marquee />
         <Menu />
         <Story />
-        <Scene3D />
+        <DriftGallery />
+        <Reviews />
       </main>
       <Footer />
     </div>
