@@ -8,331 +8,211 @@ import {
   type ReactNode,
 } from "react";
 
-export const langs = ["de", "en", "fr", "it"] as const;
+export const langs = ["en", "de", "fr", "it", "es"] as const;
 export type Lang = (typeof langs)[number];
-export type L = Record<Lang, string>;
+/** A translated string. `en` is required; other languages fall back to it. */
+export type L = Partial<Record<Lang, string>> & { en: string };
 
 export const langLabels: Record<Lang, string> = {
-  de: "Deutsch",
   en: "English",
+  de: "Deutsch",
   fr: "Français",
   it: "Italiano",
+  es: "Español",
+};
+
+export const langShort: Record<Lang, string> = {
+  en: "EN",
+  de: "DE",
+  fr: "FR",
+  it: "IT",
+  es: "ES",
 };
 
 const STORAGE_KEY = "nube-lang";
 
 export const dict: Record<string, L> = {
-  "nav.menu": { de: "Menü", en: "Menu", fr: "Menu", it: "Menu" },
-  "nav.about": { de: "Über uns", en: "About", fr: "À propos", it: "Chi siamo" },
-  "nav.team": { de: "Team", en: "Team", fr: "Équipe", it: "Team" },
-  "nav.reviews": { de: "Bewertungen", en: "Reviews", fr: "Avis", it: "Recensioni" },
-  "nav.visit": { de: "Besuch", en: "Visit", fr: "Visite", it: "Visita" },
-  "nav.partners": { de: "Partner", en: "Partners", fr: "Partenaires", it: "Partner" },
-  "nav.faq": { de: "FAQ", en: "FAQ", fr: "FAQ", it: "FAQ" },
-  "nav.home": { de: "Startseite", en: "Home", fr: "Accueil", it: "Home" },
-  "nav.language": { de: "Sprache", en: "Language", fr: "Langue", it: "Lingua" },
-
-  "cta.visit": { de: "Besuch uns", en: "Visit us", fr: "Nous rendre visite", it: "Vieni a trovarci" },
-  "cta.menu": {
-    de: "Menü entdecken",
-    en: "Explore the menu",
-    fr: "Découvrir le menu",
-    it: "Scopri il menu",
-  },
-  "cta.directions": {
-    de: "Route planen",
-    en: "Get directions",
-    fr: "Itinéraire",
-    it: "Indicazioni",
-  },
-  "cta.openMap": {
-    de: "Karte öffnen",
-    en: "Open map",
-    fr: "Ouvrir la carte",
-    it: "Apri la mappa",
-  },
-  "cta.close": { de: "Schliessen", en: "Close", fr: "Fermer", it: "Chiudi" },
+  "nav.menu": { en: "Menu", de: "Menü", fr: "Menu", it: "Menu", es: "Menú" },
+  "nav.story": { en: "Story", de: "Story", fr: "Histoire", it: "Storia", es: "Historia" },
+  "nav.visit": { en: "Visit", de: "Besuch", fr: "Visite", it: "Visita", es: "Visítanos" },
+  "nav.findUs": { en: "Find Us", de: "Finde uns", fr: "Nous trouver", it: "Trovaci", es: "Encuéntranos" },
+  "nav.language": { en: "Language", de: "Sprache", fr: "Langue", it: "Lingua", es: "Idioma" },
 
   "hero.eyebrow": {
-    de: "Specialty Coffee & Matcha — Zürich",
-    en: "Specialty coffee & matcha — Zürich",
-    fr: "Café de spécialité & matcha — Zurich",
-    it: "Specialty coffee & matcha — Zurigo",
+    en: "Specialty coffee bar · Zürich",
+    de: "Specialty Coffee Bar · Zürich",
+    fr: "Bar à café de spécialité · Zurich",
+    it: "Specialty coffee bar · Zurigo",
+    es: "Cafetería de especialidad · Zúrich",
   },
-  "hero.title1": { de: "Willkommen auf", en: "Step into", fr: "Entrez dans", it: "Entra nella" },
-  "hero.title2": { de: "Wolke 7.", en: "cloud 9.", fr: "le 7e ciel.", it: "settima nuvola." },
+  "hero.titleA": { en: "Your way into", de: "Dein Weg auf", fr: "Ton chemin vers", it: "La tua via verso", es: "Tu camino a" },
+  "hero.titleB": { en: "cloud nine", de: "Wolke sieben", fr: "le septième ciel", it: "il settimo cielo", es: "el séptimo cielo" },
   "hero.body": {
-    de: "Premium Matcha, Specialty Coffee und handgemachte Refresher — frisch zubereitet und in unsere transparenten Dosen versiegelt.",
-    en: "Premium matcha, specialty coffee and handcrafted refreshers — freshly prepared and sealed to order in our transparent cans.",
-    fr: "Matcha premium, café de spécialité et boissons rafraîchissantes — préparés à la commande et scellés dans nos canettes transparentes.",
-    it: "Matcha premium, specialty coffee e refresher artigianali — preparati al momento e sigillati nelle nostre lattine trasparenti.",
+    en: "Cold, clean, unhurried coffee. No syrup shortcuts, no rushed pours — every drink hand-poured to order in a room that feels a little like cloud nine.",
+    de: "Kalt, klar, unaufgeregt. Keine Sirup-Abkürzungen, kein gehetztes Eingiessen — jedes Getränk wird frisch von Hand zubereitet, in einem Raum, der sich wie Wolke sieben anfühlt.",
+    fr: "Un café froid, net, sans précipitation. Aucun sirop de raccourci, aucun service pressé — chaque boisson est préparée à la main, dans un lieu qui ressemble au septième ciel.",
+    it: "Caffè freddo, pulito, senza fretta. Nessuna scorciatoia allo sciroppo, nessuna corsa — ogni drink è versato a mano su ordinazione, in uno spazio che sembra il settimo cielo.",
+    es: "Café frío, limpio y sin prisas. Sin atajos de sirope ni servidos a la carrera — cada bebida se prepara a mano al momento, en un espacio que parece el séptimo cielo.",
+  },
+  "hero.cta": { en: "See the Menu", de: "Zum Menü", fr: "Voir le menu", it: "Vedi il menu", es: "Ver el menú" },
+
+  "marq.1": {
+    en: "Sip slower, made effortless",
+    de: "Langsamer trinken, mühelos gemacht",
+    fr: "Savourer plus lentement, sans effort",
+    it: "Bevi più lentamente, senza sforzo",
+    es: "Bebe más despacio, sin esfuerzo",
+  },
+  "marq.2": {
+    en: "Hand-poured to order",
+    de: "Von Hand frisch zubereitet",
+    fr: "Versé à la main sur commande",
+    it: "Versato a mano su ordinazione",
+    es: "Servido a mano al momento",
+  },
+  "marq.3": { en: "No syrup shortcuts", de: "Keine Sirup-Abkürzungen", fr: "Aucun raccourci au sirop", it: "Nessuna scorciatoia allo sciroppo", es: "Sin atajos de sirope" },
+  "marq.4": { en: "Your way into cloud nine", de: "Dein Weg auf Wolke sieben", fr: "Ton chemin vers le septième ciel", it: "La tua via verso il settimo cielo", es: "Tu camino al séptimo cielo" },
+  "marq.5": {
+    en: "Matcha whisked to order",
+    de: "Matcha frisch aufgeschlagen",
+    fr: "Matcha fouetté à la commande",
+    it: "Matcha montato su ordinazione",
+    es: "Matcha batido al momento",
   },
 
-  "hours.label": { de: "Öffnungszeiten", en: "Opening hours", fr: "Horaires", it: "Orari" },
-  "hours.week": {
-    de: "Mo – Sa, 12:00 – 18:00",
-    en: "Mon – Sat, 12:00 – 18:00",
-    fr: "Lun – Sam, 12h00 – 18h00",
-    it: "Lun – Sab, 12:00 – 18:00",
-  },
-  "hours.sun": {
-    de: "Sonntag geschlossen",
-    en: "Sunday closed",
-    fr: "Dimanche fermé",
-    it: "Domenica chiuso",
-  },
-  "hours.openNow": { de: "Jetzt offen", en: "Open now", fr: "Ouvert", it: "Aperto ora" },
-  "hours.closedNow": { de: "Geschlossen", en: "Closed", fr: "Fermé", it: "Chiuso" },
-  "location.label": { de: "Standort", en: "Location", fr: "Adresse", it: "Posizione" },
-  "location.city": {
-    de: "8001 Zürich, Schweiz",
-    en: "8001 Zürich, Switzerland",
-    fr: "8001 Zurich, Suisse",
-    it: "8001 Zurigo, Svizzera",
-  },
-  "contact.label": { de: "Kontakt", en: "Say hi", fr: "Contact", it: "Contatti" },
-  "contact.takeaway": {
-    de: "Takeaway — 2 Min. vom Bellevue",
-    en: "Takeaway — 2 min from Bellevue",
-    fr: "À emporter — 2 min de Bellevue",
-    it: "Takeaway — 2 min da Bellevue",
-  },
-
-  "menu.eyebrow": { de: "Unser Menü", en: "Our menu", fr: "Notre menu", it: "Il nostro menu" },
-  "menu.title": {
-    de: "Vier Wege auf Wolke 7",
-    en: "Every way into cloud 9",
-    fr: "Tous les chemins vers le 7e ciel",
-    it: "Tutti i modi per salire sulla nuvola",
-  },
+  "menu.eyebrow": { en: "The pour list", de: "Die Pour-Liste", fr: "La carte des pours", it: "La lista dei pour", es: "La lista de pours" },
   "menu.body": {
-    de: "Matcha, Kaffeespezialitäten und Shakes — jedes Produkt zeigt Bild und Beschreibung.",
-    en: "Matcha, coffee specialties and shakes — every item shows its photo and description.",
-    fr: "Matcha, cafés de spécialité et shakes — chaque produit affiche sa photo et sa description.",
-    it: "Matcha, specialità di caffè e shake — ogni prodotto mostra foto e descrizione.",
+    en: "Nothing is pre-batched into a syrup. Every glass is layered when you order it at the counter. No app, no queue online — just come by.",
+    de: "Nichts wird vorab zu Sirup verkocht. Jedes Glas wird beim Bestellen an der Theke geschichtet. Keine App, keine Online-Warteschlange — komm einfach vorbei.",
+    fr: "Rien n'est préparé d'avance en sirop. Chaque verre est monté au comptoir quand tu commandes. Pas d'appli, pas de file en ligne — passe simplement nous voir.",
+    it: "Niente è pre-preparato in sciroppo. Ogni bicchiere è stratificato al banco quando ordini. Nessuna app, nessuna coda online — passa e basta.",
+    es: "Nada se prepara de antemano en sirope. Cada vaso se monta en la barra cuando lo pides. Sin app, sin cola online — solo pásate.",
   },
-  "menu.hintDesktop": {
-    de: "Fahre über ein Produkt",
-    en: "Hover a product",
-    fr: "Survolez un produit",
-    it: "Passa su un prodotto",
+  "cat.matcha": { en: "Matcha", de: "Matcha", fr: "Matcha", it: "Matcha", es: "Matcha" },
+  "cat.matcha.blurb": {
+    en: "Ceremonial grade, whisked to order — layered over fruit or poured hot.",
+    de: "Ceremonial Grade, frisch aufgeschlagen — über Früchten geschichtet oder heiss serviert.",
+    fr: "Qualité cérémoniale, fouetté à la commande — en couches sur des fruits ou servi chaud.",
+    it: "Grado ceremoniale, montato su ordinazione — a strati sulla frutta o versato caldo.",
+    es: "Grado ceremonial, batido al momento — en capas sobre fruta o servido caliente.",
   },
-  "menu.hintMobile": {
-    de: "Wischen & antippen",
-    en: "Swipe & tap",
-    fr: "Glissez & touchez",
-    it: "Scorri e tocca",
+  "cat.lattes": { en: "Lattes", de: "Lattes", fr: "Lattes", it: "Latte", es: "Lattes" },
+  "cat.lattes.blurb": {
+    en: "Cold, layered and sealed in the can — espresso the long way round.",
+    de: "Kalt, geschichtet und in der Dose versiegelt — Espresso auf dem langen Weg.",
+    fr: "Froids, en couches et scellés en canette — l'espresso par le chemin long.",
+    it: "Freddi, a strati e sigillati nella lattina — espresso per la via lunga.",
+    es: "Fríos, en capas y sellados en lata — el espresso por el camino largo.",
   },
-  "menu.tapDetails": {
-    de: "Antippen für Details",
-    en: "Tap for details",
-    fr: "Toucher pour les détails",
-    it: "Tocca per i dettagli",
+  "cat.coffee": { en: "Coffee", de: "Kaffee", fr: "Café", it: "Caffè", es: "Café" },
+  "cat.coffee.blurb": {
+    en: "The warm side of the counter, served in the cup.",
+    de: "Die warme Seite der Theke, in der Tasse serviert.",
+    fr: "Le côté chaud du comptoir, servi en tasse.",
+    it: "Il lato caldo del banco, servito in tazza.",
+    es: "El lado cálido de la barra, servido en taza.",
   },
-  "menu.nutritionNote": {
-    de: "Werte pro Portion, zubereitet mit Hafermilch. Jedes Getränk gibt es auch vegan.",
-    en: "Values per serving as prepared with oat milk. Every drink is available vegan.",
-    fr: "Valeurs par portion, préparées au lait d'avoine. Chaque boisson existe en version végane.",
-    it: "Valori per porzione, preparati con latte d'avena. Ogni bevanda è disponibile vegana.",
-  },
-
-  "nutrition.calories": { de: "Kalorien", en: "Calories", fr: "Calories", it: "Calorie" },
-  "nutrition.caffeine": { de: "Koffein", en: "Caffeine", fr: "Caféine", it: "Caffeina" },
-  "nutrition.protein": { de: "Protein", en: "Protein", fr: "Protéines", it: "Proteine" },
-  "nutrition.carbs": { de: "Kohlenhydrate", en: "Carbs", fr: "Glucides", it: "Carboidrati" },
-  "nutrition.sugar": { de: "Zucker", en: "Sugar", fr: "Sucre", it: "Zucchero" },
-  "nutrition.fat": { de: "Fett", en: "Fat", fr: "Graisses", it: "Grassi" },
-
-  "tag.veganOption": {
-    de: "Vegan möglich",
-    en: "Vegan option",
-    fr: "Option végane",
-    it: "Opzione vegana",
-  },
-  "tag.vegan": { de: "Vegan", en: "Vegan", fr: "Végane", it: "Vegano" },
-  "tag.signature": { de: "Signature", en: "Signature", fr: "Signature", it: "Signature" },
-  "tag.sugarFree": { de: "Ohne Zucker", en: "Sugar free", fr: "Sans sucre", it: "Senza zucchero" },
-  "tag.fruit": { de: "Fruchtig", en: "Fruit forward", fr: "Fruité", it: "Fruttato" },
-  "tag.caffeineFree": {
-    de: "Koffeinfrei",
-    en: "Caffeine free",
-    fr: "Sans caféine",
-    it: "Senza caffeina",
-  },
-  "tag.colourShifting": {
-    de: "Farbwechsel",
-    en: "Colour shifting",
-    fr: "Change de couleur",
-    it: "Cambia colore",
-  },
-  "tag.shareable": { de: "Zum Teilen", en: "Shareable", fr: "À partager", it: "Da condividere" },
-  "tag.warm": { de: "Warm", en: "Served warm", fr: "Servi chaud", it: "Servito caldo" },
-  "tag.homemade": { de: "Hausgemacht", en: "Homemade", fr: "Fait maison", it: "Fatto in casa" },
-
-  "story.eyebrow": {
-    de: "Unsere Geschichte",
-    en: "Our story",
-    fr: "Notre histoire",
-    it: "La nostra storia",
-  },
-  "story.title": {
-    de: "Alltägliche Getränke verdienen aussergewöhnliche Aufmerksamkeit.",
-    en: "Ordinary drinks deserve extraordinary attention.",
-    fr: "Les boissons du quotidien méritent une attention extraordinaire.",
-    it: "Le bevande di ogni giorno meritano un'attenzione straordinaria.",
-  },
-  "story.body": {
-    de: "Wir verbinden erstklassige Zutaten, sorgfältige Handarbeit und schöne Präsentation. Wir servieren nicht einfach Getränke — wir machen kleine Erlebnisse, die du durch die Stadt tragen kannst.",
-    en: "We combine premium ingredients, careful craftsmanship and beautiful presentation. We don't just serve drinks — we make small experiences you can carry through the city.",
-    fr: "Nous associons des ingrédients premium, un savoir-faire soigné et une belle présentation. Nous ne servons pas seulement des boissons — nous créons de petites expériences à emporter.",
-    it: "Uniamo ingredienti premium, cura artigianale e una bella presentazione. Non serviamo solo bevande — creiamo piccole esperienze da portare in giro per la città.",
+  "cat.shakes": { en: "Shakes", de: "Shakes", fr: "Shakes", it: "Shake", es: "Batidos" },
+  "cat.shakes.blurb": {
+    en: "Blended thick, caffeine-light — the easy end of the menu.",
+    de: "Dick gemixt, koffeinarm — das leichte Ende der Karte.",
+    fr: "Mixés épais, peu caféinés — le côté facile de la carte.",
+    it: "Frullati densi, poca caffeina — il lato facile del menu.",
+    es: "Batidos espesos, poca cafeína — el lado fácil de la carta.",
   },
 
-  "team.eyebrow": {
-    de: "Deine Freunde bei nube",
-    en: "Your friends at nube",
-    fr: "Tes amis chez nube",
-    it: "I tuoi amici di nube",
+  "story.eyebrow": { en: "Our story", de: "Unsere Story", fr: "Notre histoire", it: "La nostra storia", es: "Nuestra historia" },
+  "story.titleA": { en: "Taking you to", de: "Wir bringen dich auf", fr: "On t'emmène au", it: "Ti portiamo al", es: "Te llevamos al" },
+  "story.p1": {
+    en: "nube is a specialty coffee bar in Zürich built around one idea: cold, clean, unhurried coffee. From single-origin cold brew to matcha whisked to order, every drink is hand-poured in a space lit by soft ice-blue and blush-pink light.",
+    de: "nube ist eine Specialty Coffee Bar in Zürich mit einer Idee: kalter, klarer, unaufgeregter Kaffee. Von Single-Origin Cold Brew bis frisch aufgeschlagenem Matcha wird jedes Getränk von Hand zubereitet — in einem Raum aus eisblauem und zartrosa Licht.",
+    fr: "nube est un bar à café de spécialité à Zurich bâti sur une idée : un café froid, net, sans hâte. Du cold brew single origin au matcha fouetté à la commande, chaque boisson est versée à la main dans une lumière bleu glace et rose poudré.",
+    it: "nube è uno specialty coffee bar a Zurigo costruito su un'idea: caffè freddo, pulito, senza fretta. Dal cold brew single origin al matcha montato su ordinazione, ogni drink è versato a mano in una luce azzurro ghiaccio e rosa.",
+    es: "nube es una cafetería de especialidad en Zúrich con una sola idea: café frío, limpio y sin prisas. Del cold brew de origen único al matcha batido al momento, cada bebida se sirve a mano bajo una luz azul hielo y rosa.",
   },
-  "team.title": {
-    de: "Die Menschen hinter der Theke",
-    en: "The people behind the counter",
-    fr: "Les personnes derrière le comptoir",
-    it: "Le persone dietro al banco",
+  "story.p2": {
+    en: "We are not loud about it. Confident type, a lot of negative space, and every gesture behind the bar deliberate rather than fast. You will wait a little longer here — and you will taste it.",
+    de: "Wir machen kein Getöse darum. Klare Typo, viel Weissraum und jede Bewegung hinter der Bar bewusst statt schnell. Du wartest hier etwas länger — und du wirst es schmecken.",
+    fr: "Sans en faire du bruit. Une typo assumée, beaucoup d'espace, et chaque geste derrière le bar réfléchi plutôt que rapide. Tu attendras un peu plus — et tu le sentiras.",
+    it: "Senza farne rumore. Un carattere sicuro, molto spazio bianco e ogni gesto dietro al banco pensato, non veloce. Aspetterai un po' di più — e lo sentirai.",
+    es: "No hacemos ruido con ello. Tipografía segura, mucho espacio en blanco y cada gesto tras la barra pensado, no rápido. Esperarás un poco más — y lo notarás.",
   },
-  "team.body": {
-    de: "Ein kleines Team, das dich mit Namen kennt — und deine Bestellung meistens auch.",
-    en: "A small team that knows you by name — and usually your order too.",
-    fr: "Une petite équipe qui te connaît par ton prénom — et souvent aussi ta commande.",
-    it: "Un piccolo team che ti conosce per nome — e di solito anche il tuo ordine.",
+  "story.p1t": { en: "No syrup shortcuts", de: "Keine Sirup-Abkürzungen", fr: "Aucun raccourci au sirop", it: "Nessuna scorciatoia allo sciroppo", es: "Sin atajos de sirope" },
+  "story.p1d": {
+    en: "Sweetness comes from the bean and the milk, never from a pump bottle behind the counter.",
+    de: "Süsse kommt aus der Bohne und der Milch, nie aus einer Pumpflasche hinter der Theke.",
+    fr: "La douceur vient du grain et du lait, jamais d'un flacon-pompe derrière le comptoir.",
+    it: "La dolcezza viene dal chicco e dal latte, mai da una bottiglia con pompetta.",
+    es: "El dulzor viene del grano y de la leche, nunca de un bote con dosificador.",
   },
-  "team.favourite": {
-    de: "Lieblingsdrink",
-    en: "Favourite drink",
-    fr: "Boisson préférée",
-    it: "Bevanda preferita",
+  "story.p2t": { en: "Poured to order", de: "Frisch zubereitet", fr: "Versé à la commande", it: "Versato su ordinazione", es: "Servido al momento" },
+  "story.p2d": {
+    en: "Nothing sits in a batch jug. Matcha is whisked, cold brew is drawn, cream is poured in front of you.",
+    de: "Nichts steht in der Vorratskanne. Matcha wird aufgeschlagen, Cold Brew gezapft, Rahm vor dir eingegossen.",
+    fr: "Rien ne dort dans un pichet. Le matcha est fouetté, le cold brew tiré, la crème versée devant toi.",
+    it: "Niente resta in una brocca. Il matcha si monta, il cold brew si spilla, la panna si versa davanti a te.",
+    es: "Nada espera en una jarra. El matcha se bate, el cold brew se tira y la nata se vierte ante ti.",
   },
-
-  "reviews.eyebrow": {
-    de: "Google Bewertungen",
-    en: "Google reviews",
-    fr: "Avis Google",
-    it: "Recensioni Google",
-  },
-  "reviews.title": {
-    de: "Zürich mag uns",
-    en: "Zürich loves us",
-    fr: "Zurich nous aime",
-    it: "Zurigo ci ama",
-  },
-  "reviews.basedOn": {
-    de: "Bewertungen auf Google",
-    en: "reviews on Google",
-    fr: "avis sur Google",
-    it: "recensioni su Google",
-  },
-  "reviews.viewAll": {
-    de: "Alle Bewertungen ansehen",
-    en: "Read all reviews",
-    fr: "Voir tous les avis",
-    it: "Leggi tutte le recensioni",
-  },
-  "reviews.write": {
-    de: "Bewertung schreiben",
-    en: "Write a review",
-    fr: "Laisser un avis",
-    it: "Scrivi una recensione",
+  "story.p3t": { en: "Unhurried by design", de: "Bewusst unaufgeregt", fr: "Lent par choix", it: "Senza fretta, per scelta", es: "Sin prisa, a propósito" },
+  "story.p3d": {
+    en: "Forty seconds slower than the café next door. That difference is the entire point.",
+    de: "Vierzig Sekunden langsamer als das Café nebenan. Genau dieser Unterschied ist der Punkt.",
+    fr: "Quarante secondes plus lent que le café d'à côté. Toute l'idée est là.",
+    it: "Quaranta secondi più lento del bar accanto. Quella differenza è tutto il senso.",
+    es: "Cuarenta segundos más lento que el café de al lado. Esa diferencia es justo el punto.",
   },
 
-  "gallery.eyebrow": { de: "Der Ort", en: "The space", fr: "Le lieu", it: "Lo spazio" },
-  "gallery.title": {
-    de: "Hell, ruhig, ein bisschen wie eine Wolke",
-    en: "Bright, calm, a little like a cloud",
-    fr: "Lumineux, calme, un peu comme un nuage",
-    it: "Luminoso, calmo, un po' come una nuvola",
+  "drift.label": {
+    en: "Drift through the room",
+    de: "Treib durch den Raum",
+    fr: "Dérive à travers la salle",
+    it: "Lasciati andare nella sala",
+    es: "Flota por el local",
   },
 
-  "insta.eyebrow": { de: "Instagram", en: "Instagram", fr: "Instagram", it: "Instagram" },
-  "insta.title": {
-    de: "Live aus dem Café",
-    en: "Live from the café",
-    fr: "En direct du café",
-    it: "Dal café, in diretta",
-  },
-  "insta.body": {
-    de: "Neue Specials, Drops und Momente — täglich auf @nubeworldwide.",
-    en: "New specials, drops and moments — daily on @nubeworldwide.",
-    fr: "Nouveautés, drops et moments — chaque jour sur @nubeworldwide.",
-    it: "Novità, drop e momenti — ogni giorno su @nubeworldwide.",
-  },
-  "insta.followers": { de: "Follower", en: "Followers", fr: "Abonnés", it: "Follower" },
-  "insta.posts": { de: "Beiträge", en: "Posts", fr: "Publications", it: "Post" },
-  "insta.open": {
-    de: "Feed öffnen",
-    en: "Open the feed",
-    fr: "Ouvrir le feed",
-    it: "Apri il feed",
-  },
-  "insta.follow": { de: "Auf Instagram folgen", en: "Follow on Instagram", fr: "Suivre sur Instagram", it: "Segui su Instagram" },
+  "reviews.eyebrow": { en: "Google reviews", de: "Google Bewertungen", fr: "Avis Google", it: "Recensioni Google", es: "Reseñas de Google" },
+  "reviews.from": { en: "from", de: "aus", fr: "sur", it: "su", es: "de" },
+  "reviews.ratings": { en: "ratings", de: "Bewertungen", fr: "avis", it: "recensioni", es: "valoraciones" },
+  "reviews.cta": { en: "Read on Google", de: "Auf Google lesen", fr: "Lire sur Google", it: "Leggi su Google", es: "Leer en Google" },
 
-  "map.eyebrow": { de: "Finde uns", en: "Find us", fr: "Nous trouver", it: "Trovaci" },
-  "map.title": { de: "Komm vorbei", en: "Come say hello", fr: "Passe nous voir", it: "Vieni a salutarci" },
-  "map.body": {
-    de: "Mitten in der Zürcher Altstadt — Karte antippen, zoomen und direkt losnavigieren.",
-    en: "In the heart of Zürich's old town — tap the map, zoom around and navigate straight there.",
-    fr: "Au cœur de la vieille ville de Zurich — touchez la carte, zoomez et lancez l'itinéraire.",
-    it: "Nel cuore del centro storico di Zurigo — tocca la mappa, zooma e avvia il percorso.",
+  "footer.tagline": {
+    en: "Cold, clean, unhurried coffee in Zürich. Sip slower, made effortless.",
+    de: "Kalter, klarer, unaufgeregter Kaffee in Zürich. Langsamer trinken, mühelos gemacht.",
+    fr: "Un café froid, net et sans hâte à Zurich. Savourer plus lentement, sans effort.",
+    it: "Caffè freddo, pulito e senza fretta a Zurigo. Bevi più lentamente, senza sforzo.",
+    es: "Café frío, limpio y sin prisas en Zúrich. Bebe más despacio, sin esfuerzo.",
   },
-
-  "partners.eyebrow": {
-    de: "Creators & Partner",
-    en: "Creators & partners",
-    fr: "Créateurs & partenaires",
-    it: "Creator & partner",
+  "footer.visit": { en: "Visit", de: "Besuch", fr: "Visite", it: "Visita", es: "Visítanos" },
+  "footer.hours": { en: "Hours", de: "Öffnungszeiten", fr: "Horaires", it: "Orari", es: "Horario" },
+  "footer.weekdays": { en: "Mon — Sat", de: "Mo — Sa", fr: "Lun — Sam", it: "Lun — Sab", es: "Lun — Sáb" },
+  "footer.sunday": { en: "Sunday", de: "Sonntag", fr: "Dimanche", it: "Domenica", es: "Domingo" },
+  "footer.closed": { en: "Closed", de: "Geschlossen", fr: "Fermé", it: "Chiuso", es: "Cerrado" },
+  "footer.art": {
+    en: "Drawn in-house",
+    de: "Hausgemachte Zeichnungen",
+    fr: "Dessiné en interne",
+    it: "Disegnato in casa",
+    es: "Dibujado en casa",
   },
-  "partners.title": {
-    de: "Wer über nube spricht",
-    en: "Who's talking about nube",
-    fr: "Qui parle de nube",
-    it: "Chi parla di nube",
-  },
-  "partners.body": {
-    de: "Food Blogger, lokale Creator und Freunde des Hauses, die nube gefeatured haben.",
-    en: "Food bloggers, local creators and friends of the house who have featured nube.",
-    fr: "Food bloggers, créateurs locaux et amis de la maison qui ont parlé de nube.",
-    it: "Food blogger, creator locali e amici della casa che hanno raccontato nube.",
-  },
-  "partners.cta": {
-    de: "Partner werden",
-    en: "Become a partner",
-    fr: "Devenir partenaire",
-    it: "Diventa partner",
-  },
-  "partners.ctaBody": {
-    de: "Du bist Creator in Zürich und möchtest mit uns arbeiten? Schreib uns — wir antworten schnell.",
-    en: "Creating in Zürich and want to work with us? Write us — we answer fast.",
-    fr: "Créateur à Zurich et envie de collaborer ? Écris-nous — nous répondons vite.",
-    it: "Sei un creator a Zurigo e vuoi collaborare? Scrivici — rispondiamo veloci.",
-  },
-  "partners.viewPost": { de: "Beitrag ansehen", en: "View post", fr: "Voir le post", it: "Guarda il post" },
-  "partners.page": {
-    de: "Partnerseite ansehen",
-    en: "See the partner page",
-    fr: "Voir la page partenaires",
-    it: "Vedi la pagina partner",
+  "footer.area": {
+    en: "Old town · 2 min from Bellevue",
+    de: "Altstadt · 2 Min. vom Bellevue",
+    fr: "Vieille ville · 2 min du Bellevue",
+    it: "Centro storico · 2 min dal Bellevue",
+    es: "Casco antiguo · 2 min de Bellevue",
   },
 
-  "faq.eyebrow": { de: "FAQ", en: "FAQ", fr: "FAQ", it: "FAQ" },
-  "faq.title": { de: "Gut zu wissen", en: "Good to know", fr: "Bon à savoir", it: "Buono a sapersi" },
+  "location.city": { en: "Zürich, Switzerland", de: "Zürich, Schweiz", fr: "Zurich, Suisse", it: "Zurigo, Svizzera", es: "Zúrich, Suiza" },
 
-  "legal.impressum": { de: "Impressum", en: "Imprint", fr: "Mentions légales", it: "Note legali" },
-  "legal.privacy": { de: "Datenschutz", en: "Privacy", fr: "Confidentialité", it: "Privacy" },
-  "legal.back": { de: "Zurück zur Startseite", en: "Back to home", fr: "Retour à l'accueil", it: "Torna alla home" },
+  "legal.impressum": { en: "Imprint", de: "Impressum", fr: "Mentions légales", it: "Note legali", es: "Aviso legal" },
+  "legal.privacy": { en: "Privacy", de: "Datenschutz", fr: "Confidentialité", it: "Privacy", es: "Privacidad" },
+  "legal.back": { en: "Back to home", de: "Zurück zur Startseite", fr: "Retour à l'accueil", it: "Torna alla home", es: "Volver al inicio" },
   "legal.reviewNote": {
-    de: "Bitte prüfe und ergänze diese Angaben mit deinen echten Firmendaten.",
     en: "Please review and complete this page with your real company details.",
+    de: "Bitte prüfe und ergänze diese Angaben mit deinen echten Firmendaten.",
     fr: "Merci de vérifier et compléter cette page avec vos données réelles.",
     it: "Verifica e completa questa pagina con i dati reali dell'azienda.",
+    es: "Revisa y completa esta página con los datos reales de la empresa.",
   },
 };
 
@@ -346,7 +226,7 @@ type I18nValue = {
 const I18nContext = createContext<I18nValue | null>(null);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("de");
+  const [lang, setLangState] = useState<Lang>("en");
 
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY) as Lang | null;
@@ -371,8 +251,8 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     () => ({
       lang,
       setLang,
-      t: (key) => dict[key]?.[lang] ?? key,
-      tl: (v) => v[lang],
+      t: (key) => dict[key]?.[lang] ?? dict[key]?.en ?? key,
+      tl: (v) => v[lang] ?? v.en,
     }),
     [lang, setLang],
   );
