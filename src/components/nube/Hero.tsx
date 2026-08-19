@@ -20,14 +20,32 @@ export default function Hero() {
   /** Safari needs the muted attribute in the DOM, and a gesture in Low Power Mode. */
   useEffect(() => {
     if (!videoOk) return;
-    tryPlay(videoRef.current);
+    const video = videoRef.current;
+    tryPlay(video);
     const revealFallback = window.setTimeout(() => {
       if (videoRef.current?.paused) setShowPlay(true);
     }, 900);
     const offGesture = onPlaybackGesture(() => videoRef.current);
+    const keepLooping = () => {
+      const current = videoRef.current;
+      if (!current || document.hidden) return;
+      if (current.ended) current.currentTime = 0;
+      tryPlay(current);
+    };
+    const onVisibilityChange = () => {
+      if (!document.hidden) keepLooping();
+    };
+    video?.addEventListener("ended", keepLooping);
+    video?.addEventListener("stalled", keepLooping);
+    window.addEventListener("pageshow", keepLooping);
+    document.addEventListener("visibilitychange", onVisibilityChange);
     return () => {
       window.clearTimeout(revealFallback);
       offGesture();
+      video?.removeEventListener("ended", keepLooping);
+      video?.removeEventListener("stalled", keepLooping);
+      window.removeEventListener("pageshow", keepLooping);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, [videoOk]);
 
@@ -63,7 +81,10 @@ export default function Hero() {
               setVideoPlaying(true);
               setShowPlay(false);
             }}
-            onPause={() => setVideoPlaying(false)}
+            onEnded={(event) => {
+              event.currentTarget.currentTime = 0;
+              tryPlay(event.currentTarget);
+            }}
             onError={() => setVideoOk(false)}
             className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
             style={{ opacity: videoPlaying ? 1 : 0 }}
