@@ -27,7 +27,7 @@ export type Drink = {
   tagline: string;
   notes: string;
   img: string;
-  temp: "Cold" | "Whisked" | "Blended" | "Hot";
+  temp: "Cold" | "Poured" | "Blended" | "Hot";
   /** Dominant colour of the drink — drives the soft glow behind the can. */
   glow: string;
   /** Two or three lines on where the drink came from. */
@@ -53,7 +53,7 @@ export const drinks: Drink[] = [
     tagline: "Whisked to order",
     notes: "Ceremonial matcha · cold milk",
     img: matchaLatte.url,
-    temp: "Whisked",
+    temp: "Poured",
     glow: "#7FC08A",
     story:
       "Borrowed from a quiet Kyoto tea room where nobody spoke while the whisk moved. We kept the silence and added cold milk.",
@@ -64,7 +64,7 @@ export const drinks: Drink[] = [
     tagline: "Five layers, one straw",
     notes: "Crushed strawberry · milk · matcha",
     img: strawberryMatcha.url,
-    temp: "Whisked",
+    temp: "Poured",
     glow: "#F58AA6",
     story:
       "Built one June from market strawberries that were too ripe to sell. Crushed, layered, and gone by the afternoon.",
@@ -75,7 +75,7 @@ export const drinks: Drink[] = [
     tagline: "Deep purple into green",
     notes: "Blueberry compote · milk · matcha",
     img: blueberryMatcha.url,
-    temp: "Whisked",
+    temp: "Poured",
     glow: "#8E7BD6",
     story:
       "Inspired by dusk over the lake — deep purple sinking into green. We stopped stirring it once we saw the colour.",
@@ -86,7 +86,7 @@ export const drinks: Drink[] = [
     tagline: "Sunrise in a glass",
     notes: "Mango purée · milk · matcha",
     img: mangoMatcha.url,
-    temp: "Whisked",
+    temp: "Poured",
     glow: "#F5B45A",
     story:
       "A sunrise drink. Mango purée at the bottom so the first sip is bright and the last one is grassy and calm.",
@@ -119,7 +119,7 @@ export const drinks: Drink[] = [
     tagline: "The one people come back for",
     notes: "Salted caramel · banana · matcha",
     img: saltedCaramelBananaMatcha.url,
-    temp: "Whisked",
+    temp: "Poured",
     glow: "#BFC96E",
     story:
       "The accident that stuck. A caramel banana poured over matcha by mistake — now the one regulars order by name.",
@@ -141,7 +141,7 @@ export const drinks: Drink[] = [
     tagline: "Caffeine-light, small glass",
     notes: "Mild matcha · lots of milk · fruit",
     img: kidsMatcha.url,
-    temp: "Whisked",
+    temp: "Poured",
     glow: "#9AD3A8",
     story:
       "For the smallest guests on Kirchgasse. Mild matcha, mostly milk, a little fruit — so they get their own cloud too.",
