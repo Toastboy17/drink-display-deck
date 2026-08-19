@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { drinks, hotDrinks, type Drink } from "@/data/nube";
 import TempIcon from "@/components/nube/TempIcon";
+import { useI18n } from "@/i18n";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -84,8 +85,8 @@ const byId = (ids: string[]) => ids.map((id) => all.find((d) => d.id === id)!).f
 const categories = [
   {
     id: "matcha",
-    label: "Matcha",
-    blurb: "Ceremonial grade, whisked to order — layered over fruit or poured hot.",
+    labelKey: "cat.matcha",
+    blurbKey: "cat.matcha.blurb",
     items: byId([
       "matcha-latte",
       "strawberry-matcha",
@@ -97,14 +98,14 @@ const categories = [
   },
   {
     id: "lattes",
-    label: "Lattes",
-    blurb: "Cold, layered and sealed in the can — espresso the long way round.",
+    labelKey: "cat.lattes",
+    blurbKey: "cat.lattes.blurb",
     items: byId(["iced-latte", "blueberry-latte", "salted-caramel-banana"]),
   },
   {
     id: "coffee",
-    label: "Coffee",
-    blurb: "The warm side of the counter, served in the cup.",
+    labelKey: "cat.coffee",
+    blurbKey: "cat.coffee.blurb",
     items: byId([
       "cappuccino",
       "flat-white",
@@ -118,8 +119,8 @@ const categories = [
   },
   {
     id: "shakes",
-    label: "Shakes",
-    blurb: "Blended thick, caffeine-light — the easy end of the menu.",
+    labelKey: "cat.shakes",
+    blurbKey: "cat.shakes.blurb",
     items: byId(["mango-shake", "kids-matcha"]),
   },
 ];
@@ -127,18 +128,20 @@ const categories = [
 export default function Menu() {
   const [activeId, setActiveId] = useState(categories[0]!.id);
   const active = categories.find((c) => c.id === activeId)!;
+  const { t } = useI18n();
 
   return (
     <section id="menu" className="section-ice px-5 py-24 sm:px-8 sm:py-32 lg:px-12">
       <div className="mx-auto max-w-screen-2xl">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-5 lg:items-end">
           <div className="lg:col-span-3">
-            <p className="label-caps text-[#C2E9FF]">The pour list</p>
-            <h2 className="mt-4 text-[#F2F7FA]">Your way into cloud nine</h2>
+            <p className="label-caps text-[#C2E9FF]">{t("menu.eyebrow")}</p>
+            <h2 className="mt-4 text-[#F2F7FA]">
+              {t("hero.titleA")} {t("hero.titleB")}
+            </h2>
           </div>
           <p className="max-w-[42ch] text-[15px] text-[#AECDDD] lg:col-span-2 lg:pb-4">
-            Nothing is pre-batched into a syrup. Every glass is layered when you order it at the
-            counter. No app, no queue online — just come by.
+            {t("menu.body")}
           </p>
         </div>
 
@@ -158,14 +161,14 @@ export default function Menu() {
                     : "border-[#C2E9FF]/20 text-[#AECDDD] hover:border-[#C2E9FF]/40 hover:text-[#F2F7FA]"
                 }`}
               >
-                {c.label}
+                {t(c.labelKey)}
                 <span className="ml-2 tabular-nums text-[#C2E9FF]/70">{c.items.length}</span>
               </button>
             );
           })}
         </div>
 
-        <p className="mt-6 max-w-[52ch] text-[15px] text-[#AECDDD]">{active.blurb}</p>
+        <p className="mt-6 max-w-[52ch] text-[15px] text-[#AECDDD]">{t(active.blurbKey)}</p>
 
         <div
           key={active.id}
