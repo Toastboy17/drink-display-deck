@@ -1,16 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import type { ReactNode } from "react";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
+import Navbar from "@/components/nube/Navbar";
+import Footer from "@/components/nube/Footer";
 import { useI18n } from "@/i18n";
 
 export function LegalLayout({ heading, children }: { heading: string; children: ReactNode }) {
   const { t } = useI18n();
   return (
     <div className="min-h-screen bg-background">
-      <SiteHeader />
-      <main className="mx-auto max-w-3xl px-5 py-16 md:py-24">
+      <Navbar />
+      <main className="mx-auto max-w-3xl px-5 pb-16 pt-32 md:pb-24">
         <Link
           to="/"
           className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -26,7 +26,7 @@ export function LegalLayout({ heading, children }: { heading: string; children: 
           {t("legal.reviewNote")}
         </p>
       </main>
-      <SiteFooter />
+      <Footer />
     </div>
   );
 }
