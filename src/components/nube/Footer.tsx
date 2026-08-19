@@ -8,9 +8,15 @@ import artCanWalk from "@/assets/nube/art-can-walk.png.asset.json";
 
 /** Hand-drawn studio pieces that sit beside the wordmark as a closing signature. */
 const artworks = [
-  { src: artHeart.url, alt: "nube worldwide hand-lettered heart", tilt: -5 },
-  { src: artCloudNine.url, alt: "Step into cloud nine — meditating nube cloud character", tilt: 3 },
-  { src: artCanWalk.url, alt: "Walking nube can character line drawing", tilt: -3 },
+  { src: artHeart.url, alt: "nube worldwide hand-lettered heart", tilt: -5, plate: false },
+  {
+    src: artCloudNine.url,
+    alt: "Step into cloud nine — meditating nube cloud character",
+    tilt: 3,
+    /** Navy line art needs a light plate to read against the dark footer. */
+    plate: true,
+  },
+  { src: artCanWalk.url, alt: "Walking nube can character line drawing", tilt: -3, plate: false },
 ];
 
 export default function Footer() {
@@ -54,7 +60,11 @@ export default function Footer() {
                       alt={art.alt}
                       loading="lazy"
                       style={{ rotate: `${art.tilt}deg` }}
-                      className="animate-drift relative h-[86px] w-auto object-contain transition-transform duration-500 ease-out group-hover:scale-110 group-hover:rotate-0 sm:h-[112px]"
+                      className={`animate-drift relative h-[86px] w-auto object-contain transition-transform duration-500 ease-out group-hover:scale-110 group-hover:rotate-0 sm:h-[112px] ${
+                        art.plate
+                          ? "rounded-[18px] border border-[#C2E9FF]/25 bg-[#F2F7FA]/90 px-2.5 py-2"
+                          : ""
+                      }`}
                     />
                   </div>
                 ))}
