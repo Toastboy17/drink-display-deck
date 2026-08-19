@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { drinks, hotDrinks, type Drink } from "@/data/nube";
 import TempIcon from "@/components/nube/TempIcon";
-import Logo from "@/components/nube/Logo";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -130,10 +129,7 @@ export default function Menu() {
       <div className="mx-auto max-w-screen-2xl">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-5 lg:items-end">
           <div className="lg:col-span-3">
-            <div className="flex items-center gap-4">
-              <Logo aria-hidden className="h-[30px] opacity-75" />
-              <p className="label-caps text-[#C2E9FF]">The pour list</p>
-            </div>
+            <p className="label-caps text-[#C2E9FF]">The pour list</p>
             <h2 className="mt-4 text-[#F2F7FA]">Your way into cloud nine</h2>
           </div>
           <p className="max-w-[42ch] text-[15px] text-[#AECDDD] lg:col-span-2 lg:pb-4">
